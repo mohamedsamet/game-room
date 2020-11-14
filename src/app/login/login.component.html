@@ -1,0 +1,7 @@
+<form class="p-2 p-md-4 border rounded-sm container-md col-md-6 col-xl-4 mt-5">
+  <div class="form-group">
+    <label for="pseudoLogin">Pseudo</label>
+    <input [(ngModel)]="pseudo" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="pseudoLogin" aria-describedby="pseudoLogin">
+  </div>
+  <button (click)="validatePseudo()" type="submit" class="btn btn-dark">Submit</button>
+</form>
