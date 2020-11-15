@@ -1,7 +1,21 @@
-<form class="p-2 p-md-4 border rounded-sm container-md col-md-6 col-xl-4 mt-5">
+<form [formGroup]="loginFormGroup"
+      (ngSubmit)="validatePseudo()"
+      class="p-2 p-md-4 border rounded-sm container-md col-md-6 col-xl-4 mt-5">
   <div class="form-group">
     <label for="pseudoLogin">Pseudo</label>
-    <input [(ngModel)]="pseudo" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="pseudoLogin" aria-describedby="pseudoLogin">
+    <input [ngClass]="{'is-invalid': loginFormGroup.dirty && loginFormGroup.invalid}"
+           formControlName="pseudo"
+           minlength="6"
+           maxlength="20"
+           type="text"
+           class="form-control"
+           id="pseudoLogin"
+           aria-describedby="pseudoLogin">
+    <small [ngClass]="loginFormGroup.dirty && loginFormGroup.invalid ? 'text-danger':'text-muted'"
+           id="pseudoHelp"
+           class="form-text">
+      Your pseudo must be 8-20 characters long.
+    </small>
   </div>
-  <button (click)="validatePseudo()" type="submit" class="btn btn-dark">Submit</button>
+  <button [disabled]="loginFormGroup.invalid" type="submit" class="btn btn-dark">Submit</button>
 </form>

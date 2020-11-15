@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserInterface } from './interfaces/user-interface/user.interface';
 import { UserService } from './services/user.service';
 
@@ -15,7 +15,7 @@ import { UserService } from './services/user.service';
     LoginComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule
+    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule
   ],
   providers: [
     {provide: 'UserInterface', useClass: UserService}
