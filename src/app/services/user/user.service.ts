@@ -21,4 +21,9 @@ export class UserService implements UserInterface {
     const headers: HttpHeaders = new HttpHeaders({Authorization: hash});
     return this.http.get<UserModel>(`${this.baseUrl}/users`, {headers});
   }
+
+  disconnectUser(hash: string): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders({Authorization: hash});
+    return this.http.delete<any>(`${this.baseUrl}/users`, {headers});
+  }
 }
