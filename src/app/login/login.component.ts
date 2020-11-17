@@ -9,19 +9,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
-  constructor(@Inject('UserInterface') private  userService: UserInterface, private _formBuilder: FormBuilder) {
-    this.loginFormGroup = this._formBuilder.group({
-      pseudo: ['', Validators.required]
-    })
-  }
+  constructor(@Inject('UserInterface') private  userInt: UserInterface, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-
+    this.loginFormGroup = this.formBuilder.group({
+      pseudo: ['', Validators.required]
+    });
   }
 
-  validatePseudo() {
-    this.userService.addUserByPseudo(this.loginFormGroup.get('pseudo')?.value).subscribe(res => {
-      console.log(res)
-    })
+  validatePseudo(): void {
+    this.userInt.addUserByPseudo(this.loginFormGroup.get('pseudo')?.value).subscribe(res => {
+      console.log(res);
+    });
   }
 }
