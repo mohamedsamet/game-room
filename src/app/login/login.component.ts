@@ -11,8 +11,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
-  public loginError = false;
-  public loginMessage: string;
   constructor(@Inject('UserInterface') private  userInt: UserInterface, private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
