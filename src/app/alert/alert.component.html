@@ -1,0 +1,6 @@
+<div *ngIf="alertInt.getAlertStatus()?.status" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>{{alertInt.getAlertStatus()?.message}}</strong>
+  <button type="button" class="close" (click)="alertInt.setAlertStatus(false, '')" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

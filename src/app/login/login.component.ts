@@ -34,17 +34,12 @@ export class LoginComponent implements OnInit {
       this.redirectToRooms(user.pseudo);
     }, (error) => {
       localStorage.removeItem('hash');
-      this.loginError = true;
-      this.loginMessage = error.error;
     });
   }
 
   validatePseudo(): void {
     this.userInt.addUserByPseudo(this.loginFormGroup.get('pseudo')?.value).subscribe((user: UserModel)  => {
       this.loginToHome(user);
-    }, error => {
-      this.loginError = true;
-      this.loginMessage = error.error;
     });
   }
 
@@ -52,8 +47,6 @@ export class LoginComponent implements OnInit {
     if (user.hash) {
       this.saveHashToStorage(user.hash);
       this.redirectToRooms(user.pseudo);
-    } else {
-      this.loginError = true;
     }
   }
 
