@@ -12,12 +12,30 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
   public loginError = false;
-  public loginMessage = 'Erreur inattendu';
+  public loginMessage: string;
   constructor(@Inject('UserInterface') private  userInt: UserInterface, private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.loginFormGroup = this.formBuilder.group({
       pseudo: ['', Validators.required]
+    });
+    this.manageAutoLogin();
+  }
+
+  manageAutoLogin(): void {
+    const userCredential = localStorage.getItem('hash');
+    if (userCredential) {
+      this.getLoggedUser(userCredential);
+    }
+  }
+
+  getLoggedUser(hash: string): void {
+    this.userInt.getLoggedUser(hash).subscribe(user => {
+      this.redirectToRooms(user.pseudo);
+    }, (error) => {
+      localStorage.removeItem('hash');
+      this.loginError = true;
+      this.loginMessage = error.error;
     });
   }
 
