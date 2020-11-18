@@ -1,14 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserInterface } from '../../interfaces/user-interface/user.interface';
+import { LoggedUserInterface } from '../../interfaces/user-interface/logged-user.interface';
 import { UserModel } from '../../models/user/user.model';
+import { DisconnectionInterface } from '../../interfaces/user-interface/disconnection.interface';
+import { AddUserInterface } from '../../interfaces/user-interface/add-user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class UserService implements UserInterface {
+export class UserService implements LoggedUserInterface, DisconnectionInterface, AddUserInterface {
   constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string) { }
 
   addUserByPseudo(pseudo: string): Observable<UserModel> {

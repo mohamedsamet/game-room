@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { UserInterface } from '../interfaces/user-interface/user.interface';
+import { LoggedUserInterface } from '../interfaces/user-interface/logged-user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from '../models/user/user.model';
-import { Router } from '@angular/router';
+import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
+import { AddUserInterface } from '../interfaces/user-interface/add-user.interface';
 
 @Component({
   selector: 'app-login',
@@ -11,32 +12,18 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
-  constructor(@Inject('UserInterface') private  userInt: UserInterface, private formBuilder: FormBuilder, private router: Router) {}
+  constructor(@Inject('AddUserInterface') private  addUserInt: AddUserInterface,
+              @Inject('RedirectionInterface') private  redirect: RedirectionInterface,
+              private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.loginFormGroup = this.formBuilder.group({
       pseudo: ['', Validators.required]
     });
-    this.manageAutoLogin();
-  }
-
-  manageAutoLogin(): void {
-    const userCredential = localStorage.getItem('hash');
-    if (userCredential) {
-      this.getLoggedUser(userCredential);
-    }
-  }
-
-  getLoggedUser(hash: string): void {
-    this.userInt.getLoggedUser(hash).subscribe(user => {
-      this.redirectToRooms(user.pseudo);
-    }, (error) => {
-      localStorage.removeItem('hash');
-    });
   }
 
   validatePseudo(): void {
-    this.userInt.addUserByPseudo(this.loginFormGroup.get('pseudo')?.value).subscribe((user: UserModel)  => {
+    this.addUserInt.addUserByPseudo(this.loginFormGroup.get('pseudo')?.value).subscribe((user: UserModel)  => {
       this.loginToHome(user);
     });
   }
@@ -44,12 +31,8 @@ export class LoginComponent implements OnInit {
   loginToHome(user: UserModel): void {
     if (user.hash) {
       this.saveHashToStorage(user.hash);
-      this.redirectToRooms(user.pseudo);
+      this.redirect.redirectTo(`/rooms/${user.pseudo}`);
     }
-  }
-
-  redirectToRooms(pseudo: string): void {
-    this.router.navigate(['/rooms/' + pseudo]);
   }
 
   saveHashToStorage(hash: string): void {

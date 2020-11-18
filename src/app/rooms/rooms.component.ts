@@ -1,23 +1,21 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { UserInterface } from '../interfaces/user-interface/user.interface';
-import { Router } from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
+import { DisconnectionInterface } from '../interfaces/user-interface/disconnection.interface';
 
 @Component({
   selector: 'app-rooms',
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss']
 })
-export class RoomsComponent implements OnInit {
+export class RoomsComponent {
 
-  constructor(@Inject('UserInterface') private userInt: UserInterface, private router: Router) { }
-
-  ngOnInit(): void {
-  }
+  constructor(@Inject('DisconnectionInterface') private disconnectInt: DisconnectionInterface,
+              @Inject('RedirectionInterface') private  redirect: RedirectionInterface) {}
 
   disconnect(): void {
     const hash = localStorage.getItem('hash');
     if (hash) {
-      this.userInt.disconnectUser(hash).subscribe(res => {
+      this.disconnectInt.disconnectUser(hash).subscribe(res => {
         this.logOutAction();
       });
     } else {
@@ -27,6 +25,6 @@ export class RoomsComponent implements OnInit {
 
   logOutAction(): void {
     localStorage.removeItem('hash');
-    this.router.navigate(['/']);
+    this.redirect.redirectTo('/');
   }
 }
