@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
-import { DisconnectionInterface } from '../interfaces/user-interface/disconnection.interface';
+import { DisconnectionInterface } from '../interfaces/user/disconnection.interface';
 
 @Component({
   selector: 'app-rooms',

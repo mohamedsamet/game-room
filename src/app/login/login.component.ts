@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { LoggedUserInterface } from '../interfaces/user-interface/logged-user.interface';
+import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from '../models/user/user.model';
 import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
-import { AddUserInterface } from '../interfaces/user-interface/add-user.interface';
+import { AddUserInterface } from '../interfaces/user/add-user.interface';
 
 @Component({
   selector: 'app-login',

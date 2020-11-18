@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { LoggedUserInterface } from './interfaces/user-interface/logged-user.interface';
+import { LoggedUserInterface } from './interfaces/user/logged-user.interface';
 import { RedirectionInterface } from './interfaces/redirection/redirection.interface';
 
 @Component({

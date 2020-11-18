@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoggedUserInterface } from '../../interfaces/user-interface/logged-user.interface';
+import { LoggedUserInterface } from '../../interfaces/user/logged-user.interface';
 import { UserModel } from '../../models/user/user.model';
-import { DisconnectionInterface } from '../../interfaces/user-interface/disconnection.interface';
-import { AddUserInterface } from '../../interfaces/user-interface/add-user.interface';
+import { DisconnectionInterface } from '../../interfaces/user/disconnection.interface';
+import { AddUserInterface } from '../../interfaces/user/add-user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,10 @@ export class UserService implements LoggedUserInterface, DisconnectionInterface,
   }
 
   getLoggedUser(hash: string): Observable<UserModel> {
-    const headers: HttpHeaders = new HttpHeaders({Authorization: hash});
-    return this.http.get<UserModel>(`${this.baseUrl}/users`, {headers});
+    return this.http.get<UserModel>(`${this.baseUrl}/users`);
   }
 
   disconnectUser(hash: string): Observable<any> {
-    const headers: HttpHeaders = new HttpHeaders({Authorization: hash});
-    return this.http.delete<any>(`${this.baseUrl}/users`, {headers});
+    return this.http.delete<any>(`${this.baseUrl}/users`);
   }
 }
