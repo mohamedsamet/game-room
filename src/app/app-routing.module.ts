@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { RoomsComponent } from './rooms/rooms.component';
 
 const routes: Routes = [
   {
@@ -10,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'rooms/:pseudo',
-    component: RoomsComponent
+    loadChildren: () => import('./rooms/rooms.module').then(module => module.RoomsModule)
   }
 ];
 
