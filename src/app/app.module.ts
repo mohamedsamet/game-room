@@ -21,7 +21,11 @@ import { AuthorizationAppendInterceptor } from './interceptors/authorization-app
     AlertComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
