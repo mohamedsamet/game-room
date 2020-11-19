@@ -1,6 +1,6 @@
 <form [formGroup]="createRoomForm"
       (ngSubmit)="validateCreation()"
-      class="mx-0 p-2 p-md-4 border rounded-sm container-md col-md-6 col-xl-4">
+      class="mx-0 p-2 p-md-4 border rounded-sm">
   <div class="form-group">
     <label for="roomName">Room name</label>
     <input [ngClass]="{'is-invalid': createRoomForm.dirty && createRoomForm.invalid}"

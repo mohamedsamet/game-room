@@ -1,0 +1,20 @@
+<div class="mx-0 p-2 p-md-4 border rounded-sm">
+  <label>Rooms</label>
+  <div>
+    <table *ngIf="($roomList | async)?.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Created By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of $roomList | async">
+          <td>{{room.name}}</td>
+          <td>{{room.createdBy}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="($roomList | async)?.length === 0"><small>Rooms list is empty</small></p>
+  </div>
+</div>

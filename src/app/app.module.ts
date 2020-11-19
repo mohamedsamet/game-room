@@ -14,8 +14,9 @@ import { AlertService } from './services/alert/alert.service';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { UtiliesService } from './services/utilies.service';
 import { CreateRoomComponent } from './rooms/create-room/create-room.component';
-import { RoomsService } from './services/rooms.service';
+import { RoomsService } from './services/rooms/rooms.service';
 import { AuthorizationAppendInterceptor } from './interceptors/authorization-append.interceptor';
+import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AuthorizationAppendInterceptor } from './interceptors/authorization-app
     LoginComponent,
     RoomsComponent,
     AlertComponent,
-    CreateRoomComponent
+    CreateRoomComponent,
+    RoomsListComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule
@@ -37,6 +39,7 @@ import { AuthorizationAppendInterceptor } from './interceptors/authorization-app
     {provide: 'RedirectionInterface', useClass: UtiliesService},
     {provide: 'AlertInterface', useClass: AlertService},
     {provide: 'AddRoomInterface', useClass: RoomsService},
+    {provide: 'GetRoomsInterface', useClass: RoomsService},
     {provide: 'API_BASE_URL', useValue: environment.baseUrl}
   ],
   bootstrap: [AppComponent]

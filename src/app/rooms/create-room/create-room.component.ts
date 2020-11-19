@@ -18,9 +18,7 @@ export class CreateRoomComponent implements OnInit {
   }
 
   validateCreation(): void {
-    this.addRoomInt.addRoom(this.createRoomForm.get('roomName')?.value).subscribe(room => {
-      console.log(room);
-    });
+    this.addRoomInt.addRoom(this.createRoomForm.get('roomName')?.value).subscribe(() => {});
   }
 
 }
