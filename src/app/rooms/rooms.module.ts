@@ -25,6 +25,7 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     SocketIoModule.forRoot(config)
   ],
   providers: [
+    {provide: 'EmitRoomsNotifInterface', useClass: SocketRoomService},
     {provide: 'GetRoomsNotifInterface', useClass: SocketRoomService},
     {provide: 'AddRoomInterface', useClass: RoomsService},
     {provide: 'GetRoomsInterface', useClass: RoomsService},

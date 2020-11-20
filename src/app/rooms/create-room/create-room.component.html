@@ -5,7 +5,7 @@
     <label for="roomName">Room name</label>
     <input [ngClass]="{'is-invalid': createRoomForm.dirty && createRoomForm.invalid}"
            formControlName="roomName"
-           minlength="6"
+           minlength="4"
            maxlength="20"
            type="text"
            class="form-control"
@@ -14,7 +14,7 @@
     <small [ngClass]="createRoomForm.dirty && createRoomForm.invalid ? 'text-danger':'text-muted'"
            id="pseudoHelp"
            class="form-text">
-      Your room name must be 8-20 characters long.
+      Your room name must be 4-20 characters long.
     </small>
   </div>
   <button [disabled]="createRoomForm.invalid" type="submit" class="btn btn-dark">Create</button>

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { RoomModel } from '../../models/room/room.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { GetRoomsInterface } from '../../interfaces/rooms/get-rooms.interface';
 import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
 
@@ -10,17 +10,18 @@ import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.i
   styleUrls: ['./rooms-list.component.scss']
 })
 export class RoomsListComponent implements OnInit {
-  public $roomList: Observable<RoomModel[]>;
+  public roomList: RoomModel[] = [];
   constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface,
               @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface) {
   }
 
   ngOnInit(): void {
-    this.$roomList = this.getRooms();
+    this.getRooms();
   }
 
-  getRooms(): Observable<RoomModel[]> {
-    this.getRoomsNotif.getRoomsSockNotif().subscribe();
-    return this.getRoomsNotif.getRoomsSockNotif();
+  getRooms(): void {
+    this.getRoomsNotif.getRoomsSockNotif().subscribe(rooms => {
+      this.roomList = rooms;
+    });
   }
 }

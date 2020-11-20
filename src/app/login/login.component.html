@@ -5,7 +5,7 @@
     <label for="pseudoLogin">Pseudo</label>
     <input [ngClass]="{'is-invalid': loginFormGroup.dirty && loginFormGroup.invalid}"
            formControlName="pseudo"
-           minlength="6"
+           minlength="4"
            maxlength="20"
            type="text"
            class="form-control"
@@ -14,7 +14,7 @@
     <small [ngClass]="loginFormGroup.dirty && loginFormGroup.invalid ? 'text-danger':'text-muted'"
            id="pseudoHelp"
            class="form-text">
-      Your pseudo must be 8-20 characters long.
+      Your pseudo must be 4-20 characters long.
     </small>
   </div>
   <button [disabled]="loginFormGroup.invalid" type="submit" class="btn btn-dark">Submit</button>
