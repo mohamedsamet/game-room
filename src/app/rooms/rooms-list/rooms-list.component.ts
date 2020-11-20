@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { RoomModel } from '../../models/room/room.model';
 import { Observable } from 'rxjs';
 import { GetRoomsInterface } from '../../interfaces/rooms/get-rooms.interface';
-import { Socket } from 'ngx-socket-io';
+import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
 
 @Component({
   selector: 'app-rooms-list',
@@ -10,18 +10,17 @@ import { Socket } from 'ngx-socket-io';
   styleUrls: ['./rooms-list.component.scss']
 })
 export class RoomsListComponent implements OnInit {
-  public $roomList: Observable<RoomModel[]> = new Observable<RoomModel[]>();
-  constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface, private socket: Socket) {
+  public $roomList: Observable<RoomModel[]>;
+  constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface,
+              @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface) {
   }
 
   ngOnInit(): void {
-    this.getRooms();
-    this.socket.fromEvent('getDoc').subscribe(res => {
-      console.log(res);
-    });
+    this.$roomList = this.getRooms();
   }
 
-  getRooms(): void {
-    this.$roomList = this.getRoomsInt.getRooms();
+  getRooms(): Observable<RoomModel[]> {
+    this.getRoomsNotif.getRoomsSockNotif().subscribe();
+    return this.getRoomsNotif.getRoomsSockNotif();
   }
 }

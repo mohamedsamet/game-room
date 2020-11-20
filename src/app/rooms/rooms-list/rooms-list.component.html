@@ -9,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let room of $roomList | async">
+        <tr *ngFor="let room of ($roomList | async)">
           <td>{{room.name}}</td>
           <td>{{room.createdBy}}</td>
         </tr>
