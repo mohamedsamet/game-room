@@ -13,12 +13,14 @@ import { AlertService } from './services/alert/alert.service';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { UtiliesService } from './services/utilies.service';
 import { AuthorizationAppendInterceptor } from './interceptors/authorization-append.interceptor';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

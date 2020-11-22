@@ -1,0 +1,10 @@
+<nav *ngIf="pagesNumber" aria-label="...">
+  <ul class="pagination pagination-sm">
+    <li *ngFor="let page of getPagesArray()" class="page-item">
+      <a [ngStyle]="{'background-color': page === selectedPage ? 'blue': 'transparent'}"
+         (click)="selectPage(page)"
+         class="page-link">{{page}}
+      </a>
+    </li>
+  </ul>
+</nav>
