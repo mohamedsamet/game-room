@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { RoomModel } from '../../models/room/room.model';
 import { HttpClient } from '@angular/common/http';
 import { GetRoomsInterface } from '../../interfaces/rooms/get-rooms.interface';
+import { RoomsResultModel } from '../../models/room/rooms-result.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class RoomsService implements AddRoomInterface, GetRoomsInterface {
     return this.http.post<RoomModel>(`${this.baseUrl}/rooms`, room);
   }
 
-  getRooms(): Observable<RoomModel[]> {
-    return this.http.get<RoomModel[]>(`${this.baseUrl}/rooms`);
+  getRoomsByPage(start: number, end: number): Observable<RoomsResultModel> {
+    return this.http.get<RoomsResultModel>(`${this.baseUrl}/rooms?start=${start}&end=${end}`);
   }
 }

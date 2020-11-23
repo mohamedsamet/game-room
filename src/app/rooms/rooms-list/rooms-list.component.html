@@ -1,6 +1,7 @@
 <div class="mx-0 p-2 p-md-4 border rounded-sm">
   <label>Rooms</label>
   <div>
+    <app-paginator [totalResult]="totalRooms" (selectedPageEvent)="selectPage($event)"></app-paginator>
     <table *ngIf="roomList?.length > 0" class="table table-striped">
       <thead>
         <tr>

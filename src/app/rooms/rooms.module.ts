@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SocketRoomService } from '../services/rooms/socket-room.service';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {transports: ['websocket', 'polling', 'flashsocket']} };
 
@@ -16,7 +17,9 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
   declarations: [
     RoomsComponent,
     CreateRoomComponent,
-    RoomsListComponent],
+    RoomsListComponent,
+    PaginatorComponent
+  ],
   imports: [
     RoomsRoutingModule,
     FormsModule,

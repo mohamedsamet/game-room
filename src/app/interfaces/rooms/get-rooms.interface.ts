@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { RoomModel } from '../../models/room/room.model';
+import { RoomsResultModel } from '../../models/room/rooms-result.model';
 
 export interface GetRoomsInterface {
-  getRooms(): Observable<RoomModel[]>;
+  getRoomsByPage(start: number, end: number): Observable<RoomsResultModel>;
 }

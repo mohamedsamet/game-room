@@ -13,31 +13,42 @@ import { AlertService } from './services/alert/alert.service';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { UtiliesService } from './services/utilies.service';
 import { AuthorizationAppendInterceptor } from './interceptors/authorization-append.interceptor';
-import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    AlertComponent,
-    PaginatorComponent
+    AppComponent, LoginComponent, AlertComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
+    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: AuthorizationAppendInterceptor, multi: true},
-    {provide: 'LoggedUserInterface', useClass: UserService},
-    {provide: 'AddUserInterface', useClass: UserService},
-    {provide: 'DisconnectionInterface', useClass: UserService},
-    {provide: 'RedirectionInterface', useClass: UtiliesService},
-    {provide: 'AlertInterface', useClass: AlertService},
-    {provide: 'API_BASE_URL', useValue: environment.baseUrl}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationAppendInterceptor,
+      multi: true
+    }, {
+      provide: 'LoggedUserInterface',
+      useClass: UserService
+    }, {
+      provide: 'AddUserInterface',
+      useClass: UserService
+    }, {
+      provide: 'DisconnectionInterface',
+      useClass: UserService
+    }, {
+      provide: 'RedirectionInterface',
+      useClass: UtiliesService
+    }, {
+      provide: 'AlertInterface',
+      useClass: AlertService
+    }, {
+      provide: 'API_BASE_URL',
+      useValue: environment.baseUrl
+    }
   ],
   bootstrap: [AppComponent]
 })
