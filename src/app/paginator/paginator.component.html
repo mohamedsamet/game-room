@@ -1,9 +1,9 @@
-<nav *ngIf="totalResult" aria-label="...">
+<nav *ngIf="totalResult" aria-label="..." class="float-right">
   <ul class="pagination pagination-sm">
-    <li *ngFor="let pageElem of pagesArray" class="page-item">
-      <a [ngStyle]="{'background-color': pageElem.selected  ? 'blue': 'transparent'}"
-         (click)="selectPage(pageElem.page)"
-         class="page-link">{{pageElem.page}}
+    <li *ngFor="let page of pagesArray" class="page-item">
+      <a [ngClass]="{'bg-primary text-light': selectedPage === page}"
+         (click)="selectPage(page)"
+         class="page-link">{{page}}
       </a>
     </li>
   </ul>

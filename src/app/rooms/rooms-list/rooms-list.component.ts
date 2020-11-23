@@ -16,6 +16,7 @@ export class RoomsListComponent implements OnInit {
   public roomList: RoomModel[] = [];
   public totalRooms: number;
   public selectedPage = 1;
+  public showReloadBtn = false;
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
   constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface,
               @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface) {
@@ -29,6 +30,8 @@ export class RoomsListComponent implements OnInit {
     this.getRoomsNotif.getRoomsSockNotif().subscribe(result => {
       if (this.selectedPage === 1) {
         this.applyRoomsResult(result);
+      } else {
+        this.showReloadBtn = true;
       }
     });
   }
@@ -36,9 +39,6 @@ export class RoomsListComponent implements OnInit {
   private applyRoomsResult(result: RoomsResultModel): void {
     this.roomList = result.rooms;
     this.totalRooms = result.total;
-    if (this.paginator) {
-      this.paginator.setInitPage();
-    }
   }
 
   selectPage(page: number): void {
@@ -48,9 +48,14 @@ export class RoomsListComponent implements OnInit {
 
   getRoomsByPage(start: number, end: number): void {
     this.getRoomsInt.getRoomsByPage(start, end).subscribe(result => {
-      this.roomList = result.rooms;
-      this.totalRooms = result.total;
-      this.paginator.setInitPage();
+      this.applyRoomsResult(result);
+      this.showReloadBtn = false;
     });
+  }
+
+  reloadRooms(): void {
+    this.selectedPage = 1;
+    this.paginator.selectedPage = 1;
+    this.getRoomsByPage(0, ROOMS_PER_PAGE - 1);
   }
 }

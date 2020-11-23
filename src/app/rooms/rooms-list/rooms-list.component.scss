@@ -1,0 +1,11 @@
+.reload-icon {
+  background-image: url(/assets/reload.svg);
+  width: 20px;
+  height: 20px;
+  background-size: 20px;
+  cursor: pointer;
+  &:hover {
+    transition: .8s ease-in-out;
+    transform: rotate(180deg);
+  }
+}

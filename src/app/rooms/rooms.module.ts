@@ -15,10 +15,10 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
 
 @NgModule({
   declarations: [
+    PaginatorComponent,
     RoomsComponent,
     CreateRoomComponent,
-    RoomsListComponent,
-    PaginatorComponent
+    RoomsListComponent
   ],
   imports: [
     RoomsRoutingModule,
