@@ -11,6 +11,7 @@ import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.i
 })
 export class RoomsListComponent implements OnInit {
   public roomList: RoomModel[] = [];
+  public totalRooms: number;
   constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface,
               @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface) {
   }
@@ -20,8 +21,9 @@ export class RoomsListComponent implements OnInit {
   }
 
   getRooms(): void {
-    this.getRoomsNotif.getRoomsSockNotif().subscribe(rooms => {
-      this.roomList = rooms;
+    this.getRoomsNotif.getRoomsSockNotif().subscribe(result => {
+      this.roomList = result.rooms;
+      this.totalRooms = result.total;
     });
   }
 }

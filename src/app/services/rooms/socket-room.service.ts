@@ -6,6 +6,7 @@ import { RoomModel } from '../../models/room/room.model';
 import { filter, map } from 'rxjs/operators';
 import { GET_ROOMS, REQUEST_ROOMS } from '../../constants/socket-events';
 import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
+import { RoomsResultModel } from '../../models/room/rooms-result.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif
 export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotifInterface {
   constructor(private socket: Socket) {}
 
-  getRoomsSockNotif(): Observable<RoomModel[]> {
+  getRoomsSockNotif(): Observable<RoomsResultModel> {
     const $socket = this.socket.fromEvent(GET_ROOMS);
     this.emitRoomNotif();
     return this.getDataFromEvent($socket);
