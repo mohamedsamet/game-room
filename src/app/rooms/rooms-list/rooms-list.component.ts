@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { RoomModel } from '../../models/room/room.model';
-import { Observable, of } from 'rxjs';
+import { Subject } from 'rxjs';
 import { GetRoomsInterface } from '../../interfaces/rooms/get-rooms.interface';
 import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
 import { ROOMS_PER_PAGE } from '../../constants/rooms.constant';
@@ -17,6 +17,7 @@ export class RoomsListComponent implements OnInit {
   public totalRooms: number;
   public selectedPage = 1;
   public showReloadBtn = false;
+  @Input() $roomCreated = new Subject();
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
   constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface,
               @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface) {
@@ -24,6 +25,16 @@ export class RoomsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRooms();
+    this.listenToRoomCreation();
+  }
+
+  listenToRoomCreation(): void {
+    this.$roomCreated.subscribe(() => {
+      if (this.selectedPage !== 1) {
+        this.selectPage(1);
+        this.paginator.selectedPage = 1;
+      }
+    });
   }
 
   getRooms(): void {

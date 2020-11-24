@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
 import { DisconnectionInterface } from '../interfaces/user/disconnection.interface';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-rooms',
@@ -8,7 +9,7 @@ import { DisconnectionInterface } from '../interfaces/user/disconnection.interfa
   styleUrls: ['./rooms.component.scss']
 })
 export class RoomsComponent {
-
+  public $createRoomEvent = new Subject();
   constructor(@Inject('DisconnectionInterface') private disconnectInt: DisconnectionInterface,
               @Inject('RedirectionInterface') private  redirect: RedirectionInterface) {}
 
@@ -26,5 +27,9 @@ export class RoomsComponent {
   logOutAction(): void {
     localStorage.removeItem('hash');
     this.redirect.redirectTo('/');
+  }
+
+  createRoom(): void {
+    this.$createRoomEvent.next();
   }
 }

@@ -4,9 +4,9 @@
 </nav>
 <div class="row justify-content-between mx-0 p-2 p-md-3 p-xl-4">
   <div class="col-12 col-md-4 pl-0">
-    <app-create-room></app-create-room>
+    <app-create-room (createRoomEvent)="createRoom()"></app-create-room>
   </div>
   <div class="col-12 col-md-8 pr-0">
-    <app-rooms-list></app-rooms-list>
+    <app-rooms-list [$roomCreated]="$createRoomEvent"></app-rooms-list>
   </div>
 </div>
