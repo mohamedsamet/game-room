@@ -35,4 +35,15 @@ export class PaginatorComponent implements OnChanges {
     }
   }
 
+  getPagesExtendedSequence(): number[] {
+    const pagesLength = this.pagesArray.length;
+    if (this.selectedPage < 4) {
+      return [2, 3, 4];
+    } else if (this.selectedPage > pagesLength - 3) {
+      return [pagesLength - 3, pagesLength - 2, pagesLength - 1];
+    } else {
+      return [this.selectedPage - 1, this.selectedPage, this.selectedPage + 1];
+    }
+  }
+
 }

@@ -1,9 +1,35 @@
 <nav *ngIf="totalResult" aria-label="..." class="float-right">
-  <ul class="pagination pagination-sm">
+  <ul *ngIf="pagesArray.length < 6" class="pagination pagination-sm">
     <li *ngFor="let page of pagesArray" class="page-item">
       <a [ngClass]="{'bg-primary text-light': selectedPage === page}"
          (click)="selectPage(page)"
          class="page-link">{{page}}
+      </a>
+    </li>
+  </ul>
+  <ul *ngIf="pagesArray.length >= 6" class="pagination pagination-sm">
+    <li class="page-item">
+      <a [ngClass]="{'bg-primary text-light': selectedPage === pagesArray[0]}"
+         (click)="selectPage(pagesArray[0])"
+         class="page-link">{{pagesArray[0]}}
+      </a>
+    </li>
+    <li class="mx-2" *ngIf="selectedPage > 3">
+      . .
+    </li>
+    <li *ngFor="let page of getPagesExtendedSequence()" class="page-item">
+      <a [ngClass]="{'bg-primary text-light': selectedPage === page}"
+         (click)="selectPage(page)"
+         class="page-link">{{page}}
+      </a>
+    </li>
+    <li class="mx-2" *ngIf="selectedPage < pagesArray.length - 2">
+      . .
+    </li>
+    <li class="page-item">
+      <a [ngClass]="{'bg-primary text-light': selectedPage === pagesArray[pagesArray.length - 1]}"
+         (click)="selectPage(pagesArray[pagesArray.length - 1])"
+         class="page-link">{{pagesArray[pagesArray.length - 1]}}
       </a>
     </li>
   </ul>
