@@ -1,11 +1,12 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { RoomModel } from '../../models/room/room.model';
 import { Subject } from 'rxjs';
-import { GetRoomsInterface } from '../../interfaces/rooms/get-rooms.interface';
+import { ManageRoomsInterface } from '../../interfaces/rooms/manage-rooms.interface';
 import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
 import { ROOMS_PER_PAGE } from '../../constants/rooms.constant';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { RoomsResultModel } from '../../models/room/rooms-result.model';
+import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
 
 @Component({
   selector: 'app-rooms-list',
@@ -17,15 +18,18 @@ export class RoomsListComponent implements OnInit {
   public totalRooms: number;
   public selectedPage = 1;
   public showReloadBtn = false;
+  public userHash: string;
   @Input() $roomCreated = new Subject();
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
-  constructor(@Inject('GetRoomsInterface') private getRoomsInt: GetRoomsInterface,
-              @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface) {
+  constructor(@Inject('ManageRoomsInterface') private manageRoomsInt: ManageRoomsInterface,
+              @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface,
+              @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface) {
   }
 
   ngOnInit(): void {
     this.getRooms();
     this.listenToRoomCreation();
+    this.userHash = localStorage.getItem('hash');
   }
 
   listenToRoomCreation(): void {
@@ -58,15 +62,27 @@ export class RoomsListComponent implements OnInit {
   }
 
   getRoomsByPage(start: number, end: number): void {
-    this.getRoomsInt.getRoomsByPage(start, end).subscribe(result => {
+    this.manageRoomsInt.getRoomsByPage(start, end).subscribe(result => {
       this.applyRoomsResult(result);
       this.showReloadBtn = false;
     });
   }
 
-  reloadRooms(): void {
+  initPagination(): void {
     this.selectedPage = 1;
     this.paginator.selectedPage = 1;
+  }
+
+  reloadRooms(): void {
     this.getRoomsByPage(0, ROOMS_PER_PAGE - 1);
+    this.initPagination();
+  }
+
+  deleteRoom(roomId: number): void {
+    this.manageRoomsInt.deleteRooms(roomId, this.userHash).subscribe(() => {
+      this.selectPage(1);
+      this.initPagination();
+      this.emitRoomInt.emitRoomNotif();
+    });
   }
 }

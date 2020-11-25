@@ -4,8 +4,37 @@
   height: 20px;
   background-size: 20px;
   cursor: pointer;
+  animation: zoominoutsinglefeatured 1s infinite;
+}
+
+td {
+  position : relative;
+}
+
+.delete-icon {
+  background-image: url(/assets/trash.svg);
+  width: 20px;
+  height: 20px;
+  background-size: 20px;
+  cursor: pointer;
+  opacity: .4;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
   &:hover {
-    transition: .8s ease-in-out;
-    transform: rotate(180deg);
+    opacity: .8;
+  }
+}
+
+
+@keyframes zoominoutsinglefeatured {
+  0% {
+    transform: rotateZ(90deg);
+  }
+  50% {
+    transform: rotateZ(-90deg);
+  }
+  100% {
+    transform: rotateZ(90deg);
   }
 }

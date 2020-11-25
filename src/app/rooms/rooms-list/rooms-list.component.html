@@ -15,7 +15,9 @@
       <tbody>
         <tr *ngFor="let room of roomList">
           <td>{{room.name}}</td>
-          <td>{{room.createdBy}}</td>
+          <td>{{room.createdBy}}
+            <span (click)="deleteRoom(room.id)" *ngIf="userHash === room.createdByUserHash" class="delete-icon"></span>
+          </td>
         </tr>
       </tbody>
     </table>
