@@ -1,12 +1,14 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { RoomModel } from '../../models/room/room.model';
+import { RoomModel } from '../../../models/room/room.model';
 import { Subject } from 'rxjs';
-import { ManageRoomsInterface } from '../../interfaces/rooms/manage-rooms.interface';
-import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
-import { ROOMS_PER_PAGE } from '../../constants/rooms.constant';
-import { PaginatorComponent } from '../../paginator/paginator.component';
-import { RoomsResultModel } from '../../models/room/rooms-result.model';
-import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
+import { ManageRoomsInterface } from '../../../interfaces/rooms/manage-rooms.interface';
+import { GetRoomsNotifInterface } from '../../../interfaces/rooms/get-rooms-notif.interface';
+import { ROOMS_PER_PAGE } from '../../../constants/rooms.constant';
+import { PaginatorComponent } from '../../../paginator/paginator.component';
+import { RoomsResultModel } from '../../../models/room/rooms-result.model';
+import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
+import { RedirectionInterface } from '../../../interfaces/redirection/redirection.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rooms-list',
@@ -23,13 +25,19 @@ export class RoomsListComponent implements OnInit {
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
   constructor(@Inject('ManageRoomsInterface') private manageRoomsInt: ManageRoomsInterface,
               @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface,
-              @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface) {
+              @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface,
+              @Inject('RedirectionInterface') private redirect: RedirectionInterface,
+              private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.getRooms();
     this.listenToRoomCreation();
     this.userHash = localStorage.getItem('hash');
+  }
+
+  openRoom(id: number): void {
+    this.redirect.redirectTo(`${id}`, this.activeRoute);
   }
 
   listenToRoomCreation(): void {

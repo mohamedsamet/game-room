@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddRoomInterface } from '../../interfaces/rooms/add-room.interface';
-import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
+import { AddRoomInterface } from '../../../interfaces/rooms/add-room.interface';
+import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
 
 @Component({
   selector: 'app-create-room',

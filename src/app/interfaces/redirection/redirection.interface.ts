@@ -1,3 +1,5 @@
+import { ActivatedRoute } from '@angular/router';
+
 export interface RedirectionInterface {
-  redirectTo(path: string): void;
+  redirectTo(path: string, activeRoute?: ActivatedRoute): void;
 }

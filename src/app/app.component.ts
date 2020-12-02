@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
               @Inject('RedirectionInterface') private  redirect: RedirectionInterface) {}
 
   ngOnInit(): void {
-    this.manageAutoLogin();
+   this.manageAutoLogin();
   }
 
   manageAutoLogin(): void {
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   getLoggedUser(hash: string): void {
     this.loggedUser.getLoggedUser(hash).subscribe(user => {
-      this.redirect.redirectTo(`/rooms/${user.pseudo}`);
+      this.redirect.redirectTo(`${user.pseudo}/rooms`);
     }, () => {
       localStorage.removeItem('hash');
       this.redirect.redirectTo(`/`);

@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
-import { RoomsComponent } from './rooms.component';
-import { RoomsListComponent } from './rooms-list/rooms-list.component';
-import { CreateRoomComponent } from './create-room/create-room.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
+import { CreateRoomComponent } from './rooms/create-room/create-room.component';
 import { RoomsService } from '../services/rooms/rooms.service';
 import { environment } from '../../environments/environment';
-import { RoomsRoutingModule } from './rooms-routing.module';
+import { HomeRoutingModule } from './home-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SocketRoomService } from '../services/rooms/socket-room.service';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { PaginatorComponent } from '../paginator/paginator.component';
+import { RoomComponent } from './rooms/room/room.component';
+import { HomeComponent } from './home.component';
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {transports: ['websocket', 'polling', 'flashsocket']} };
 
@@ -18,10 +20,12 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     PaginatorComponent,
     RoomsComponent,
     CreateRoomComponent,
-    RoomsListComponent
+    RoomsListComponent,
+    RoomComponent,
+    HomeComponent
   ],
   imports: [
-    RoomsRoutingModule,
+    HomeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -35,4 +39,4 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     {provide: 'API_BASE_URL', useValue: environment.baseUrl}
   ]
 })
-export class RoomsModule { }
+export class HomeModule { }

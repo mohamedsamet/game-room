@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
 
 @Injectable({
@@ -9,7 +9,8 @@ export class UtiliesService implements RedirectionInterface {
 
   constructor(private router: Router) { }
 
-  redirectTo(path: string): void {
-    this.router.navigate([path]);
+  redirectTo(path: string, activeRoute?: ActivatedRoute): void {
+    this.router.navigate([path], {relativeTo: activeRoute ? activeRoute : null});
   }
+
 }

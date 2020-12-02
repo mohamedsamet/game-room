@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   loginToHome(user: UserModel): void {
     if (user.hash) {
       this.saveHashToStorage(user.hash);
-      this.redirect.redirectTo(`/rooms/${user.pseudo}`);
+      this.redirect.redirectTo(`${user.pseudo}/rooms`);
     }
   }
 

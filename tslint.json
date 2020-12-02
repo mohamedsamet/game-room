@@ -3,6 +3,7 @@
   "rulesDirectory": [
     "codelyzer"
   ],
+  "unified-signatures": false,
   "rules": {
     "align": {
       "options": [
