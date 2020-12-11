@@ -1,6 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { RedirectionInterface } from '../../interfaces/redirection/redirection.interface';
-import { DisconnectionInterface } from '../../interfaces/user/disconnection.interface';
+import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({

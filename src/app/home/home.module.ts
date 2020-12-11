@@ -36,6 +36,7 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     {provide: 'GetRoomsNotifInterface', useClass: SocketRoomService},
     {provide: 'AddRoomInterface', useClass: RoomsService},
     {provide: 'ManageRoomsInterface', useClass: RoomsService},
+    {provide: 'RoomAccessInterface', useClass: RoomsService},
     {provide: 'API_BASE_URL', useValue: environment.baseUrl}
   ]
 })

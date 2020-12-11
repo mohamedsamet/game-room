@@ -10,13 +10,15 @@
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Created By</th>
+          <th scope="col">N° persons</th>
         </tr>
       </thead>
       <tbody>
         <tr (click)="openRoom(room.id)" *ngFor="let room of roomList">
           <td>{{room.name}}</td>
-          <td>{{room.createdBy}}
-            <span (click)="deleteRoom(room.id)" *ngIf="userHash === room.createdByUserHash" class="delete-icon"></span>
+          <td>{{room.createdBy}}</td>
+          <td>{{room.users.length}}
+            <span (click)="$event.stopPropagation(); $event.preventDefault();deleteRoom(room.id)" *ngIf="userHash === room.createdByUserHash" class="delete-icon"></span>
           </td>
         </tr>
       </tbody>
