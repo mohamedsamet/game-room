@@ -3,6 +3,8 @@ import { RedirectionInterface } from '../../../interfaces/redirection/redirectio
 import { ActivatedRoute } from '@angular/router';
 import { RoomAccessInterface } from '../../../interfaces/rooms/room-access.interface';
 import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
+import { GetUsersInRoomNotifInterface } from '../../../interfaces/rooms/get-users-in-room-notif.interface';
+import { UserModel } from '../../../models/user/user.model';
 
 @Component({
   selector: 'app-room',
@@ -10,31 +12,41 @@ import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-no
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit, OnDestroy {
-
+  public roomId: number;
+  public usersConnected: UserModel[];
   constructor(@Inject('RedirectionInterface') private  redirect: RedirectionInterface,
               @Inject('RoomAccessInterface') private  roomAccess: RoomAccessInterface,
               @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface,
+              @Inject('GetUsersInRoomNotifInterface') private getUsersInRoom: GetUsersInRoomNotifInterface,
               private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getUserInRoom();
+    this.addUserInRoom();
   }
 
   ngOnDestroy(): void {
     this.getOutFromRoom();
   }
 
-  getUserInRoom(): void {
-    const roomId = +this.activeRoute.snapshot.paramMap.get('roomId');
-    this.roomAccess.addUserToRoom(roomId).subscribe(() => {
+  addUserInRoom(): void {
+    this.roomId = +this.activeRoute.snapshot.paramMap.get('roomId');
+    this.roomAccess.addUserToRoom(this.roomId).subscribe(() => {
       this.emitRoomInt.emitRoomNotif();
+      this.getUsersConnected();
+    });
+  }
+
+
+  getUsersConnected(): void {
+    this.getUsersInRoom.getUsersInRoomNotif(this.roomId).subscribe(users => {
+      this.usersConnected = users;
     });
   }
 
   getOutFromRoom(): void {
-    const roomId = +this.activeRoute.snapshot.paramMap.get('roomId');
-    this.roomAccess.removeUserFromRoom(roomId).subscribe(() => {
+    this.roomAccess.removeUserFromRoom(this.roomId).subscribe(() => {
       this.emitRoomInt.emitRoomNotif();
+      this.getUsersInRoom.emitUsersInRoomNotif(this.roomId);
     });
   }
 

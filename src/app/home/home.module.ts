@@ -12,6 +12,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { HomeComponent } from './home.component';
+import { UserInRoomComponent } from './rooms/user-in-room/user-in-room.component';
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {transports: ['websocket', 'polling', 'flashsocket']} };
 
@@ -22,7 +23,8 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     CreateRoomComponent,
     RoomsListComponent,
     RoomComponent,
-    HomeComponent
+    HomeComponent,
+    UserInRoomComponent
   ],
   imports: [
     HomeRoutingModule,
@@ -34,6 +36,7 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
   providers: [
     {provide: 'EmitRoomsNotifInterface', useClass: SocketRoomService},
     {provide: 'GetRoomsNotifInterface', useClass: SocketRoomService},
+    {provide: 'GetUsersInRoomNotifInterface', useClass: SocketRoomService},
     {provide: 'AddRoomInterface', useClass: RoomsService},
     {provide: 'ManageRoomsInterface', useClass: RoomsService},
     {provide: 'RoomAccessInterface', useClass: RoomsService},

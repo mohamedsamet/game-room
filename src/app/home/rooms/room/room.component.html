@@ -1,3 +1,6 @@
 <div class="row justify-content-between mx-0 p-2 p-md-3 p-xl-4">
   <a class="go-back" (click)="goBack()"></a>
+  <div class="col-12 col-md-4 pl-0">
+    <app-user-in-room [users]="usersConnected" [roomId]="roomId"></app-user-in-room>
+  </div>
 </div>
