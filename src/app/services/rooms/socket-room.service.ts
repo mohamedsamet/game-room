@@ -23,7 +23,7 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
   }
 
   emitRoomNotif(): void {
-    this.socket.emit(REQUEST_ROOMS);
+    this.socket.emit(REQUEST_ROOMS, localStorage.getItem('hash'));
   }
 
   private getDataFromEvent(data: Observable<any>): Observable<any> {
