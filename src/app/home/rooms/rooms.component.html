@@ -1,8 +1,8 @@
 <div class="row justify-content-between mx-0 p-2 p-md-3 p-xl-4">
-  <div class="col-12 col-md-4 pl-0">
+  <div class="col-12 col-md-4 pl-md-0 px-0 mb-2 mb-md-0 pr-md-3">
     <app-create-room (createRoomEvent)="createRoom()"></app-create-room>
   </div>
-  <div class="col-12 col-md-8 pr-0">
+  <div class="col-12 col-md-8 pr-md-0 px-0">
     <app-rooms-list [$roomCreated]="$createRoomEvent"></app-rooms-list>
   </div>
 </div>
