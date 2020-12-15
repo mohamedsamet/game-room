@@ -38,8 +38,10 @@ export class RoomComponent implements OnInit, OnDestroy {
 
 
   getUsersConnected(): void {
-    this.getUsersInRoom.getUsersInRoomNotif(this.roomId).subscribe(users => {
-      this.usersConnected = users;
+    this.getUsersInRoom.getUsersInRoomNotif(this.roomId).subscribe(usersResult => {
+      if (usersResult.roomId === this.roomId) {
+        this.usersConnected = usersResult.users;
+      }
     });
   }
 

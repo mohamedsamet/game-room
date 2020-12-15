@@ -1,5 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { GetUsersInRoomNotifInterface } from '../../../interfaces/rooms/get-users-in-room-notif.interface';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserModel } from '../../../models/user/user.model';
 
 @Component({
@@ -10,18 +9,9 @@ import { UserModel } from '../../../models/user/user.model';
 export class UserInRoomComponent implements OnInit {
   @Input() roomId: number;
   @Input() users: UserModel[];
-  public  usersConncted: UserModel[];
-  constructor(@Inject('GetUsersInRoomNotifInterface') private getUsersInRoom: GetUsersInRoomNotifInterface) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getUsersConnected();
-  }
-
-  getUsersConnected(): void {
-    this.getUsersInRoom.getUsersInRoomNotif(this.roomId).subscribe(users => {
-      this.usersConncted = users;
-      console.log(this.usersConncted);
-    });
   }
 
 }

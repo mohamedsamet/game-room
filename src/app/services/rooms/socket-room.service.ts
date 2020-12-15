@@ -9,6 +9,7 @@ import { RoomsResultModel } from '../../models/room/rooms-result.model';
 import { RedirectionInterface } from '../../interfaces/redirection/redirection.interface';
 import { UserModel } from '../../models/user/user.model';
 import { GetUsersInRoomNotifInterface } from '../../interfaces/rooms/get-users-in-room-notif.interface';
+import { UserInRoomResultModel } from '../../models/user/user-in-room-result.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
     return this.getDataFromEvent($socket);
   }
 
-  getUsersInRoomNotif(roomId: number): Observable<UserModel[]> {
+  getUsersInRoomNotif(roomId: number): Observable<UserInRoomResultModel> {
     const $socket = this.socket.fromEvent(GET_USERS_IN_ROOMS);
     this.emitUsersInRoomNotif(roomId);
     return this.getDataFromEvent($socket);
