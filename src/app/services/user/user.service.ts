@@ -11,6 +11,7 @@ import { AddUserInterface } from '../../interfaces/user/add-user.interface';
 })
 
 export class UserService implements LoggedUserInterface, DisconnectionInterface, AddUserInterface {
+  private userName: string
   constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string) { }
 
   addUserByPseudo(pseudo: string): Observable<UserModel> {
@@ -25,5 +26,13 @@ export class UserService implements LoggedUserInterface, DisconnectionInterface,
 
   disconnectUser(hash: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/users`);
+  }
+
+  getUserName(): string {
+    return this.userName;
+  }
+
+  setUserName(userName: string): void {
+    this.userName = userName;
   }
 }

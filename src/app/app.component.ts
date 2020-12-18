@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
 
   getLoggedUser(hash: string): void {
     this.loggedUser.getLoggedUser(hash).subscribe(user => {
+      this.loggedUser.setUserName(user.pseudo);
       this.redirect.redirectTo(`${user.pseudo}/rooms`);
     }, () => {
       localStorage.removeItem('hash');

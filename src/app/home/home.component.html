@@ -1,5 +1,8 @@
 <nav class="navbar navbar-light border-bottom" style="background-color: #e9edef">
   <a class="navbar-brand">Game room</a>
-  <a class="go-out" (click)="disconnect()"></a>
+  <div class="row m-0 ">
+    <p class="mr-2 mb-0">{{userName}}</p>
+    <a class="go-out" (click)="disconnect()"></a>
+  </div>
 </nav>
 <router-outlet></router-outlet>
