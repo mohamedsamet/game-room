@@ -11,7 +11,7 @@ import { RoomAccessInterface } from '../../interfaces/rooms/room-access.interfac
   providedIn: 'root'
 })
 export class RoomsService implements AddRoomInterface, ManageRoomsInterface, RoomAccessInterface {
-
+  private roomName: string;
   constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string) { }
 
   addRoom(roomName: string): Observable<RoomModel> {
@@ -34,5 +34,13 @@ export class RoomsService implements AddRoomInterface, ManageRoomsInterface, Roo
 
   removeUserFromRoom(roomId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/rooms/access/${roomId}`);
+  }
+
+  getRoomName(): string {
+    return this.roomName;
+  }
+
+  setRoomName(roomName: string): void {
+    this.roomName = roomName;
   }
 }

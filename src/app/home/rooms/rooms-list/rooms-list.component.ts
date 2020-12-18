@@ -36,8 +36,9 @@ export class RoomsListComponent implements OnInit {
     this.userHash = localStorage.getItem('hash');
   }
 
-  openRoom(id: number): void {
-    this.redirect.redirectTo(`${id}`, this.activeRoute);
+  openRoom(room: RoomModel): void {
+    this.manageRoomsInt.setRoomName(room.name)
+    this.redirect.redirectTo(`${room.id}`, this.activeRoute);
   }
 
   listenToRoomCreation(): void {
