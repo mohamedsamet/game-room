@@ -33,22 +33,22 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.roomAccess.addUserToRoom(this.roomId).subscribe(() => {
       this.emitRoomInt.emitRoomNotif();
       this.getUsersConnected();
+    }, () => {
+      this.goBack();
     });
   }
 
 
   getUsersConnected(): void {
     this.getUsersInRoom.getUsersInRoomNotif(this.roomId).subscribe(usersResult => {
-      if (usersResult.roomId === this.roomId) {
-        this.usersConnected = usersResult.users;
-      }
+      this.usersConnected = usersResult.users;
     });
   }
 
   getOutFromRoom(): void {
     this.roomAccess.removeUserFromRoom(this.roomId).subscribe(() => {
       this.emitRoomInt.emitRoomNotif();
-      this.getUsersInRoom.emitUsersInRoomNotif(this.roomId);
+      this.getUsersInRoom.emitUsersLeaveRoomNotif(this.roomId);
     });
   }
 

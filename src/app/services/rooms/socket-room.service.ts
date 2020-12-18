@@ -3,7 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
 import { filter, map } from 'rxjs/operators';
-import { GET_ROOMS, GET_USERS_IN_ROOMS, REQUEST_ROOMS, REQUEST_USERS_IN_ROOM } from '../../constants/socket-events';
+import { GET_ROOMS, GET_USERS_IN_ROOMS, LEAVE_USER_FROM_ROOM, REQUEST_ROOMS, REQUEST_USERS_IN_ROOM } from '../../constants/socket-events';
 import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
 import { RoomsResultModel } from '../../models/room/rooms-result.model';
 import { RedirectionInterface } from '../../interfaces/redirection/redirection.interface';
@@ -54,5 +54,9 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
     this.socket.on('disconnect', () => {
       this.redirect.redirectTo('/');
     });
+  }
+
+  emitUsersLeaveRoomNotif(roomId: number): void {
+    this.emitNotif(LEAVE_USER_FROM_ROOM, roomId);
   }
 }

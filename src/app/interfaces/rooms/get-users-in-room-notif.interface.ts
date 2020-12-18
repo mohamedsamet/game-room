@@ -4,4 +4,5 @@ import { UserInRoomResultModel } from '../../models/user/user-in-room-result.mod
 export interface GetUsersInRoomNotifInterface {
   getUsersInRoomNotif(roomId: number): Observable<UserInRoomResultModel>;
   emitUsersInRoomNotif(roomId: number): void;
+  emitUsersLeaveRoomNotif(roomId: number): void;
 }
