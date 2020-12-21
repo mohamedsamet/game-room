@@ -12,28 +12,29 @@ import { RoomAccessInterface } from '../../interfaces/rooms/room-access.interfac
 })
 export class RoomsService implements AddRoomInterface, ManageRoomsInterface, RoomAccessInterface {
   private roomName: string;
-  constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string) { }
+  constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string,
+              @Inject('API_URLS') private urls: any) { }
 
   addRoom(roomName: string): Observable<RoomModel> {
     const room = {} as RoomModel;
     room.name = roomName;
-    return this.http.post<RoomModel>(`${this.baseUrl}/rooms`, room);
+    return this.http.post<RoomModel>(`${this.baseUrl}${this.urls.ROOMS_URL}`, room);
   }
 
   getRoomsByPage(start: number, end: number): Observable<RoomsResultModel> {
-    return this.http.get<RoomsResultModel>(`${this.baseUrl}/rooms?start=${start}&end=${end}`);
+    return this.http.get<RoomsResultModel>(`${this.baseUrl}${this.urls.ROOMS_URL}?start=${start}&end=${end}`);
   }
 
   deleteRooms(roomId: number, userHash: string): Observable<RoomsResultModel> {
-    return this.http.delete<RoomsResultModel>(`${this.baseUrl}/rooms?id=${roomId}&user=${userHash}`);
+    return this.http.delete<RoomsResultModel>(`${this.baseUrl}${this.urls.ROOMS_URL}?id=${roomId}&user=${userHash}`);
   }
 
   addUserToRoom(roomId: number): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/rooms/access/${roomId}`, {});
+    return this.http.post<any>(`${this.baseUrl}${this.urls.ROOMS_ACCESS_URL}${roomId}`, {});
   }
 
   removeUserFromRoom(roomId: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/rooms/access/${roomId}`);
+    return this.http.delete<any>(`${this.baseUrl}${this.urls.ROOMS_ACCESS_URL}${roomId}`);
   }
 
   getRoomName(): string {

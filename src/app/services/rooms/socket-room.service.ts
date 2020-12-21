@@ -3,7 +3,9 @@ import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
 import { filter, map } from 'rxjs/operators';
-import { GET_ROOMS, GET_USERS_IN_ROOMS, LEAVE_USER_FROM_ROOM, REQUEST_ROOMS, REQUEST_USERS_IN_ROOM } from '../../constants/socket-events';
+import {
+  DISCONNECT_SOCKET, GET_ROOMS, GET_USERS_IN_ROOMS, LEAVE_USER_FROM_ROOM, REQUEST_ROOMS, REQUEST_USERS_IN_ROOM
+} from '../../constants/socket-events';
 import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
 import { RoomsResultModel } from '../../models/room/rooms-result.model';
 import { RedirectionInterface } from '../../interfaces/redirection/redirection.interface';
@@ -51,7 +53,7 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
   }
 
   listenToDisconnection(): void {
-    this.socket.on('disconnect', () => {
+    this.socket.on(DISCONNECT_SOCKET, () => {
       this.redirect.redirectTo('/');
     });
   }

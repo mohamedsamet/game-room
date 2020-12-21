@@ -12,20 +12,21 @@ import { AddUserInterface } from '../../interfaces/user/add-user.interface';
 
 export class UserService implements LoggedUserInterface, DisconnectionInterface, AddUserInterface {
   private userName: string
-  constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string) { }
+  constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string,
+              @Inject('API_URLS') private urls: any) { }
 
   addUserByPseudo(pseudo: string): Observable<UserModel> {
     const user = {} as UserModel;
     user.pseudo = pseudo;
-    return this.http.post<UserModel>(`${this.baseUrl}/users`, user);
+    return this.http.post<UserModel>(`${this.baseUrl}${this.urls.USER_URL}`, user);
   }
 
   getLoggedUser(hash: string): Observable<UserModel> {
-    return this.http.get<UserModel>(`${this.baseUrl}/users`);
+    return this.http.get<UserModel>(`${this.baseUrl}${this.urls.USER_URL}`);
   }
 
   disconnectUser(hash: string): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/users`);
+    return this.http.delete<any>(`${this.baseUrl}${this.urls.USER_URL}`);
   }
 
   getUserName(): string {

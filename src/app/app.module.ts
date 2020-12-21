@@ -13,6 +13,7 @@ import { AlertService } from './services/alert/alert.service';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { UtiliesService } from './services/utilies.service';
 import { AuthorizationAppendInterceptor } from './interceptors/authorization-append.interceptor';
+import { URLS } from './constants/urls.constant';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,9 @@ import { AuthorizationAppendInterceptor } from './interceptors/authorization-app
     }, {
       provide: 'API_BASE_URL',
       useValue: environment.baseUrl
+    }, {
+      provide: 'API_URLS',
+      useValue: URLS
     }
   ],
   bootstrap: [AppComponent]

@@ -5,8 +5,7 @@ import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-no
 
 @Component({
   selector: 'app-create-room',
-  templateUrl: './create-room.component.html',
-  styleUrls: ['./create-room.component.scss']
+  templateUrl: './create-room.component.html'
 })
 export class CreateRoomComponent implements OnInit {
   public createRoomForm: FormGroup;

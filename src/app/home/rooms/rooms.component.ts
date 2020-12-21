@@ -3,8 +3,7 @@ import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-rooms',
-  templateUrl: './rooms.component.html',
-  styleUrls: ['./rooms.component.scss']
+  templateUrl: './rooms.component.html'
 })
 export class RoomsComponent {
   public $createRoomEvent = new Subject();

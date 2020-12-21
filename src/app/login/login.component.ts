@@ -7,8 +7,7 @@ import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
@@ -18,7 +17,11 @@ export class LoginComponent implements OnInit {
               private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.loginFormGroup = this.formBuilder.group({
+    this.initLoginForm(this.formBuilder);
+  }
+
+  initLoginForm(formBuilder: FormBuilder): void {
+    this.loginFormGroup = formBuilder.group({
       pseudo: ['', Validators.required]
     });
   }
