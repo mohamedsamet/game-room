@@ -9,5 +9,12 @@
 
 .room-title {
   left: 50%;
-  top: 12px;
+  transform: translateX(-50%);
+  top: -32px;
+}
+
+@media screen and (max-width: 768px) {
+  .room-title {
+    top: 8px;
+  }
 }

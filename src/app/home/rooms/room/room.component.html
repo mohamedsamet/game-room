@@ -1,7 +1,10 @@
-<div class="room-title position-absolute d-none d-md-block">{{roomName}}</div>
-<div class="row justify-content-between mx-0 p-2 p-md-3 p-xl-4">
-  <a class="go-back" (click)="goBack()"></a>
-  <div class="col-12 col-md-4 p-0 mt-2 mt-md-0">
-    <app-user-in-room [users]="usersConnected" [roomId]="roomId"></app-user-in-room>
+<div class="position-relative">
+  <div class="room-title position-absolute">{{roomName}}</div>
+  <div class="row justify-content-between mx-0 p-2 p-md-3 p-xl-4">
+    <a class="go-back" (click)="goBack()"></a>
+    <div class="col-12 col-md-4 p-0 mt-2 mt-md-0">
+      <app-user-in-room [users]="usersConnected" [roomId]="roomId"></app-user-in-room>
+    </div>
   </div>
 </div>
+
