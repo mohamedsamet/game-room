@@ -38,7 +38,7 @@ export class RoomsListComponent implements OnInit {
 
   openRoom(room: RoomModel): void {
     this.manageRoomsInt.setRoomName(room.name)
-    this.redirect.redirectTo(`${room.id}`, this.activeRoute);
+    this.redirect.redirectTo(`${room._id}`, this.activeRoute);
   }
 
   listenToRoomCreation(): void {
@@ -87,7 +87,7 @@ export class RoomsListComponent implements OnInit {
     this.initPagination();
   }
 
-  deleteRoom(roomId: number): void {
+  deleteRoom(roomId: string): void {
     this.manageRoomsInt.deleteRooms(roomId, this.userHash).subscribe(() => {
       this.selectPage(1);
       this.initPagination();

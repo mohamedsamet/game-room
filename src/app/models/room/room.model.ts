@@ -1,7 +1,7 @@
 import { UserModel } from '../user/user.model';
 
 export interface RoomModel {
-  id: number;
+  _id: string;
   name: string;
   createdBy: string;
   createdByUserHash: string;
