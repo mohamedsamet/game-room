@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { UserInRoomResultModel } from '../../models/user/user-in-room-result.model';
 
 export interface GetUsersInRoomNotifInterface {
-  getUsersInRoomNotif(roomId: number): Observable<UserInRoomResultModel>;
-  emitUsersInRoomNotif(roomId: number): void;
-  emitUsersLeaveRoomNotif(roomId: number): void;
+  getUsersInRoomNotif(roomId: string): Observable<UserInRoomResultModel>;
+  emitUsersInRoomNotif(roomId: string): void;
+  emitUsersLeaveRoomNotif(roomId: string): void;
 }

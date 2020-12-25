@@ -13,7 +13,7 @@ import { ManageRoomsInterface } from '../../../interfaces/rooms/manage-rooms.int
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit, OnDestroy {
-  public roomId: number;
+  public roomId: string;
   public usersConnected: UserModel[];
   public roomName: string;
   constructor(@Inject('RedirectionInterface') private  redirect: RedirectionInterface,
@@ -37,7 +37,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   addUserInRoom(): void {
-    this.roomId = +this.activeRoute.snapshot.paramMap.get('roomId');
+    this.roomId = this.activeRoute.snapshot.paramMap.get('roomId');
     this.roomAccess.addUserToRoom(this.roomId).subscribe(() => {
       this.emitRoomInt.emitRoomNotif();
       this.getUsersConnected();
@@ -45,7 +45,6 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.goBack();
     });
   }
-
 
   getUsersConnected(): void {
     this.getUsersInRoom.getUsersInRoomNotif(this.roomId).subscribe(usersResult => {

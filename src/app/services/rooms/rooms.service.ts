@@ -29,11 +29,11 @@ export class RoomsService implements AddRoomInterface, ManageRoomsInterface, Roo
     return this.http.delete<RoomsResultModel>(`${this.baseUrl}${this.urls.ROOMS_URL}?id=${roomId}&user=${userHash}`);
   }
 
-  addUserToRoom(roomId: number): Observable<any> {
+  addUserToRoom(roomId: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}${this.urls.ROOMS_ACCESS_URL}${roomId}`, {});
   }
 
-  removeUserFromRoom(roomId: number): Observable<any> {
+  removeUserFromRoom(roomId: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}${this.urls.ROOMS_ACCESS_URL}${roomId}`);
   }
 

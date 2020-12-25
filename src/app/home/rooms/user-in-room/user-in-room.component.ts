@@ -5,12 +5,8 @@ import { UserModel } from '../../../models/user/user.model';
   selector: 'app-user-in-room',
   templateUrl: './user-in-room.component.html'
 })
-export class UserInRoomComponent implements OnInit {
-  @Input() roomId: number;
+export class UserInRoomComponent {
+  @Input() roomId: string;
   @Input() users: UserModel[];
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

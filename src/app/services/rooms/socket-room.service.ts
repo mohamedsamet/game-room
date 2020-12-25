@@ -27,13 +27,13 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
     return this.getDataFromEvent($socket);
   }
 
-  getUsersInRoomNotif(roomId: number): Observable<UserInRoomResultModel> {
+  getUsersInRoomNotif(roomId: string): Observable<UserInRoomResultModel> {
     const $socket = this.socket.fromEvent(GET_USERS_IN_ROOMS);
     this.emitUsersInRoomNotif(roomId);
     return this.getDataFromEvent($socket);
   }
 
-  emitUsersInRoomNotif(roomId: number): void {
+  emitUsersInRoomNotif(roomId: string): void {
     this.emitNotif(REQUEST_USERS_IN_ROOM, roomId);
   }
 
@@ -58,7 +58,7 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
     });
   }
 
-  emitUsersLeaveRoomNotif(roomId: number): void {
+  emitUsersLeaveRoomNotif(roomId: string): void {
     this.emitNotif(LEAVE_USER_FROM_ROOM, roomId);
   }
 }
