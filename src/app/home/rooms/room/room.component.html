@@ -1,9 +1,14 @@
 <div class="position-relative">
   <div class="room-title position-absolute">{{roomName}}</div>
-  <div class="row justify-content-between mx-0 p-2 p-md-3 p-xl-4">
-    <a class="go-back" (click)="goBack()"></a>
-    <div class="col-12 col-md-4 p-0 mt-2 mt-md-0">
-      <app-user-in-room [users]="usersConnected" [roomId]="roomId"></app-user-in-room>
+  <a class="go-back ml-3 mt-1" (click)="goBack()"></a>
+  <div class="row justify-content-between mx-0 px-2 px-md-3 px-xl-4 pt-2 chat-box-content">
+    <div class="row mx-0 justify-content-between col-12 p-0">
+      <div class="col-9 pl-0 pr-1 pr-md-2">
+        <app-chat-box></app-chat-box>
+      </div>
+      <div class="col-3 pr-0 pl-1 pl-md-2">
+        <app-user-in-room [users]="usersConnected" [roomId]="roomId"></app-user-in-room>
+      </div>
     </div>
   </div>
 </div>

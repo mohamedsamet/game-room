@@ -13,6 +13,7 @@ import { PaginatorComponent } from '../paginator/paginator.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { HomeComponent } from './home.component';
 import { UserInRoomComponent } from './rooms/user-in-room/user-in-room.component';
+import { ChatBoxComponent } from './rooms/room/chat-box/chat-box.component';
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {transports: ['websocket', 'polling', 'flashsocket']} };
 
@@ -24,7 +25,8 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     RoomsListComponent,
     RoomComponent,
     HomeComponent,
-    UserInRoomComponent
+    UserInRoomComponent,
+    ChatBoxComponent
   ],
   imports: [
     HomeRoutingModule,

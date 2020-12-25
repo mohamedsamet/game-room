@@ -18,3 +18,11 @@
     top: 8px;
   }
 }
+
+.position-relative {
+  height: calc(100vh - 60px);
+}
+
+.chat-box-content {
+  height: calc(100% - 45px);
+}
