@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { LoggedUserInterface } from './interfaces/user/logged-user.interface';
 import { RedirectionInterface } from './interfaces/redirection/redirection.interface';
+import {LOCAL_STORAGE_ID} from "./constants/rooms.constant";
 
 @Component({
   selector: 'app-root',
@@ -15,20 +16,20 @@ export class AppComponent implements OnInit {
   }
 
   manageAutoLogin(): void {
-    const userCredential = localStorage.getItem('hash');
+    const userCredential = localStorage.getItem(LOCAL_STORAGE_ID);
     if (userCredential) {
-      this.getLoggedUser(userCredential);
+      this.getLoggedUser();
     } else {
       this.redirect.redirectTo(`/`);
     }
   }
 
-  getLoggedUser(hash: string): void {
-    this.loggedUser.getLoggedUser(hash).subscribe(user => {
+  getLoggedUser(): void {
+    this.loggedUser.getLoggedUser().subscribe(user => {
       this.loggedUser.setUserName(user.pseudo);
       this.redirect.redirectTo(`${user.pseudo}/rooms`);
     }, () => {
-      localStorage.removeItem('hash');
+      localStorage.removeItem(LOCAL_STORAGE_ID);
       this.redirect.redirectTo(`/`);
     });
   }

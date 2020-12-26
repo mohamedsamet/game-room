@@ -21,11 +21,11 @@ export class UserService implements LoggedUserInterface, DisconnectionInterface,
     return this.http.post<UserModel>(`${this.baseUrl}${this.urls.USER_URL}`, user);
   }
 
-  getLoggedUser(hash: string): Observable<UserModel> {
+  getLoggedUser(): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.baseUrl}${this.urls.USER_URL}`);
   }
 
-  disconnectUser(hash: string): Observable<any> {
+  disconnectUser(): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}${this.urls.USER_URL}`);
   }
 

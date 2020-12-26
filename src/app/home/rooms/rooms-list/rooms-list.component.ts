@@ -3,7 +3,7 @@ import { RoomModel } from '../../../models/room/room.model';
 import { Subject } from 'rxjs';
 import { ManageRoomsInterface } from '../../../interfaces/rooms/manage-rooms.interface';
 import { GetRoomsNotifInterface } from '../../../interfaces/rooms/get-rooms-notif.interface';
-import { ROOMS_PER_PAGE } from '../../../constants/rooms.constant';
+import { LOCAL_STORAGE_ID, ROOMS_PER_PAGE } from '../../../constants/rooms.constant';
 import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { RoomsResultModel } from '../../../models/room/rooms-result.model';
 import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
@@ -20,7 +20,7 @@ export class RoomsListComponent implements OnInit {
   public totalRooms: number;
   public selectedPage = 1;
   public showReloadBtn = false;
-  public userHash: string;
+  public userId: string;
   @Input() $roomCreated = new Subject();
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
   constructor(@Inject('ManageRoomsInterface') private manageRoomsInt: ManageRoomsInterface,
@@ -33,7 +33,7 @@ export class RoomsListComponent implements OnInit {
   ngOnInit(): void {
     this.getRooms();
     this.listenToRoomCreation();
-    this.userHash = localStorage.getItem('hash');
+    this.userId = localStorage.getItem(LOCAL_STORAGE_ID);
   }
 
   openRoom(room: RoomModel): void {
@@ -88,7 +88,7 @@ export class RoomsListComponent implements OnInit {
   }
 
   deleteRoom(roomId: string): void {
-    this.manageRoomsInt.deleteRooms(roomId, this.userHash).subscribe(() => {
+    this.manageRoomsInt.deleteRoom(roomId, this.userId).subscribe(() => {
       this.selectPage(1);
       this.initPagination();
       this.emitRoomInt.emitRoomNotif();

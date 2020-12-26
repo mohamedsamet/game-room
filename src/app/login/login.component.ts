@@ -4,6 +4,7 @@ import { UserModel } from '../models/user/user.model';
 import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
 import { AddUserInterface } from '../interfaces/user/add-user.interface';
 import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
+import {LOCAL_STORAGE_ID} from "../constants/rooms.constant";
 
 @Component({
   selector: 'app-login',
@@ -34,13 +35,13 @@ export class LoginComponent implements OnInit {
   }
 
   loginToHome(user: UserModel): void {
-    if (user.hash) {
-      this.saveHashToStorage(user.hash);
+    if (user._id) {
+      this.saveUserIdToStorage(user._id);
       this.redirect.redirectTo(`${user.pseudo}/rooms`);
     }
   }
 
-  saveHashToStorage(hash: string): void {
-    localStorage.setItem('hash', hash);
+  saveUserIdToStorage(userId: string): void {
+    localStorage.setItem(LOCAL_STORAGE_ID, userId);
   }
 }

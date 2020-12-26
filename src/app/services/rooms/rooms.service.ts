@@ -25,8 +25,8 @@ export class RoomsService implements AddRoomInterface, ManageRoomsInterface, Roo
     return this.http.get<RoomsResultModel>(`${this.baseUrl}${this.urls.ROOMS_URL}?start=${start}&end=${end}`);
   }
 
-  deleteRooms(roomId: string, userHash: string): Observable<RoomsResultModel> {
-    return this.http.delete<RoomsResultModel>(`${this.baseUrl}${this.urls.ROOMS_URL}?id=${roomId}&user=${userHash}`);
+  deleteRoom(roomId: string, id: string): Observable<RoomsResultModel> {
+    return this.http.delete<RoomsResultModel>(`${this.baseUrl}${this.urls.ROOMS_URL}?id=${roomId}&user=${id}`);
   }
 
   addUserToRoom(roomId: string): Observable<any> {

@@ -11,7 +11,7 @@ import { RoomsResultModel } from '../../models/room/rooms-result.model';
 import { RedirectionInterface } from '../../interfaces/redirection/redirection.interface';
 import { GetUsersInRoomNotifInterface } from '../../interfaces/rooms/get-users-in-room-notif.interface';
 import { UserInRoomResultModel } from '../../models/user/user-in-room-result.model';
-import { ROOMS_PER_PAGE } from '../../constants/rooms.constant';
+import {LOCAL_STORAGE_ID, ROOMS_PER_PAGE} from '../../constants/rooms.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotif
   }
 
   emitRoomNotif(): void {
-    this.emitNotif(REQUEST_ROOMS, {hash: localStorage.getItem('hash'), roomsByPage: ROOMS_PER_PAGE });
+    this.emitNotif(REQUEST_ROOMS, {id: localStorage.getItem(LOCAL_STORAGE_ID), roomsByPage: ROOMS_PER_PAGE });
   }
 
   private emitNotif(topic: string, data: any): void {

@@ -4,6 +4,6 @@ export interface RoomModel {
   _id: string;
   name: string;
   createdBy: string;
-  createdByUserHash: string;
+  createdByUserId: string;
   users: UserModel[];
 }
