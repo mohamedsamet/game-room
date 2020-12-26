@@ -14,6 +14,7 @@ import { RoomComponent } from './rooms/room/room.component';
 import { HomeComponent } from './home.component';
 import { UserInRoomComponent } from './rooms/user-in-room/user-in-room.component';
 import { ChatBoxComponent } from './rooms/room/chat-box/chat-box.component';
+import {ChatService} from "../services/chat/chat.service";
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {transports: ['websocket', 'polling', 'flashsocket']} };
 
@@ -42,6 +43,7 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {transport
     {provide: 'AddRoomInterface', useClass: RoomsService},
     {provide: 'ManageRoomsInterface', useClass: RoomsService},
     {provide: 'RoomAccessInterface', useClass: RoomsService},
+    {provide: 'SendMessageInterface', useClass: ChatService},
     {provide: 'API_BASE_URL', useValue: environment.baseUrl}
   ]
 })
