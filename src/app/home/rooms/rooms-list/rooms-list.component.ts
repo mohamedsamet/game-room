@@ -7,7 +7,7 @@ import { LOCAL_STORAGE_ID, ROOMS_PER_PAGE } from '../../../constants/rooms.const
 import { PaginatorComponent } from '../../../paginator/paginator.component';
 import { RoomsResultModel } from '../../../models/room/rooms-result.model';
 import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
-import { RedirectionInterface } from '../../../interfaces/redirection/redirection.interface';
+import { RedirectionInterface } from '../../../interfaces/utilities/redirection/redirection.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

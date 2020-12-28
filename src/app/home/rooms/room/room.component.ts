@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { RedirectionInterface } from '../../../interfaces/redirection/redirection.interface';
+import { RedirectionInterface } from '../../../interfaces/utilities/redirection/redirection.interface';
 import { ActivatedRoute } from '@angular/router';
 import { RoomAccessInterface } from '../../../interfaces/rooms/room-access.interface';
 import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';

@@ -1,6 +1,14 @@
 <div class="mx-0 p-2 p-md-4 border rounded-sm h-100">
   <div class="position-relative h-100">
-    <textarea [(ngModel)]="message" autofocus class="text-area"></textarea>
+    <div>
+      <div *ngFor="let msg of chatMessages">
+        <span>{{msg.pseudo}} -- {{msg.dateTime}}</span>
+        <div>{{msg.message}}</div>
+      </div>
+    </div>
+    <label>
+      <textarea (keyup.enter)="sendMessage()" [(ngModel)]="message" autofocus class="text-area"></textarea>
+    </label>
     <div (click)="sendMessage()" class="send-btn"></div>
   </div>
 </div>

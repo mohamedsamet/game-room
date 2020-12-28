@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DisconnectionInterface } from '../interfaces/user/disconnection.interface';
-import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
+import { RedirectionInterface } from '../interfaces/utilities/redirection/redirection.interface';
 import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
 import {LOCAL_STORAGE_ID} from "../constants/rooms.constant";
 

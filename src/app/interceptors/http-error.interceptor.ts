@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { AlertInterface } from '../interfaces/alert/alert.interface';
-import { RedirectionInterface } from '../interfaces/redirection/redirection.interface';
+import { RedirectionInterface } from '../interfaces/utilities/redirection/redirection.interface';
 import {LOCAL_STORAGE_ID} from "../constants/rooms.constant";
 
 @Injectable()
