@@ -1,21 +1,23 @@
-<form [formGroup]="loginFormGroup"
-      (ngSubmit)="validatePseudo()"
-      class="p-2 p-md-4 border rounded-sm container-md col-md-6 col-xl-4 mt-5">
-  <div class="form-group">
-    <label for="pseudoLogin">Pseudo</label>
-    <input [ngClass]="{'is-invalid': loginFormGroup.dirty && loginFormGroup.invalid}"
-           formControlName="pseudo"
-           minlength="4"
-           maxlength="20"
-           type="text"
-           class="form-control"
-           id="pseudoLogin"
-           aria-describedby="pseudoLogin">
-    <small [ngClass]="loginFormGroup.dirty && loginFormGroup.invalid ? 'text-danger':'text-muted'"
-           id="pseudoHelp"
-           class="form-text">
-      Your pseudo must be 4-20 characters long.
-    </small>
-  </div>
-  <button [disabled]="loginFormGroup.invalid" type="submit" class="btn btn-dark">Submit</button>
-</form>
+<div class="p-2">
+  <form [formGroup]="loginFormGroup"
+        (ngSubmit)="validatePseudo()"
+        class="p-2 p-md-4 border rounded-sm container-md col-md-6 col-xl-4 mt-5">
+    <div class="form-group">
+      <label for="pseudoLogin">Pseudo</label>
+      <input [ngClass]="{'is-invalid': loginFormGroup.dirty && loginFormGroup.invalid}"
+             formControlName="pseudo"
+             minlength="4"
+             maxlength="20"
+             type="text"
+             class="form-control"
+             id="pseudoLogin"
+             aria-describedby="pseudoLogin">
+      <small [ngClass]="loginFormGroup.dirty && loginFormGroup.invalid ? 'text-danger':'text-muted'"
+             id="pseudoHelp"
+             class="form-text">
+        Your pseudo must be 4-20 characters long.
+      </small>
+    </div>
+    <button [disabled]="loginFormGroup.invalid" type="submit" class="btn btn-dark">Submit</button>
+  </form>
+</div>
