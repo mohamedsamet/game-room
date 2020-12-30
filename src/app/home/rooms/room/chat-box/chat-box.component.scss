@@ -22,3 +22,10 @@
   bottom: 26px;
   cursor: pointer;
 }
+
+.messages-content {
+  display: flex;
+  flex-direction: column-reverse;
+  height: calc(100% - 110px);
+  overflow : auto;
+}
