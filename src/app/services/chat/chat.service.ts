@@ -18,7 +18,7 @@ export class ChatService implements ChatMessageInterface {
               @Inject('DataInterface') private  dataInt: DataInterface) { }
 
   sendMessage(message: string, roomId: string): Observable<ChatModel> {
-    return this.http.post<ChatModel>(`${this.baseUrl}${this.urls.CHAT_URL}/${roomId}`, {message: message});
+    return this.http.post<ChatModel>(`${this.baseUrl}${this.urls.CHAT_URL}/${roomId}`, {message});
   }
 
   requestMessagesInRoom(roomId: string): void {

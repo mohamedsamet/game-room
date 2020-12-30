@@ -21,7 +21,8 @@ export class ChatBoxComponent implements OnInit {
   }
 
   sendMessage(): void {
-    if (this.message && this.message.length > 0 && this.message !== '↵') {
+    this.message = this.message.trim();
+    if (this.message && this.message.length > 0 && this.message !== ' ') {
       this.sendMsgInt.sendMessage(this.message, this.roomId).subscribe(() => {
         this.sendMsgInt.requestMessagesInRoom(this.roomId);
         this.message = '';
