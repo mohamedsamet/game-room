@@ -17,14 +17,16 @@ export class ChatBoxComponent implements OnInit {
 
   ngOnInit(): void {
     this.roomId = this.activeRoute.snapshot.paramMap.get('roomId');
-    this.getMessagesInRoom()
+    this.getMessagesInRoom();
   }
 
-  sendMessage() {
-    this.sendMsgInt.sendMessage(this.message, this.roomId).subscribe(() => {
-      this.sendMsgInt.requestMessagesInRoom(this.roomId);
-      this.message = '';
-    })
+  sendMessage(): void {
+    if (this.message && this.message.length > 0 && this.message !== '↵') {
+      this.sendMsgInt.sendMessage(this.message, this.roomId).subscribe(() => {
+        this.sendMsgInt.requestMessagesInRoom(this.roomId);
+        this.message = '';
+      });
+    }
   }
 
   private getMessagesInRoom(): void {
