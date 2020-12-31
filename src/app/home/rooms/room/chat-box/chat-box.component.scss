@@ -32,6 +32,8 @@
   flex-direction: column;
   height: calc(100% - 110px);
   overflow-y : auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
