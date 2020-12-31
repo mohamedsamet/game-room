@@ -2,9 +2,12 @@
   <div class="position-relative h-100">
     <div #messagesScroll class="messages-scroll-container">
       <div class="messages-content">
-        <div *ngFor="let msg of chatMessages">
-          <span>{{msg.pseudo}} -- {{msg.dateTime}}</span>
-          <div>{{msg.message}}</div>
+        <div class="mt-2 p-2 fit-content-width message-bloc" *ngFor="let msg of chatMessages">
+          <span>
+            <span class="author-def">{{msg.pseudo}}</span>
+            <span class="mx-2 date-text">{{msg.dateTime}}</span>
+          </span>
+          <div class="fit-content-width message-text">{{msg.message}}</div>
         </div>
       </div>
     </div>

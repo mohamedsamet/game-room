@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ChatMessageInterface } from '../../../../interfaces/chat/chat-message.interface';
 import { ActivatedRoute } from '@angular/router';
 import { ChatModel } from '../../../../models/chat/chat.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat-box',
