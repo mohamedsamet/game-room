@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  game-room-front:
+    container_name: game_room_front_dev
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+    - '.:/app'
+    - '/app/node_modules'
+    ports:
+    - '4200:4200'
+
