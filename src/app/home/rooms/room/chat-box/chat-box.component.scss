@@ -41,16 +41,32 @@
     display: flex;
     flex-direction: column-reverse;
     flex-grow: 1;
+    position: relative;
     .message-bloc {
       border-radius: 3px;
       background-color: rgba(0, 128, 0, .08);
-      .date-text {
-        font-size: 11px;
-        color: #545b62;
+      &.is-user-msg {
+        position: relative;
+        left: 100%;
+        transform: translateX(-100%);
+        .upper-chat-block {
+          justify-content: flex-end;
+          .author-def {
+            color: rgb(0, 88, 0);
+          }
+        }
       }
-      .author-def {
-        font-size: 12px;
-        font-weight : 600;
+      .upper-chat-block {
+        display: flex;
+        .date-text {
+          font-size: 11px;
+          color: #545b62;
+          line-height: 18px;
+        }
+        .author-def {
+          font-size: 12px;
+          font-weight : 600;
+        }
       }
       .message-text {
         font-size: 13px;

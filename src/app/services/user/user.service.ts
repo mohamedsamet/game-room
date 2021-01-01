@@ -11,7 +11,7 @@ import { AddUserInterface } from '../../interfaces/user/add-user.interface';
 })
 
 export class UserService implements LoggedUserInterface, DisconnectionInterface, AddUserInterface {
-  private userName: string
+  private userName: string;
   constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string,
               @Inject('API_URLS') private urls: any) { }
 
