@@ -1,17 +1,31 @@
-FROM node:12.20-alpine
+# stage1 as builder
+FROM node:12.20-alpine as builder
 
 WORKDIR /app
 
-COPY package.json /app/package.json
+# copy the package.json to install dependencies
+COPY package.json  .
+
+# Install the dependencies and make the folder
 RUN npm install
-RUN npm install -g @angular/cli@11.0.1
-RUN npm install -g angular-http-server
 
-# add app
-COPY . /app
+COPY . .
 
-# start app
-CMD ng build --prod
+# Build the project and copy the files
+RUN npm run ng build --prod
 
-#deploy
-CMD angular-http-server --path dist/game-room/ -p 4606
+FROM nginx:alpine
+
+#!/bin/sh
+
+COPY docker/prod/.nginx/nginx.conf /etc/nginx/nginx.conf
+
+## Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy from the stahg 1
+COPY --from=builder /app/dist/game-room /usr/share/nginx/html
+
+EXPOSE 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

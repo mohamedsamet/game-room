@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "docker-compose up",
+    "start": "docker-compose down -v && docker-compose up",
     "start:full": "docker-compose down -v && docker-compose up -d --build",
+    "build:imageProd": "docker build -f docker/prod/Dockerfile -t game-room-prod-image .",
+    "build:runDockerProd": "docker run -d --name game-room-prod-cont -p 4606:80 game-room-prod-image",
+    "deploy:prod": "npm run build:imageProd && npm run build:runDockerProd",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
