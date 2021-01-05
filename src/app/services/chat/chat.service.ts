@@ -1,11 +1,11 @@
-import {Inject, Injectable} from '@angular/core';
-import {ChatMessageInterface} from '../../interfaces/chat/chat-message.interface';
-import {Observable} from 'rxjs';
-import {ChatModel} from '../../models/chat/chat.model';
-import {HttpClient} from '@angular/common/http';
-import {Socket} from 'ngx-socket-io';
-import {GET_CHATMSG, REQUEST_CHATMSG} from '../../constants/socket-events';
-import {DataInterface} from '../../interfaces/utilities/data.interface';
+import { Inject, Injectable } from '@angular/core';
+import { ChatMessageInterface } from '../../interfaces/chat/chat-message.interface';
+import { Observable } from 'rxjs';
+import { ChatModel } from '../../models/chat/chat.model';
+import { HttpClient } from '@angular/common/http';
+import { Socket } from 'ngx-socket-io';
+import { GET_CHATMSG, REQUEST_CHATMSG } from '../../constants/socket-events';
+import { DataInterface } from '../../interfaces/utilities/data.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders } from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import {LOCAL_STORAGE_ID} from "../constants/rooms.constant";
+import { LOCAL_STORAGE_ID } from '../constants/rooms.constant';
 
 @Injectable()
 export class AuthorizationAppendInterceptor implements HttpInterceptor {

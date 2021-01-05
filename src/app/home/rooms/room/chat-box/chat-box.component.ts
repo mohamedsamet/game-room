@@ -2,8 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } f
 import { ChatMessageInterface } from '../../../../interfaces/chat/chat-message.interface';
 import { ActivatedRoute } from '@angular/router';
 import { ChatModel } from '../../../../models/chat/chat.model';
-import {LoggedUserInterface} from "../../../../interfaces/user/logged-user.interface";
-import {LOCAL_STORAGE_ID} from "../../../../constants/rooms.constant";
+import { LOCAL_STORAGE_ID } from '../../../../constants/rooms.constant';
 
 @Component({
   selector: 'app-chat-box',

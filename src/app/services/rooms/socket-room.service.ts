@@ -10,8 +10,8 @@ import { RoomsResultModel } from '../../models/room/rooms-result.model';
 import { RedirectionInterface } from '../../interfaces/utilities/redirection/redirection.interface';
 import { GetUsersInRoomNotifInterface } from '../../interfaces/rooms/get-users-in-room-notif.interface';
 import { UserInRoomResultModel } from '../../models/user/user-in-room-result.model';
-import {LOCAL_STORAGE_ID, ROOMS_PER_PAGE} from '../../constants/rooms.constant';
-import {DataInterface} from "../../interfaces/utilities/data.interface";
+import { LOCAL_STORAGE_ID, ROOMS_PER_PAGE } from '../../constants/rooms.constant';
+import { DataInterface } from '../../interfaces/utilities/data.interface';
 
 @Injectable({
   providedIn: 'root'
