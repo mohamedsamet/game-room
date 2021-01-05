@@ -1,5 +1,7 @@
 # GameRoom
 
+To lunch project locally just run 'npm run start:full' for fist time then you can use npm start if images already built
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.1.
 
 ## Development server
