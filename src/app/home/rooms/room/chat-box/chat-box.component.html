@@ -13,7 +13,7 @@
       </div>
     </div>
     <label>
-      <textarea (keyup.enter)="sendMessage()" [(ngModel)]="message" autofocus class="text-area"></textarea>
+      <textarea (ngModelChange)="textChanged($event)" (keyup.enter)="sendMessage()" [ngModel]="message" autofocus class="text-area"></textarea>
     </label>
     <div (click)="sendMessage()" class="send-btn"></div>
   </div>

@@ -3,6 +3,7 @@ import { ChatMessageInterface } from '../../../../interfaces/chat/chat-message.i
 import { ActivatedRoute } from '@angular/router';
 import { ChatModel } from '../../../../models/chat/chat.model';
 import { LOCAL_STORAGE_ID } from '../../../../constants/rooms.constant';
+import { UserWriterStatusModel } from '../../../../models/user/user-writer-status.model';
 
 @Component({
   selector: 'app-chat-box',
@@ -46,5 +47,16 @@ export class ChatBoxComponent implements OnInit {
   private manageScrollChatBox(): void {
     this.ref.detectChanges();
     this.chatContent.nativeElement.scrollTop = this.chatContent.nativeElement.scrollHeight;
+  }
+
+  textChanged(text: string): void {
+    this.message = text;
+    const isMessageWriterStatus = this.message.length > 0;
+    const userWriterStatus: UserWriterStatusModel = {userId: this.userId, roomId: this.roomId, status: isMessageWriterStatus};
+    this.updateWriterInRoomStatus(userWriterStatus);
+  }
+
+  updateWriterInRoomStatus(userStatus: UserWriterStatusModel): void {
+
   }
 }
