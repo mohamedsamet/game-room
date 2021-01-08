@@ -1,5 +1,6 @@
 export interface UserWriterStatusModel {
-  userId: string;
+  pseudo: string;
   roomId: string;
   status: boolean;
+  _id: string;
 }

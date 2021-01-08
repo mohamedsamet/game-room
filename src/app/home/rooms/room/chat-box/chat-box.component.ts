@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatModel } from '../../../../models/chat/chat.model';
 import { LOCAL_STORAGE_ID } from '../../../../constants/rooms.constant';
 import { UserWriterStatusModel } from '../../../../models/user/user-writer-status.model';
+import { LoggedUserInterface } from '../../../../interfaces/user/logged-user.interface';
 
 @Component({
   selector: 'app-chat-box',
@@ -11,37 +12,41 @@ import { UserWriterStatusModel } from '../../../../models/user/user-writer-statu
   styleUrls: ['./chat-box.component.scss'],
 })
 export class ChatBoxComponent implements OnInit {
-  public message: string;
+  public message = '';
   public roomId: string;
   public chatMessages: ChatModel[];
   public userId: string;
+  public writers: UserWriterStatusModel[] = [];
+  public isWriterUser = true;
   @ViewChild('messagesScroll') private chatContent: ElementRef;
-  constructor(@Inject('SendMessageInterface') private sendMsgInt: ChatMessageInterface,
+  constructor(@Inject('ChatMessageInterface') private chatMessageInterface: ChatMessageInterface,
+              @Inject('LoggedUserInterface') private  loggedUser: LoggedUserInterface,
               private activeRoute: ActivatedRoute,
               private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.roomId = this.activeRoute.snapshot.paramMap.get('roomId');
     this.getMessagesInRoom();
+    this.getWriterStatusInRoom(this.roomId);
     this.userId = localStorage.getItem(LOCAL_STORAGE_ID);
   }
 
   sendMessage(): void {
     this.message = this.message.trim();
     if (this.message && this.message.length > 0) {
-      this.sendMsgInt.sendMessage(this.message, this.roomId).subscribe(() => {
-        this.sendMsgInt.requestMessagesInRoom(this.roomId);
+      this.chatMessageInterface.sendMessage(this.message, this.roomId).subscribe(() => {
+        this.chatMessageInterface.requestMessagesInRoom(this.roomId);
         this.message = '';
       });
     }
   }
 
   private getMessagesInRoom(): void {
-    this.sendMsgInt.getMessagesInRoom().subscribe(chatMessages => {
+    this.chatMessageInterface.getMessagesInRoom().subscribe(chatMessages => {
       this.chatMessages = chatMessages;
       this.manageScrollChatBox();
     });
-    this.sendMsgInt.requestMessagesInRoom(this.roomId);
+    this.chatMessageInterface.requestMessagesInRoom(this.roomId);
   }
 
   private manageScrollChatBox(): void {
@@ -50,13 +55,25 @@ export class ChatBoxComponent implements OnInit {
   }
 
   textChanged(text: string): void {
+    const canUpdate = (this.message.length === 0 && text.length > 0) || (this.message.length > 0 &&  text.length === 0);
     this.message = text;
-    const isMessageWriterStatus = this.message.length > 0;
-    const userWriterStatus: UserWriterStatusModel = {userId: this.userId, roomId: this.roomId, status: isMessageWriterStatus};
-    this.updateWriterInRoomStatus(userWriterStatus);
+    if (canUpdate) {
+      const isMessageWriterStatus = this.message.length > 0;
+      const userWriterStatus: UserWriterStatusModel =
+          {_id: this.userId, pseudo: this.loggedUser.getUserName(), roomId: this.roomId, status: isMessageWriterStatus};
+      this.updateWriterInRoomStatus(userWriterStatus);
+    }
   }
 
   updateWriterInRoomStatus(userStatus: UserWriterStatusModel): void {
+    this.chatMessageInterface.updateWriterStatusInRoom(userStatus);
+    this.chatMessageInterface.requestWritersInToom(this.roomId);
+  }
 
+  private getWriterStatusInRoom(roomId: string): void {
+    this.chatMessageInterface.getWriterStatusInRoom().subscribe(writers => {
+      this.writers = writers.filter(writer => writer._id !== this.userId);
+    });
+    this.chatMessageInterface.requestWritersInToom(roomId);
   }
 }

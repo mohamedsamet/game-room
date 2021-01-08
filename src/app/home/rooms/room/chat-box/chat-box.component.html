@@ -13,6 +13,12 @@
       </div>
     </div>
     <label>
+      <div class="position-absolute" *ngIf="writers.length">
+        <span *ngFor="let writer of writers; let i = index">{{writer.pseudo}}
+          <span *ngIf="i !== writers.length - 1"> , and </span>
+        </span>
+        <span><span>{{writers.length > 1 ? 'are' : 'is'}}</span> writing ...</span>
+      </div>
       <textarea (ngModelChange)="textChanged($event)" (keyup.enter)="sendMessage()" [ngModel]="message" autofocus class="text-area"></textarea>
     </label>
     <div (click)="sendMessage()" class="send-btn"></div>
