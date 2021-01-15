@@ -6,6 +6,7 @@
       <label for="pseudoLogin">Pseudo</label>
       <input [ngClass]="{'is-invalid': loginFormGroup.dirty && loginFormGroup.invalid}"
              formControlName="pseudo"
+             autofocus
              minlength="4"
              maxlength="20"
              type="text"

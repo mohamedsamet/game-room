@@ -37,6 +37,7 @@ export class ChatBoxComponent implements OnInit {
       this.chatMessageInterface.sendMessage(this.message, this.roomId).subscribe(() => {
         this.chatMessageInterface.requestMessagesInRoom(this.roomId);
         this.message = '';
+        this.sendUpdateWriterStatus();
       });
     }
   }
@@ -58,11 +59,15 @@ export class ChatBoxComponent implements OnInit {
     const canUpdate = (this.message.length === 0 && text.length > 0) || (this.message.length > 0 &&  text.length === 0);
     this.message = text;
     if (canUpdate) {
-      const isMessageWriterStatus = this.message.length > 0;
-      const userWriterStatus: UserWriterStatusModel =
-          {_id: this.userId, pseudo: this.loggedUser.getUserName(), roomId: this.roomId, status: isMessageWriterStatus};
-      this.updateWriterInRoomStatus(userWriterStatus);
+      this.sendUpdateWriterStatus();
     }
+  }
+
+  sendUpdateWriterStatus(): void {
+    const isMessageWriterStatus = this.message.length > 0;
+    const userWriterStatus: UserWriterStatusModel =
+      {_id: this.userId, pseudo: this.loggedUser.getUserName(), roomId: this.roomId, status: isMessageWriterStatus};
+    this.updateWriterInRoomStatus(userWriterStatus);
   }
 
   updateWriterInRoomStatus(userStatus: UserWriterStatusModel): void {

@@ -13,7 +13,7 @@
       </div>
     </div>
     <label>
-      <div class="position-absolute" *ngIf="writers.length">
+      <div class="position-absolute writer-box" *ngIf="writers.length">
         <span *ngFor="let writer of writers; let i = index">{{writer.pseudo}}
           <span *ngIf="i !== writers.length - 1"> , and </span>
         </span>

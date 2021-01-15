@@ -5,6 +5,7 @@
     <label for="roomName">Room name</label>
     <input [ngClass]="{'is-invalid': createRoomForm.dirty && createRoomForm.invalid}"
            formControlName="roomName"
+           autofocus
            minlength="4"
            maxlength="20"
            type="text"

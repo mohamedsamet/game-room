@@ -27,6 +27,13 @@
   bottom: 26px;
   cursor: pointer;
 }
+
+.writer-box {
+  font-size: 13px;
+  line-height: 26px;
+  color: #545b62;
+}
+
 .messages-scroll-container {
   display: flex;
   flex-direction: column;
