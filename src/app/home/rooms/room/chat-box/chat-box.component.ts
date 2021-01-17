@@ -17,7 +17,6 @@ export class ChatBoxComponent implements OnInit {
   public chatMessages: ChatModel[];
   public userId: string;
   public writers: UserWriterStatusModel[] = [];
-  public isWriterUser = true;
   @ViewChild('messagesScroll') private chatContent: ElementRef;
   constructor(@Inject('ChatMessageInterface') private chatMessageInterface: ChatMessageInterface,
               @Inject('LoggedUserInterface') private  loggedUser: LoggedUserInterface,
