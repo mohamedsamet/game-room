@@ -27,7 +27,9 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
+    autoWatch: true,
     browsers: ['ChromeHeadless'],
-    singleRun: true,
+    singleRun: false,
+    restartOnFileChange: true
   });
 };
