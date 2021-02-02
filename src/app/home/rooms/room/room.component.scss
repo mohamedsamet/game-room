@@ -1,0 +1,28 @@
+.go-back {
+  background-image: url('/assets/go-back.svg');
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  cursor : pointer;
+  display: block;
+}
+
+.room-title {
+  left: 50%;
+  transform: translateX(-50%);
+  top: -38px;
+}
+
+@media screen and (max-width: 768px) {
+  .room-title {
+    top: 5px;
+  }
+}
+
+.position-relative {
+  height: calc(100vh - 60px);
+}
+
+.chat-box-content {
+  height: calc(100% - 45px);
+}
