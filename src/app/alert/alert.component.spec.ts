@@ -1,7 +1,7 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlertComponent } from "./alert.component";
-import { AlertModel } from "../models/alert/alert.model";
+import { AlertComponent } from './alert.component';
+import { AlertModel } from '../models/alert/alert.model';
 
 describe('AlertComponent', () => {
   let fixture: ComponentFixture<AlertComponent>;
@@ -18,7 +18,7 @@ describe('AlertComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(AlertComponent);
     app = fixture.componentInstance;
-    alertInt = TestBed.get('AlertInterface')
+    alertInt = TestBed.get('AlertInterface');
   });
 
   it('should create the app', () => {
@@ -29,38 +29,37 @@ describe('AlertComponent', () => {
     alertInt.setAlertStatus(true, 'show alert');
     fixture.detectChanges();
     const alertBlock = fixture.nativeElement.querySelector('.alert.alert-danger');
-    expect(alertBlock).toBeTruthy()
-  })
+    expect(alertBlock).toBeTruthy();
+  });
 
   it('should not show alert when status is false', () => {
     fixture.detectChanges();
     const alertBlock = fixture.nativeElement.querySelector('.alert.alert-danger');
-    expect(alertBlock).toBeFalsy()
-  })
+    expect(alertBlock).toBeFalsy();
+  });
 
   it('should show message', () => {
     alertInt.setAlertStatus(true, 'show alert message');
     fixture.detectChanges();
     const alertBlockMessage = fixture.nativeElement.querySelector('.alert strong');
-    expect(alertBlockMessage.textContent).toEqual('show alert message')
-  })
+    expect(alertBlockMessage.textContent).toEqual('show alert message');
+  });
 
   it('should show close icon at btn', () => {
     alertInt.setAlertStatus(true, 'show alert message');
     fixture.detectChanges();
     const alertBlockBtnElem = fixture.nativeElement.querySelector('.alert button span');
-    expect(alertBlockBtnElem.textContent).toEqual('×')
-  })
+    expect(alertBlockBtnElem.textContent).toEqual('×');
+  });
 
-  it('should call setAlertStatus when btn click', fakeAsync(() => {
+  it('should call setAlertStatus when btn click', () => {
     alertInt.setAlertStatus(true, 'show alert message');
     fixture.detectChanges();
     const alertBlockBtn = fixture.debugElement.nativeElement.querySelector('button');
-    spyOn(alertInt, 'setAlertStatus')
+    spyOn(alertInt, 'setAlertStatus');
     alertBlockBtn.click();
-    tick();
     expect(alertInt.setAlertStatus).toHaveBeenCalledWith(false, '');
-  }))
+  });
 });
 
 class AlertInterfaceMock {

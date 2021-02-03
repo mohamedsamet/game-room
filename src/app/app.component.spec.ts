@@ -25,8 +25,8 @@ describe('AppComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.componentInstance;
-    redirectInt = TestBed.get('RedirectionInterface')
-    loggedUserInt = TestBed.get('LoggedUserInterface')
+    redirectInt = TestBed.get('RedirectionInterface');
+    loggedUserInt = TestBed.get('LoggedUserInterface');
   });
 
   it('should create the app', () => {
@@ -34,63 +34,63 @@ describe('AppComponent', () => {
   });
 
   describe('manageAutoLogin method', () => {
-    afterEach(() => {
+    beforeEach(() => {
       localStorage.removeItem(LOCAL_STORAGE_ID);
-    })
+    });
 
     it('should call manageAutoLogin on init', () => {
       spyOn(app, 'manageAutoLogin');
       app.ngOnInit();
       expect(app.manageAutoLogin).toHaveBeenCalled();
-    })
+    });
 
     it('should call getLoggedUser if user credential exists', () => {
       spyOn(app, 'getLoggedUser');
       localStorage.setItem(LOCAL_STORAGE_ID, 'test user id');
       app.manageAutoLogin();
       expect(app.getLoggedUser).toHaveBeenCalled();
-    })
+    });
 
     it('should not call getLoggedUser if user credential does not exists', () => {
       spyOn(app, 'getLoggedUser');
       app.manageAutoLogin();
       expect(app.getLoggedUser).not.toHaveBeenCalled();
-    })
+    });
 
     it('should redirect to / if user credential does not exists', () => {
-      spyOn(redirectInt, 'redirectTo')
+      spyOn(redirectInt, 'redirectTo');
       app.manageAutoLogin();
       expect(redirectInt.redirectTo).toHaveBeenCalledWith('/');
-    })
+    });
 
     it('should not redirect to / if user credential exist', () => {
-      spyOn(redirectInt, 'redirectTo')
+      spyOn(redirectInt, 'redirectTo');
       localStorage.setItem(LOCAL_STORAGE_ID, 'test user id');
       app.manageAutoLogin();
       expect(redirectInt.redirectTo).not.toHaveBeenCalledWith('/');
-    })
-  })
+    });
+  });
 
   describe('getLoggedUser method', () => {
     it('should call getLoggedUser from service', () => {
-      spyOn(loggedUserInt, 'getLoggedUser').and.callThrough()
-      app.getLoggedUser()
-      expect(loggedUserInt.getLoggedUser).toHaveBeenCalled()
-    })
+      spyOn(loggedUserInt, 'getLoggedUser').and.callThrough();
+      app.getLoggedUser();
+      expect(loggedUserInt.getLoggedUser).toHaveBeenCalled();
+    });
 
     it('should call setUserName from logged user int', () => {
-      spyOn(loggedUserInt, 'setUserName')
-      app.getLoggedUser()
-      expect(loggedUserInt.setUserName).toHaveBeenCalledWith('samet')
-    })
+      spyOn(loggedUserInt, 'setUserName');
+      app.getLoggedUser();
+      expect(loggedUserInt.setUserName).toHaveBeenCalledWith('samet');
+    });
 
     it('should redirect to rooms with corresponding pseudo', () => {
-      spyOn(redirectInt, 'redirectTo')
+      spyOn(redirectInt, 'redirectTo');
       loggedUserInt.setError();
       app.getLoggedUser();
-      expect(redirectInt.redirectTo).toHaveBeenCalledWith('/')
-    })
-  })
+      expect(redirectInt.redirectTo).toHaveBeenCalledWith('/');
+    });
+  });
 
 });
 

@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   disconnect(): void {
     const userId = localStorage.getItem(LOCAL_STORAGE_ID);
     if (userId) {
-      this.disconnectInt.disconnectUser().subscribe(res => {
+      this.disconnectInt.disconnectUser().subscribe(() => {
         this.logOutAction();
       });
     } else {
