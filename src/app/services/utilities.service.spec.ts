@@ -50,7 +50,7 @@ describe('UtilitiesService', () => {
     });
 
     it('should return filtred data 2', async() => {
-      const obj: any = [{data: 'test data22', total: 55}, {data: 'test data', total: 55}];
+      const obj: any = [{data: 'test data22', total: 55}, {data: 'test data', total: 60}];
       utilitiesService.getDataFromEvent(of(obj)).subscribe(data => {
         expect(data).toEqual(['test data', 'test data22']);
       });

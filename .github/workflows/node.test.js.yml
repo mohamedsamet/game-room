@@ -12,7 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [12.x]
@@ -29,3 +28,15 @@ jobs:
     - run: CI=true npm test
       env:
         CI: true
+    - name: Archive build
+      if: success()
+      uses: actions/upload-artifact@v1
+      with:
+        name: deploy_dist
+        path: dist/game-room
+    - name: Archive code coverage
+      if: success()
+      uses: actions/upload-artifact@v1
+      with:
+        name: deploy_coverage
+        path: coverage
