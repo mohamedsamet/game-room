@@ -1,7 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-import { UtiliesService } from './utilies.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable, of} from "rxjs";
+import {TestBed} from '@angular/core/testing';
+import {UtiliesService} from './utilies.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {of} from 'rxjs';
 
 describe('UtilitiesService', () => {
   let utilitiesService: UtiliesService;
