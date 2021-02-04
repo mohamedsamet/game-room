@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SocketRoomService } from '../services/rooms/socket-room.service';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-import { PaginatorComponent } from '../paginator/paginator.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { HomeComponent } from './home.component';
 import { UserInRoomComponent } from './rooms/user-in-room/user-in-room.component';

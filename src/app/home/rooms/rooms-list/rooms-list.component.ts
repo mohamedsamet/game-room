@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { ManageRoomsInterface } from '../../../interfaces/rooms/manage-rooms.interface';
 import { GetRoomsNotifInterface } from '../../../interfaces/rooms/get-rooms-notif.interface';
 import { LOCAL_STORAGE_ID, ROOMS_PER_PAGE } from '../../../constants/rooms.constant';
-import { PaginatorComponent } from '../../../paginator/paginator.component';
+import { PaginatorComponent } from '../../paginator/paginator.component';
 import { RoomsResultModel } from '../../../models/room/rooms-result.model';
 import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
 import { RedirectionInterface } from '../../../interfaces/utilities/redirection/redirection.interface';

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ROOMS_PER_PAGE } from '../constants/rooms.constant';
+import { ROOMS_PER_PAGE } from '../../constants/rooms.constant';
 
 @Component({
   selector: 'app-paginator',
