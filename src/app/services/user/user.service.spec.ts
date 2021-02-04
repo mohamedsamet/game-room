@@ -1,16 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
-import {UserService} from "./user.service";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {environment} from "../../../environments/environment";
-import {URLS} from "../../constants/urls.constant";
-import {UserModel} from "../../models/user/user.model";
+import { UserService } from './user.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { environment } from '../../../environments/environment';
+import { URLS } from '../../constants/urls.constant';
+import { UserModel } from '../../models/user/user.model';
 
 describe('UserService', () => {
   let userService: UserService;
-  let baseUrl: any;
-  let apiUrls: any;
   let httpTestingController: HttpTestingController;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,7 +24,7 @@ describe('UserService', () => {
     httpTestingController = TestBed.get(HttpTestingController);
   });
 
-  it('should create the utilitie service', () => {
+  it('should create the ueser service', () => {
     expect(userService).toBeTruthy();
   });
 
@@ -54,15 +50,14 @@ describe('UserService', () => {
     });
 
     it('should get request as logged user model', () => {
+      const userModel = {} as UserModel;
+      userModel._id = '123456';
+      userModel.pseudo = 'samet';
       userService.getLoggedUser().subscribe((user) => {
-        console.log(user);
         expect(user._id).toEqual('123456');
         expect(user.pseudo).toEqual('samet');
       });
       const req = httpTestingController.expectOne(loggedUserUrl);
-      const userModel = {} as UserModel;
-      userModel._id = '123456';
-      userModel.pseudo = 'samet';
       req.flush(userModel);
     });
   });
@@ -106,14 +101,14 @@ describe('UserService', () => {
     });
 
     it('should get response after adding user', () => {
+      const userModel = {} as UserModel;
+      userModel._id = '123456';
+      userModel.pseudo = 'sametresponse';
       userService.addUserByPseudo('samet').subscribe((user) => {
         expect(user._id).toEqual('123456');
         expect(user.pseudo).toEqual('sametresponse');
       });
       const req = httpTestingController.expectOne(loggedUserUrl);
-      const userModel = {} as UserModel;
-      userModel._id = '123456';
-      userModel.pseudo = 'sametresponse';
       req.flush(userModel);
     });
   });
