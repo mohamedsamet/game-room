@@ -21,6 +21,10 @@ describe('AlertComponent', () => {
     alertInt = TestBed.get('AlertInterface');
   });
 
+  afterAll(() => {
+    alertInt.setAlertStatus(false, 'show alert');
+  });
+
   it('should create the app', () => {
     expect(app).toBeTruthy();
   });
