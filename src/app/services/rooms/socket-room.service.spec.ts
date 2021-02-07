@@ -9,7 +9,10 @@ import {UserInRoomResultModel} from "../../models/user/user-in-room-result.model
 import {UserModel} from "../../models/user/user.model";
 import {RoomsResultModel} from "../../models/room/rooms-result.model";
 import {RoomModel} from "../../models/room/room.model";
-import {RoomsHelper} from "./room.service.spec.helper";
+import {RoomsHelper} from "../../tests-spec-mocks/helpers/room.service.spec.helper";
+import {SocketMock} from "../../tests-spec-mocks/socket.mock";
+import {RedirectionInterfaceMock} from "../../tests-spec-mocks/redirection.mock";
+import {DataInterfaceMock} from "../../tests-spec-mocks/data.mock";
 
 describe('SocketRoomsService', () => {
   let socketRoomsService: SocketRoomService;
@@ -96,10 +99,14 @@ describe('SocketRoomsService', () => {
     });
 
     it('should return data from socket', (done) => {
+      const expectedKeysForUsersInRoom: string[] = ['users', 'roomId'].sort();
+      const expectedKeysForUser: string[]= ['_id', 'pseudo'];
       socketRoomsService.getUsersInRoomNotif('zerzer').subscribe(res => {
         expect(res.roomId).toEqual('zerzer');
         expect(res.users[0]._id).toEqual('8888');
         expect(res.users[0].pseudo).toEqual('samet');
+        expect(Object.keys(res).sort()).toEqual(expectedKeysForUsersInRoom);
+        expect(Object.keys(res.users[0]).sort()).toEqual(expectedKeysForUser);
         done();
       });
     });
@@ -119,64 +126,21 @@ describe('SocketRoomsService', () => {
     });
 
     it('should return data from socket', (done) => {
+      const expectedKeysForRoomsResult: string[] = ['total', 'rooms'].sort();
+      const expectedKeysForRoom: string[] = ['_id', 'name', 'createdByUserId', 'users', 'createdBy'].sort();
       socketRoomsService.getRoomsSockNotif().subscribe(res => {
         expect(res.total).toEqual(1);
-        expect(res.rooms[0].name).toEqual('room1');
-        expect(res.rooms[0]._id).toEqual('wxcccc');
+        expect(res.rooms[0].name).toEqual('room2');
+        expect(res.rooms[0]._id).toEqual('fggggdfdf');
         expect(res.rooms[0].createdBy).toEqual('samet');
-        expect(res.rooms[0].users[0]._id).toEqual('54654');
-        expect(res.rooms[0].createdByUserId).toEqual('54654');
-        expect(res.rooms[0].users[0].pseudo).toEqual('samet');
+        expect(res.rooms[0].users[0]._id).toEqual('5254');
+        expect(res.rooms[0].createdByUserId).toEqual('54655');
+        expect(res.rooms[0].users[0].pseudo).toEqual('yasmine');
+        expect(Object.keys(res).sort()).toEqual(expectedKeysForRoomsResult);
+        expect(Object.keys(res.rooms[0]).sort()).toEqual(expectedKeysForRoom);
         done();
       });
     });
   });
 
 });
-
-class SocketMock {
-  public executeCallBackTree: {fn: Function, topic: string}[] = [];
-  on(eventName: string, callback: Function) {
-    this.executeCallBackTree.push({fn: callback, topic: eventName});
-  }
-
-  emit(event: string, val: string) {
-    const eventFn = this.executeCallBackTree.find(call => call.topic === event);
-    eventFn ? eventFn.fn() : null;
-  }
-
-  fromEvent(event: string): Observable<any> {
-    if (event === 'getUsersInRoom') {
-      return this.getUserInRoom();
-    } else if (event === 'getRooms') {
-      return this.getRooms()
-    }
-    return of()
-  }
-
-  getUserInRoom() {
-    const usersInRoom = {} as UserInRoomResultModel;
-    const user: UserModel = {_id: '8888', pseudo: 'samet'}
-    usersInRoom.roomId = 'zerzer';
-    usersInRoom.users = [user];
-    return of(usersInRoom);
-  }
-
-  getRooms() {
-    const usersInRoom = {} as RoomsResultModel;
-    usersInRoom.total = 1;
-    usersInRoom.rooms = [new RoomsHelper().room1];
-    return of(usersInRoom);
-  }
-}
-
-class DataInterfaceMock {
-  getDataFromEvent(socket: Observable<any>): Observable<any> {
-    return socket;
-  }
-}
-class RedirectionInterfaceMock {
-  redirectTo(path: string) {
-
-  }
-}

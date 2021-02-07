@@ -4,6 +4,9 @@ import { HomeComponent } from './home.component';
 import { DisconnectionInterface } from '../interfaces/user/disconnection.interface';
 import { LOCAL_STORAGE_ID } from '../constants/rooms.constant';
 import { Observable, of } from 'rxjs';
+import {RedirectionInterfaceMock} from "../tests-spec-mocks/redirection.mock";
+import {LoggedUserInterfaceMock} from "../tests-spec-mocks/logged-user.mock";
+import {DisconnectionInterfaceMock} from "../tests-spec-mocks/disconnection.mock";
 
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
@@ -115,23 +118,3 @@ describe('HomeComponent', () => {
   });
 });
 
-class DisconnectionInterfaceMock {
-  disconnectUser(): Observable<any> {
-    return of([]);
-  }
-}
-
-class RedirectionInterfaceMock {
-  redirectTo(path: string): void {}
-}
-
-class LoggedUserInterfaceMock {
-  private userName: string;
-  setUserName(userName: string): void {
-    this.userName = userName;
-  }
-
-  getUserName(): string {
-    return this.userName;
-  }
-}

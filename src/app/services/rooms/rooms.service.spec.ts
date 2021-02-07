@@ -6,7 +6,7 @@ import { UserModel } from '../../models/user/user.model';
 import { RoomsService } from './rooms.service';
 import { RoomModel } from '../../models/room/room.model';
 import { RoomsResultModel } from '../../models/room/rooms-result.model';
-import { RoomsHelper } from './room.service.spec.helper';
+import { RoomsHelper } from '../../tests-spec-mocks/helpers/room.service.spec.helper';
 
 describe('RoomsService', () => {
   let roomsService: RoomsService;
@@ -61,18 +61,23 @@ describe('RoomsService', () => {
     });
 
     it('should get response after adding user', () => {
+      const expectedKeysForRoom: string[] = ['_id', 'name', 'createdByUserId', 'users', 'createdBy'].sort();
+      const expectedKeysForUser: string[] = ['_id', 'pseudo'].sort();
       roomsService.addRoom('room name').subscribe((room) => {
         expect(room._id).toEqual('123456');
         expect(room.name).toEqual('room samet');
         expect(room.createdByUserId).toEqual('987654t');
         expect(room.users[0].pseudo).toEqual('samet');
+        expect(Object.keys(room).sort()).toEqual(expectedKeysForRoom);
+        expect(Object.keys(room.users[0]).sort()).toEqual(expectedKeysForUser);
       });
       const req = httpTestingController.expectOne(roomsUrl);
       const roomModel = {} as RoomModel;
       roomModel._id = '123456';
       roomModel.name = 'room samet';
       roomModel.createdByUserId = '987654t';
-      roomModel.users = [{pseudo: 'samet'} as UserModel];
+      roomModel.createdBy = 'tsss';
+      roomModel.users = [{pseudo: 'samet', _id: 'id'} as UserModel];
       req.flush(roomModel);
     });
   });
@@ -92,6 +97,8 @@ describe('RoomsService', () => {
     });
 
     it('should get roomsResultModel', () => {
+      const expectedKeysForRoom: string[] = ['_id', 'name', 'createdByUserId', 'users', 'createdBy'].sort();
+      const expectedKeysForUser: string[] = ['_id', 'pseudo'].sort();
       const roomsResult = {} as RoomsResultModel;
       roomsResult.total = 2;
       roomsResult.rooms = [new RoomsHelper().room1, new RoomsHelper().room3];
@@ -110,6 +117,8 @@ describe('RoomsService', () => {
         expect(res.rooms[1].users[0]._id).toEqual('54654');
         expect(res.rooms[1].users[1]._id).toEqual('5254');
         expect(res.rooms[1].users[2]._id).toEqual('54699');
+        expect(Object.keys(res.rooms[0]).sort()).toEqual(expectedKeysForRoom);
+        expect(Object.keys(res.rooms[0].users[0]).sort()).toEqual(expectedKeysForUser);
       });
       const req = httpTestingController.expectOne(`${roomsUrl}?start=0&end=10`);
       req.flush(roomsResult);
@@ -131,6 +140,8 @@ describe('RoomsService', () => {
     });
 
     it('should return roomsResultModel', () => {
+      const expectedKeysForRoom: string[] = ['_id', 'name', 'createdByUserId', 'users', 'createdBy'].sort();
+      const expectedKeysForUser: string[] = ['_id', 'pseudo'].sort();
       const roomsResult = {} as RoomsResultModel;
       roomsResult.total = 1;
       roomsResult.rooms = [new RoomsHelper().room2];
@@ -140,6 +151,8 @@ describe('RoomsService', () => {
         expect(resAfterDel.rooms[0].name).toEqual('room2');
         expect(resAfterDel.rooms[0].createdBy).toEqual('samet');
         expect(resAfterDel.total).toEqual(1);
+        expect(Object.keys(resAfterDel.rooms[0]).sort()).toEqual(expectedKeysForRoom);
+        expect(Object.keys(resAfterDel.rooms[0].users[0]).sort()).toEqual(expectedKeysForUser);
       });
       const req = httpTestingController.expectOne(`${roomsUrl}?id=123456&user=10`);
       req.flush(roomsResult);

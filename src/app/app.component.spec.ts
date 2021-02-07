@@ -6,6 +6,9 @@ import { LOCAL_STORAGE_ID } from './constants/rooms.constant';
 import { RedirectionInterface } from './interfaces/utilities/redirection/redirection.interface';
 import { Observable, of, throwError } from 'rxjs';
 import { Component } from '@angular/core';
+import {LoggedUserInterfaceMock} from "./tests-spec-mocks/logged-user.mock";
+import {RedirectionInterfaceMock} from "./tests-spec-mocks/redirection.mock";
+import {AlertComponentMock} from "./tests-spec-mocks/alert.component.mock";
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -93,31 +96,3 @@ describe('AppComponent', () => {
   });
 
 });
-
-class RedirectionInterfaceMock {
-  redirectTo(path: string): void {
-  }
-}
-
-class LoggedUserInterfaceMock {
-  isError = false;
-  getLoggedUser(): Observable<any> {
-    if (this.isError) {
-      return throwError('error');
-    }
-    return of({pseudo: 'samet'});
-  }
-
-  setError() {
-    this.isError = true;
-  }
-
-  setUserName(userName: string): void {
-  }
-}
-
-@Component({
-  selector: 'app-alert',
-  template: ''
-})
-class AlertComponentMock {}

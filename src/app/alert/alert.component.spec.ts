@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertComponent } from './alert.component';
 import { AlertModel } from '../models/alert/alert.model';
+import {AlertInterfaceMock} from "../tests-spec-mocks/alert.mock";
 
 describe('AlertComponent', () => {
   let fixture: ComponentFixture<AlertComponent>;
@@ -65,14 +66,3 @@ describe('AlertComponent', () => {
     expect(alertInt.setAlertStatus).toHaveBeenCalledWith(false, '');
   });
 });
-
-class AlertInterfaceMock {
-  private status: AlertModel;
-  getAlertStatus(): AlertModel {
-   return this.status;
-  }
-
-  setAlertStatus(status: boolean, message: string): void {
-    this.status = {status, message};
-  }
-}
