@@ -7,7 +7,7 @@ arr=(`find ./src/app -name "*.component.ts" -o -name "*.service.ts" `)
 for ((i=0; i<${#arr[@]}; i++)); do
     #do something to each element of array
     if ls `dirname ${arr[$i]}`/**.spec.ts; then
-      echo "file exist"
+      echo "OK"
     else
       echo "ERROR cannot find spec files" `dirname ${arr[$i]}`/**.spec.ts
       exit 1

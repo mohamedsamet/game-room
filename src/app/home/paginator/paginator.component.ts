@@ -16,16 +16,16 @@ export class PaginatorComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.totalResult && this.totalResult) {
-      this.pagesArray = this.getPagesArray();
+      this.pagesArray = this.getPagesArray(ROOMS_PER_PAGE);
     }
   }
 
-  getPagesArray(): number[] {
-    return Array(this.getPagesNumber()).fill(0).map((page, i) => i + 1);
+  getPagesArray(roomsByPage: number): number[] {
+    return Array(this.getPagesNumber(roomsByPage)).fill(0).map((page, i) => i + 1);
   }
 
-  getPagesNumber(): number {
-    return Math.ceil(this.totalResult / ROOMS_PER_PAGE);
+  getPagesNumber(roomsByPage: number): number {
+    return Math.ceil(this.totalResult / roomsByPage);
   }
 
   selectPage(page: number): void {

@@ -1,5 +1,5 @@
 <nav *ngIf="totalResult" aria-label="..." class="float-right">
-  <ul *ngIf="pagesArray.length < 6" class="pagination pagination-sm">
+  <ul *ngIf="pagesArray.length < 6" class="pagination pagination-sm basic-pages">
     <li *ngFor="let page of pagesArray" class="page-item">
       <a [ngClass]="{'bg-primary text-light': selectedPage === page}"
          (click)="selectPage(page)"
@@ -7,7 +7,7 @@
       </a>
     </li>
   </ul>
-  <ul *ngIf="pagesArray.length >= 6" class="pagination pagination-sm">
+  <ul *ngIf="pagesArray.length >= 6" class="pagination pagination-sm extended-pages">
     <li class="page-item">
       <a [ngClass]="{'bg-primary text-light': selectedPage === pagesArray[0]}"
          (click)="selectPage(pagesArray[0])"
