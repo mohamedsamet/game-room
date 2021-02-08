@@ -1,18 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import {SocketRoomService} from "./socket-room.service";
-import {Socket} from "ngx-socket-io";
-import {RedirectionInterface} from "../../interfaces/utilities/redirection/redirection.interface";
-import {DataInterface} from "../../interfaces/utilities/data.interface";
-import {Observable, of, Subject} from "rxjs";
-import {LOCAL_STORAGE_ID} from "../../constants/rooms.constant";
-import {UserInRoomResultModel} from "../../models/user/user-in-room-result.model";
-import {UserModel} from "../../models/user/user.model";
-import {RoomsResultModel} from "../../models/room/rooms-result.model";
-import {RoomModel} from "../../models/room/room.model";
-import {RoomsHelper} from "../../tests-spec-mocks/helpers/room.service.spec.helper";
-import {SocketMock} from "../../tests-spec-mocks/socket.mock";
-import {RedirectionInterfaceMock} from "../../tests-spec-mocks/redirection.mock";
-import {DataInterfaceMock} from "../../tests-spec-mocks/data.mock";
+import { SocketRoomService } from './socket-room.service';
+import { Socket } from 'ngx-socket-io';
+import { RedirectionInterface } from '../../interfaces/utilities/redirection/redirection.interface';
+import { DataInterface } from '../../interfaces/utilities/data.interface';
+import { Observable } from 'rxjs';
+import { LOCAL_STORAGE_ID } from '../../constants/rooms.constant';
+import { SocketMock } from '../../tests-spec-mocks/socket.mock';
+import { RedirectionInterfaceMock } from '../../tests-spec-mocks/redirection.mock';
+import { DataInterfaceMock } from '../../tests-spec-mocks/data.mock';
 
 describe('SocketRoomsService', () => {
   let socketRoomsService: SocketRoomService;

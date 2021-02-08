@@ -8,7 +8,7 @@ import { URLS } from '../../constants/urls.constant';
 import { SocketMock } from '../../tests-spec-mocks/socket.mock';
 import { DataInterfaceMock } from '../../tests-spec-mocks/data.mock';
 import {ChatModel} from '../../models/chat/chat.model';
-import {UserWriterStatusModel} from '../../models/user/user-writer-status.model';
+import { UserWriterStatusModel } from '../../models/user/user-writer-status.model';
 
 describe('ChatService', () => {
   let chatService: ChatService;

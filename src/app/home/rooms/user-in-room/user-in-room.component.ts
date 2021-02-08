@@ -6,7 +6,6 @@ import { UserModel } from '../../../models/user/user.model';
   templateUrl: './user-in-room.component.html'
 })
 export class UserInRoomComponent {
-  @Input() roomId: string;
   @Input() users: UserModel[];
   constructor() { }
 }

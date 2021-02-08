@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertComponent } from './alert.component';
-import { AlertModel } from '../models/alert/alert.model';
-import {AlertInterfaceMock} from "../tests-spec-mocks/alert.mock";
+import { AlertInterfaceMock } from '../tests-spec-mocks/alert.mock';
 
 describe('AlertComponent', () => {
   let fixture: ComponentFixture<AlertComponent>;
