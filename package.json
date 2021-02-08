@@ -12,7 +12,8 @@
     "test": "ng test --watch=false --browsers ChromeHeadless --code-coverage",
     "lint": "ng lint",
     "lineOfCode": "git diff --shortstat `git hash-object -t tree /dev/null`",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "test-prereq": "./spec.lint.bash"
   },
   "private": true,
   "dependencies": {
