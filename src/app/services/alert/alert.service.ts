@@ -8,7 +8,7 @@ import { RESPONSE_ERROR_ALERT_DELAY } from '../../constants/rooms.constant';
 @Injectable({
   providedIn: 'root'
 })
-export class AlertService implements AlertInterface{
+export class AlertService implements AlertInterface {
   public alertStatus: AlertModel;
   constructor() { }
 
