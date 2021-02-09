@@ -13,7 +13,8 @@
     "lint": "ng lint",
     "lineOfCode": "git diff --shortstat `git hash-object -t tree /dev/null`",
     "e2e": "ng e2e",
-    "test-prereq": "./spec.lint.bash"
+    "test-prereq": "./spec.lint.bash",
+    "test-lint-code-cov": "./coverage.lint.bash"
   },
   "private": true,
   "dependencies": {

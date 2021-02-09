@@ -29,6 +29,7 @@ jobs:
     - run: CI=true npm test
       env:
         CI: true
+    - run: npm run test-lint-code-cov
     - name: Archive build
       if: success()
       uses: actions/upload-artifact@v1
