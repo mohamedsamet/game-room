@@ -140,7 +140,6 @@ describe('LoginComponent', () => {
     });
 
     it('should display formGroup', () => {
-      spyOn(loginApp, 'validatePseudo');
       const formGroup = fixture.nativeElement.querySelector('form');
       expect(formGroup.getAttribute('ng-reflect-form')).toBeTruthy();
     });

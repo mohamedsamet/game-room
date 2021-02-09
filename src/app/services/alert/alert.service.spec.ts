@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import {fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
 import { AlertService } from './alert.service';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -43,17 +43,15 @@ describe('AlertService', () => {
   });
 
   describe('closeAlertDelayed method', () => {
-    beforeEach(() => {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 6000;
-    });
-    it('should setAlertStatus after delay', (done) => {
+    it('should setAlertStatus after delay', fakeAsync(() => {
       spyOn(alertService, 'setAlertStatus');
       alertService.closeAlertDelayed();
       of(true).pipe(delay(5000)).subscribe(() => {
         expect(alertService.setAlertStatus).toHaveBeenCalled();
-        done();
+        flush();
       });
-    });
+      tick(5000);
+    }));
   });
 });
 
