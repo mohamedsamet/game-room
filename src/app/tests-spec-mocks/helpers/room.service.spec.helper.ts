@@ -1,5 +1,5 @@
-import {UserModel} from '../../models/user/user.model';
-import {RoomModel} from '../../models/room/room.model';
+import { UserModel } from '../../models/user/user.model';
+import { RoomModel } from '../../models/room/room.model';
 
 export class RoomsHelper {
   users: UserModel[] = [{pseudo: 'samet', _id: '54654'}, {pseudo: 'yasmine', _id: '5254'}, {pseudo: 'marwa', _id: '54699'}];

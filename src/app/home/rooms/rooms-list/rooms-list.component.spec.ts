@@ -7,6 +7,7 @@ import { EmitRoomsMock } from '../../../tests-spec-mocks/emit-rooms.mock';
 import { RedirectionInterfaceMock } from '../../../tests-spec-mocks/redirection.mock';
 import { RoomsHelper } from '../../../tests-spec-mocks/helpers/room.service.spec.helper';
 import { PaginatorComponent } from '../../paginator/paginator.component';
+import { By } from '@angular/platform-browser';
 
 describe('RoomsListComponent', () => {
   let fixture: ComponentFixture<RoomsListComponent>;
@@ -242,5 +243,124 @@ describe('RoomsListComponent', () => {
     });
   });
 
+  describe('HTML spec DOM', () => {
+    it('should display label Rooms', () => {
+      const labelElement = fixture.nativeElement.querySelector('label');
+      expect(labelElement.textContent.trim()).toEqual('Rooms');
+    });
+
+    describe('Reload button', () => {
+      it('should show reload btn', () => {
+        roomsList.showReloadBtn = true;
+        fixture.detectChanges();
+        const reloadBtnElement = fixture.nativeElement.querySelector('div.reload-icon');
+        expect(reloadBtnElement).toBeTruthy();
+      });
+
+      it('should not show reload btn', () => {
+        roomsList.showReloadBtn = false;
+        fixture.detectChanges();
+        const reloadBtnElement = fixture.nativeElement.querySelector('div.reload-icon');
+        expect(reloadBtnElement).toBeFalsy();
+      });
+
+      it('should reloadRooms on click', () => {
+        spyOn(roomsList, 'reloadRooms');
+        roomsList.showReloadBtn = true;
+        fixture.detectChanges();
+        const reloadBtnElement = fixture.nativeElement.querySelector('div.reload-icon');
+        reloadBtnElement.click();
+        expect(roomsList.reloadRooms).toHaveBeenCalled();
+      });
+    });
+
+    describe('app-paginator element', () => {
+      it('should show app paginator', () => {
+        const appPaginator = fixture.nativeElement.querySelector('app-paginator');
+        expect(appPaginator).toBeTruthy();
+      });
+
+      it('should pass totalRooms', () => {
+        roomsList.totalRooms = 99;
+        fixture.detectChanges();
+        const appPaginator = fixture.nativeElement.querySelector('app-paginator');
+        expect(appPaginator.getAttribute('ng-reflect-total-result')).toEqual('99');
+      });
+
+      it('should call selectPage when selectPageEvent', () => {
+        spyOn(roomsList, 'selectPage');
+        roomsList.paginator.selectedPageEvent.emit(5);
+        expect(roomsList.selectPage).toHaveBeenCalledWith(5);
+      });
+    });
+
+    describe('table of content', () => {
+      beforeEach(() => {
+        roomsList.roomList = new RoomsHelper().rooms;
+        fixture.detectChanges();
+      });
+
+      it('should not show table if roomList empty and show small empty message', () => {
+        roomsList.roomList = [];
+        fixture.detectChanges();
+        const tableContent = fixture.nativeElement.querySelector('table.table');
+        const emptyMessage = fixture.nativeElement.querySelector('p small');
+        expect(tableContent).toBeFalsy();
+        expect(emptyMessage.textContent.trim()).toEqual('Rooms list is empty');
+      });
+
+      it('should show table if roomList exist', () => {
+        const tableContent = fixture.nativeElement.querySelector('table.table');
+        const emptyMessage = fixture.nativeElement.querySelector('p small');
+        expect(tableContent).toBeTruthy();
+        expect(emptyMessage).toBeFalsy()
+      });
+
+      it('should show table header', () => {
+        const tableContentHeader = fixture.debugElement.queryAll(By.css('table.table thead th'));
+        expect(tableContentHeader[0].nativeElement.textContent.trim()).toEqual('Name');
+        expect(tableContentHeader[1].nativeElement.textContent.trim()).toEqual('Created By');
+        expect(tableContentHeader[2].nativeElement.textContent.trim()).toEqual('N° persons');
+      });
+
+      it('should display content of table', () => {
+        const tableContentRows = fixture.debugElement.queryAll(By.css('table.table tbody tr:nth-child(1) td'));
+        expect(tableContentRows[0].nativeElement.textContent.trim()).toEqual('room1');
+        expect(tableContentRows[1].nativeElement.textContent.trim()).toEqual('samet');
+        expect(tableContentRows[2].nativeElement.textContent.trim()).toEqual('2');
+      });
+
+      it('should open room', () => {
+        spyOn(roomsList, 'openRoom');
+        const tableContentRows = fixture.nativeElement.querySelector('table.table tbody tr:nth-child(1)');
+        tableContentRows.click();
+        fixture.detectChanges();
+        expect(roomsList.openRoom).toHaveBeenCalledWith(new RoomsHelper().room1);
+      });
+
+      describe('delete Icon', () => {
+        it('should not show delete icon if not created b userID', () => {
+          const deleteIcon = fixture.nativeElement.querySelector('table.table tbody tr:nth-child(1) span');
+          expect(deleteIcon).toBeFalsy();
+        });
+
+        it('should show delete icon if created b userID', () => {
+          roomsList.userId = '54654';
+          fixture.detectChanges();
+          const deleteIcon = fixture.nativeElement.querySelector('table.table tbody tr:nth-child(1) span');
+          expect(deleteIcon).toBeTruthy();
+        });
+
+        it('should call delete room', () => {
+          spyOn(roomsList, 'deleteRoom');
+          roomsList.userId = '54654';
+          fixture.detectChanges();
+          const deleteIcon = fixture.nativeElement.querySelector('table.table tbody tr:nth-child(1) span');
+          deleteIcon.click();
+          expect(roomsList.deleteRoom).toHaveBeenCalledWith('wxcccc');
+        });
+      });
+    });
+  });
 });
 
