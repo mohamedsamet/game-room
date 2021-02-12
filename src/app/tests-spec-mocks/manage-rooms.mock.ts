@@ -9,7 +9,7 @@ export class ManageRoomsMock implements  ManageRoomsInterface {
   }
 
   getRoomName(): string {
-    return '';
+    return 'room1';
   }
 
   getRoomsByPage(start: number, end: number): Observable<RoomsResultModel> {
