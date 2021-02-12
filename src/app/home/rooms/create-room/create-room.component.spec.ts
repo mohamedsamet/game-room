@@ -1,12 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RoomsHelper } from '../../../tests-spec-mocks/helpers/room.service.spec.helper';
-import { By } from '@angular/platform-browser';
-import {CreateRoomComponent} from "./create-room.component";
-import {AddRoomMock} from "../../../tests-spec-mocks/add-room.mock";
-import {AddRoomInterface} from "../../../interfaces/rooms/add-room.interface";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {EmitRoomsNotifInterface} from "../../../interfaces/rooms/emit-rooms-notif.interface";
-import {EmitRoomMock} from "../../../tests-spec-mocks/emit-room.mock";
+import { CreateRoomComponent } from './create-room.component';
+import { AddRoomMock } from '../../../tests-spec-mocks/add-room.mock';
+import { AddRoomInterface } from '../../../interfaces/rooms/add-room.interface';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
+import { EmitRoomsMock } from '../../../tests-spec-mocks/emit-rooms.mock';
 
 describe('CreateRoom', () => {
   let fixture: ComponentFixture<CreateRoomComponent>;
@@ -23,7 +21,7 @@ describe('CreateRoom', () => {
       providers: [
         FormBuilder,
         {provide: 'AddRoomInterface', useClass: AddRoomMock},
-        {provide: 'EmitRoomsNotifInterface', useClass: EmitRoomMock}
+        {provide: 'EmitRoomsNotifInterface', useClass: EmitRoomsMock}
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(CreateRoomComponent);

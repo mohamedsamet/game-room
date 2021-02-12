@@ -1,6 +1,7 @@
 import { Observable, of, throwError } from 'rxjs';
+import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
 
-export class LoggedUserInterfaceMock {
+export class LoggedUserInterfaceMock implements LoggedUserInterface {
   private userName: string;
   isError = false;
   getLoggedUser(): Observable<any> {

@@ -6,7 +6,7 @@ import { LOCAL_STORAGE_ID } from './constants/rooms.constant';
 import { RedirectionInterface } from './interfaces/utilities/redirection/redirection.interface';
 import { LoggedUserInterfaceMock } from './tests-spec-mocks/logged-user.mock';
 import { RedirectionInterfaceMock } from './tests-spec-mocks/redirection.mock';
-import { AlertComponentMock } from './tests-spec-mocks/alert.component.mock';
+import { AlertComponentMock } from './tests-spec-mocks/components-mock/alert.component.mock';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
