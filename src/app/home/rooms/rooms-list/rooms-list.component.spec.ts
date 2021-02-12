@@ -118,6 +118,7 @@ describe('RoomsListComponent', () => {
       roomsList.roomList = [];
       roomsList.totalRooms = null;
     });
+
     it('should call getRoomsSockNotif from int', () => {
       spyOn(getRoomsNotif, 'getRoomsSockNotif').and.callThrough();
       roomsList.getRooms();
@@ -141,11 +142,6 @@ describe('RoomsListComponent', () => {
       roomsList.selectedPage = 2;
       roomsList.getRooms();
       expect(roomsList.showReloadBtn).toBeTruthy();
-    });
-
-    it('should set roomList with results if selected page = 1', () => {
-      roomsList.selectedPage =1;
-      roomsList.getRooms();
     });
   });
 
