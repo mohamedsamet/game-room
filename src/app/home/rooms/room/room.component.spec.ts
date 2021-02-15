@@ -8,6 +8,7 @@ import { RoomAccessMock } from '../../../tests-spec-mocks/room-access.mock';
 import { EmitRoomsMock } from '../../../tests-spec-mocks/emit-rooms.mock';
 import { GetUsersInRoomNotifMock } from '../../../tests-spec-mocks/get-users-in-room-notif.mock';
 import { ManageRoomsMock } from '../../../tests-spec-mocks/manage-rooms.mock';
+import { RoomsHelper } from '../../../tests-spec-mocks/helpers/room.service.spec.helper';
 
 describe('RoomComponent', () => {
   let fixture: ComponentFixture<RoomComponent>;
@@ -157,6 +158,43 @@ describe('RoomComponent', () => {
       spyOn(redirectInt, 'redirectTo');
       roomComponent.goBack();
       expect(redirectInt.redirectTo).toHaveBeenCalledWith('../', activeRoute);
+    });
+  });
+
+  describe('HTML DOM', () => {
+    it('should show room Name', () => {
+      roomComponent.roomName = 'room1';
+      fixture.detectChanges();
+      const roomNameDiv = fixture.nativeElement.querySelector('.room-title');
+      expect(roomNameDiv.textContent).toEqual('room1');
+    });
+
+    it('should show chat box in 9/12 part of screen width', () => {
+      const chatBoxContent = fixture.nativeElement.querySelector('.chat-box-content .row div');
+      expect(chatBoxContent.classList.toString().includes('col-9')).toBeTruthy();
+      expect(chatBoxContent.classList.toString().includes('h-100')).toBeTruthy();
+    });
+
+    it('should show chat box component', () => {
+      const chatBoxComponent = fixture.nativeElement.querySelector('app-chat-box');
+      expect(chatBoxComponent).toBeTruthy();
+    });
+
+    it('should usersInRoom in 3/12 part of screen width', () => {
+      const usersInRoomContent = fixture.nativeElement.querySelector('.chat-box-content .row div:not(:first-child)');
+      expect(usersInRoomContent.classList.toString().includes('col-3')).toBeTruthy();
+    });
+
+    it('should show userInRoomComponent', () => {
+      const usersInRoomComponent = fixture.nativeElement.querySelector('app-user-in-room');
+      expect(usersInRoomComponent).toBeTruthy();
+    });
+
+    it('should apply userConnected to input userInRoomComponent', () => {
+      roomComponent.usersConnected = new RoomsHelper().users;
+      fixture.detectChanges();
+      const usersInRoomComponent = fixture.nativeElement.querySelector('app-user-in-room');
+      expect(usersInRoomComponent.getAttribute('ng-reflect-users')).toBeTruthy();
     });
   });
 });
