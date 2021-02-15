@@ -17,7 +17,7 @@ export class ChatBoxComponent implements OnInit {
   public chatMessages: ChatModel[];
   public userId: string;
   public writers: UserWriterStatusModel[] = [];
-  @ViewChild('messagesScroll') private chatContent: ElementRef;
+  @ViewChild('messagesScroll') public chatContent: ElementRef;
   constructor(@Inject('ChatMessageInterface') private chatMessageInterface: ChatMessageInterface,
               @Inject('LoggedUserInterface') private  loggedUser: LoggedUserInterface,
               private activeRoute: ActivatedRoute,
@@ -41,7 +41,7 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  private getMessagesInRoom(): void {
+  getMessagesInRoom(): void {
     this.chatMessageInterface.getMessagesInRoom().subscribe(chatMessages => {
       this.chatMessages = chatMessages;
       this.manageScrollChatBox();
@@ -74,7 +74,7 @@ export class ChatBoxComponent implements OnInit {
     this.chatMessageInterface.requestWritersInToom(this.roomId);
   }
 
-  private getWriterStatusInRoom(roomId: string): void {
+  getWriterStatusInRoom(roomId: string): void {
     this.chatMessageInterface.getWriterStatusInRoom().subscribe(writers => {
       this.writers = writers.filter(writer => writer._id !== this.userId);
     });

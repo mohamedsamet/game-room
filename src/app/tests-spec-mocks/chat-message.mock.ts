@@ -2,14 +2,15 @@ import { Observable, of } from 'rxjs';
 import { ChatMessageInterface } from '../interfaces/chat/chat-message.interface';
 import { ChatModel } from '../models/chat/chat.model';
 import { UserWriterStatusModel } from '../models/user/user-writer-status.model';
+import { ChatMessagesSpecHelper } from './helpers/chat-messages.spec.helper';
 
 export class ChatMessageMock implements ChatMessageInterface {
   getMessagesInRoom(): Observable<ChatModel[]> {
-    return undefined;
+    return of(ChatMessagesSpecHelper.ChatMessages);
   }
 
   getWriterStatusInRoom(): Observable<UserWriterStatusModel[]> {
-    return of([{} as UserWriterStatusModel]);
+    return of(ChatMessagesSpecHelper.usersInRoom);
   }
 
   requestMessagesInRoom(roomId: string): void {
