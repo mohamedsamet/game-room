@@ -6,6 +6,8 @@ import { LoggedUserInterfaceMock } from '../../../../tests-spec-mocks/logged-use
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserWriterStatusModel } from '../../../../models/user/user-writer-status.model';
+import { By } from '@angular/platform-browser';
+import { ChatMessagesSpecHelper } from '../../../../tests-spec-mocks/helpers/chat-messages.spec.helper';
 
 describe('ChatBoxComponent', () => {
   let fixture: ComponentFixture<ChatBoxComponent>;
@@ -252,6 +254,131 @@ describe('ChatBoxComponent', () => {
       chatBoxComponent.userId = '4566';
       chatBoxComponent.getWriterStatusInRoom('78');
       expect(chatBoxComponent.writers.length).toEqual(1);
+    });
+  });
+
+  describe('HTML DOM test', () => {
+    describe('chat bloc', () => {
+      beforeEach(() => {
+        chatBoxComponent.chatMessages = ChatMessagesSpecHelper.ChatMessages;
+        fixture.detectChanges();
+      });
+
+      it('should show messageScroll elem', () => {
+        const messageScroll = fixture.debugElement.queryAll(By.css('.messages-scroll-container'));
+        expect(messageScroll).toBeTruthy();
+      });
+
+      it('should show chat blocs', () => {
+        const messageBlocs = fixture.debugElement.queryAll(By.css('.message-bloc'));
+        expect(messageBlocs.length).toEqual(2);
+      });
+
+      it('should add class is-user-msg if user message', () => {
+        chatBoxComponent.userId = 'popoe';
+        fixture.detectChanges();
+        const chatBlocs = fixture.debugElement.queryAll(By.css('.message-bloc'));
+        expect(chatBlocs[0].nativeElement.classList.contains('is-user-msg')).toBeTruthy();
+        expect(chatBlocs[1].nativeElement.classList.contains('is-user-msg')).toBeFalsy();
+      });
+
+      it('should contain author def', () => {
+        const chatBloc = fixture.debugElement.queryAll(By.css('.message-bloc .author-def'));
+        expect(chatBloc[0].nativeElement.textContent.trim()).toEqual('yasmin');
+        expect(chatBloc[1].nativeElement.textContent.trim()).toEqual('samet');
+      });
+
+      it('should contain date-text', () => {
+        const chatBloc = fixture.debugElement.queryAll(By.css('.message-bloc .date-text'));
+        expect(chatBloc[0].nativeElement.textContent.trim()).toEqual('11:35');
+        expect(chatBloc[1].nativeElement.textContent.trim()).toEqual('11:55');
+      });
+
+      it('should contain message', () => {
+        const chatBloc = fixture.debugElement.queryAll(By.css('.message-bloc .message-text'));
+        expect(chatBloc[0].nativeElement.textContent.trim()).toEqual('hello there');
+        expect(chatBloc[1].nativeElement.textContent.trim()).toEqual('hello');
+      });
+    });
+
+    describe('writer bloc', () => {
+      beforeEach(() => {
+        chatBoxComponent.writers = ChatMessagesSpecHelper.usersInRoom;
+        fixture.detectChanges();
+      });
+      it('should not show writers bloc', () => {
+        chatBoxComponent.writers = [];
+        fixture.detectChanges();
+        const writerBloc = fixture.nativeElement.querySelector('.writer-box');
+        expect(writerBloc).toBeFalsy();
+      });
+
+      it('should show writers bloc', () => {
+        const writerBloc = fixture.nativeElement.querySelector('.writer-box');
+        expect(writerBloc).toBeTruthy();
+      });
+
+      it('should show writers in writer bloc with two writers', () => {
+        const writerBloc = fixture.nativeElement.querySelector('.writer-box');
+        expect(writerBloc.textContent.trim()).toEqual('samet  , and yasmine are writing ...');
+      });
+
+      it('should show writers in writer bloc with only one writer', () => {
+        chatBoxComponent.writers = [ChatMessagesSpecHelper.usersInRoom[0]];
+        fixture.detectChanges();
+        const writerBloc = fixture.nativeElement.querySelector('.writer-box');
+        expect(writerBloc.textContent.trim()).toEqual('samet is writing ...');
+      });
+    });
+
+    describe('textarea bloc', () => {
+      it('should show textarea', () => {
+        const textArea = fixture.nativeElement.querySelector('textarea');
+        expect(textArea).toBeTruthy();
+      });
+
+      it('should apply autofocus', () => {
+        const textArea = fixture.nativeElement.querySelector('textarea');
+        expect(textArea.getAttribute('autofocus')).not.toEqual(null);
+      });
+
+      it('should bind message with ng model', () => {
+        chatBoxComponent.message = 'Hello';
+        fixture.detectChanges();
+        const textArea = fixture.nativeElement.querySelector('textarea');
+        expect(textArea.getAttribute('ng-reflect-model')).toEqual('Hello');
+      });
+
+      it('should call textChanged', () => {
+        spyOn(chatBoxComponent, 'textChanged');
+        const textArea = fixture.debugElement.query(By.css('textarea'));
+        textArea.triggerEventHandler('ngModelChange', 'test');
+        fixture.detectChanges();
+        expect(chatBoxComponent.textChanged).toHaveBeenCalledWith('test');
+      });
+
+      it('should call sendMessage on ke enter', () => {
+        spyOn(chatBoxComponent, 'sendMessage');
+        const textArea = fixture.debugElement.query(By.css('textarea'));
+        textArea.triggerEventHandler('keyup.enter', 'test');
+        fixture.detectChanges();
+        expect(chatBoxComponent.sendMessage).toHaveBeenCalled();
+      });
+    });
+
+    describe('send button', () => {
+      it('should show send button', () => {
+        const sendBtn = fixture.nativeElement.querySelector('.send-btn');
+        expect(sendBtn).toBeTruthy();
+      });
+
+      it('should call send send button', () => {
+        spyOn(chatBoxComponent, 'sendMessage');
+        const sendBtn = fixture.nativeElement.querySelector('.send-btn');
+        sendBtn.click();
+        fixture.detectChanges();
+        expect(chatBoxComponent.sendMessage).toHaveBeenCalled();
+      });
     });
   });
 });
