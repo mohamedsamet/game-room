@@ -19,13 +19,14 @@
 
 .send-btn {
   background-image: url(/assets/send.svg);
-  background-size: 27px;
-  width: 27px;
-  height: 27px;
+  background-size: 24px;
+  width: 24px;
+  height: 24px;
   position : absolute;
   right: 6px;
-  bottom: 26px;
+  bottom: 28px;
   cursor: pointer;
+  transform: rotateZ(-23deg);
 }
 
 .writer-box {
