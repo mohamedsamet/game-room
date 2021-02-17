@@ -5,12 +5,11 @@ import { RoomModel } from '../../models/room/room.model';
 import { HttpClient } from '@angular/common/http';
 import { ManageRoomsInterface } from '../../interfaces/rooms/manage-rooms.interface';
 import { RoomsResultModel } from '../../models/room/rooms-result.model';
-import { RoomAccessInterface } from '../../interfaces/rooms/room-access.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoomsService implements AddRoomInterface, ManageRoomsInterface, RoomAccessInterface {
+export class RoomsService implements AddRoomInterface, ManageRoomsInterface {
   private roomName: string;
   constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string,
               @Inject('API_URLS') private urls: any) { }

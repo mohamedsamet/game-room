@@ -6,4 +6,6 @@ export interface ManageRoomsInterface {
   deleteRoom(roomdId: string, id: string): Observable<RoomsResultModel>;
   setRoomName(roomName: string): void;
   getRoomName(): string;
+  addUserToRoom(roomId: string): Observable<any>;
+  removeUserFromRoom(roomId: string): Observable<any>;
 }

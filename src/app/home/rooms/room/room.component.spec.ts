@@ -4,7 +4,6 @@ import { UserInRoomComponentMock } from '../../../tests-spec-mocks/components-mo
 import { ChatBoxComponentMock } from '../../../tests-spec-mocks/components-mock/chat-box.component.mock';
 import { ActivatedRoute } from '@angular/router';
 import { RedirectionInterfaceMock } from '../../../tests-spec-mocks/redirection.mock';
-import { RoomAccessMock } from '../../../tests-spec-mocks/room-access.mock';
 import { GetUsersInRoomNotifMock } from '../../../tests-spec-mocks/get-users-in-room-notif.mock';
 import { ManageRoomsMock } from '../../../tests-spec-mocks/manage-rooms.mock';
 import { RoomsHelper } from '../../../tests-spec-mocks/helpers/room.service.spec.helper';
@@ -15,7 +14,6 @@ describe('RoomComponent', () => {
   let fixture: ComponentFixture<RoomComponent>;
   let roomComponent: RoomComponent;
   let redirectInt: RedirectionInterfaceMock;
-  let roomAccess: RoomAccessMock;
   let roomsNotifInterface: RoomsNotifInterface;
   let getUsersInRoomNotifInterface: GetUsersInRoomNotifMock;
   let manageRoomsMock: ManageRoomsMock;
@@ -30,7 +28,6 @@ describe('RoomComponent', () => {
       providers: [
         {provide: ActivatedRoute, useValue: activeRoute},
         {provide: 'RedirectionInterface', useClass: RedirectionInterfaceMock},
-        {provide: 'RoomAccessInterface', useClass: RoomAccessMock},
         {provide: 'RoomsNotifInterface', useClass: RoomsNotifMock},
         {provide: 'GetUsersInRoomNotifInterface', useClass: GetUsersInRoomNotifMock},
         {provide: 'ManageRoomsInterface', useClass: ManageRoomsMock},
@@ -39,7 +36,6 @@ describe('RoomComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(RoomComponent);
     redirectInt = TestBed.get('RedirectionInterface');
-    roomAccess = TestBed.get('RoomAccessInterface');
     roomsNotifInterface = TestBed.get('RoomsNotifInterface');
     getUsersInRoomNotifInterface = TestBed.get('GetUsersInRoomNotifInterface');
     manageRoomsMock = TestBed.get('ManageRoomsInterface');
@@ -84,9 +80,9 @@ describe('RoomComponent', () => {
     });
 
     it('should call addUserInRoom from int', () => {
-      spyOn(roomAccess, 'addUserToRoom').and.callThrough();
+      spyOn(manageRoomsMock, 'addUserToRoom').and.callThrough();
       roomComponent.addUserInRoom();
-      expect(roomAccess.addUserToRoom).toHaveBeenCalledWith('room1');
+      expect(manageRoomsMock.addUserToRoom).toHaveBeenCalledWith('room1');
     });
 
     it('should call emitRoomNotif from int', () => {
@@ -103,7 +99,7 @@ describe('RoomComponent', () => {
 
     it('should call goBack if service return error', () => {
       spyOn(roomComponent, 'goBack').and.callThrough();
-      roomAccess.setError(true);
+      manageRoomsMock.setError(true);
       roomComponent.addUserInRoom();
       expect(roomComponent.goBack).toHaveBeenCalled();
     });
@@ -133,10 +129,10 @@ describe('RoomComponent', () => {
 
   describe('getOutFromRoom method', () => {
     it('should call removeUserFromRoom from int', () => {
-      spyOn(roomAccess, 'removeUserFromRoom').and.callThrough();
+      spyOn(manageRoomsMock, 'removeUserFromRoom').and.callThrough();
       roomComponent.roomId = 'room2';
       roomComponent.getOutFromRoom();
-      expect(roomAccess.removeUserFromRoom).toHaveBeenCalledWith('room2');
+      expect(manageRoomsMock.removeUserFromRoom).toHaveBeenCalledWith('room2');
     });
 
     it('should call emitRoomNotif from int', () => {
