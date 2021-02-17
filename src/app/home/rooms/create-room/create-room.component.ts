@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddRoomInterface } from '../../../interfaces/rooms/add-room.interface';
-import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
+import { RoomsNotifInterface } from '../../../interfaces/rooms/rooms-notif.interface';
 
 @Component({
   selector: 'app-create-room',
@@ -12,7 +12,7 @@ export class CreateRoomComponent implements OnInit {
   @Output() createRoomEvent = new EventEmitter();
   constructor(private formBuilder: FormBuilder,
               @Inject('AddRoomInterface') private addRoomInt: AddRoomInterface,
-              @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface) { }
+              @Inject('RoomsNotifInterface') private roomsNotifInt: RoomsNotifInterface) { }
 
   ngOnInit(): void {
     this.createRoomForm = this.formBuilder.group({
@@ -22,7 +22,7 @@ export class CreateRoomComponent implements OnInit {
 
   validateCreation(): void {
     this.addRoomInt.addRoom(this.createRoomForm.get('roomName')?.value).subscribe(() => {
-      this.emitRoomInt.emitRoomNotif();
+      this.roomsNotifInt.emitRoomNotif();
       this.createRoomEvent.emit();
     });
   }

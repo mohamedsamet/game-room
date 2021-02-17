@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoggedUserInterface } from '../../interfaces/user/logged-user.interface';
 import { UserModel } from '../../models/user/user.model';
-import { DisconnectionInterface } from '../../interfaces/user/disconnection.interface';
+import { DisconnectUserInterface } from '../../interfaces/user/disconnect-user.interface';
 import { AddUserInterface } from '../../interfaces/user/add-user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class UserService implements LoggedUserInterface, DisconnectionInterface, AddUserInterface {
+export class UserService implements LoggedUserInterface, DisconnectUserInterface, AddUserInterface {
   private userName: string;
   constructor(private http: HttpClient, @Inject('API_BASE_URL') private baseUrl: string,
               @Inject('API_URLS') private urls: any) { }

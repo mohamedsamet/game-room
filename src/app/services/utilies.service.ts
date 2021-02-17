@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RedirectionInterface } from '../interfaces/utilities/redirection/redirection.interface';
+import { RedirectionInterface } from '../interfaces/utilities/redirection.interface';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { DataInterface } from '../interfaces/utilities/data.interface';

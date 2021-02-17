@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
 
-export interface DisconnectionInterface {
+export interface DisconnectUserInterface {
   disconnectUser(): Observable<any>;
 }

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SocketRoomService } from './socket-room.service';
 import { Socket } from 'ngx-socket-io';
-import { RedirectionInterface } from '../../interfaces/utilities/redirection/redirection.interface';
+import { RedirectionInterface } from '../../interfaces/utilities/redirection.interface';
 import { DataInterface } from '../../interfaces/utilities/data.interface';
 import { Observable } from 'rxjs';
 import { LOCAL_STORAGE_ID } from '../../constants/rooms.constant';

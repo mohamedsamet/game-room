@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { LoggedUserInterface } from './interfaces/user/logged-user.interface';
 import { LOCAL_STORAGE_ID } from './constants/rooms.constant';
-import { RedirectionInterface } from './interfaces/utilities/redirection/redirection.interface';
+import { RedirectionInterface } from './interfaces/utilities/redirection.interface';
 import { LoggedUserInterfaceMock } from './tests-spec-mocks/logged-user.mock';
 import { RedirectionInterfaceMock } from './tests-spec-mocks/redirection.mock';
 import { AlertComponentMock } from './tests-spec-mocks/components-mock/alert.component.mock';

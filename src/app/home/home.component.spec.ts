@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
-import { DisconnectionInterface } from '../interfaces/user/disconnection.interface';
 import { LOCAL_STORAGE_ID } from '../constants/rooms.constant';
 import { RedirectionInterfaceMock} from '../tests-spec-mocks/redirection.mock';
 import { LoggedUserInterfaceMock} from '../tests-spec-mocks/logged-user.mock';
-import { DisconnectionInterfaceMock} from '../tests-spec-mocks/disconnection.mock';
+import { DisconnectionInterfaceMock} from '../tests-spec-mocks/disconnect-user.mock';
 
 describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;

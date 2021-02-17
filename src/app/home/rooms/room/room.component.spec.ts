@@ -5,17 +5,18 @@ import { ChatBoxComponentMock } from '../../../tests-spec-mocks/components-mock/
 import { ActivatedRoute } from '@angular/router';
 import { RedirectionInterfaceMock } from '../../../tests-spec-mocks/redirection.mock';
 import { RoomAccessMock } from '../../../tests-spec-mocks/room-access.mock';
-import { EmitRoomsMock } from '../../../tests-spec-mocks/emit-rooms.mock';
 import { GetUsersInRoomNotifMock } from '../../../tests-spec-mocks/get-users-in-room-notif.mock';
 import { ManageRoomsMock } from '../../../tests-spec-mocks/manage-rooms.mock';
 import { RoomsHelper } from '../../../tests-spec-mocks/helpers/room.service.spec.helper';
+import { RoomsNotifInterface } from '../../../interfaces/rooms/rooms-notif.interface';
+import { RoomsNotifMock } from '../../../tests-spec-mocks/rooms-notif.mock';
 
 describe('RoomComponent', () => {
   let fixture: ComponentFixture<RoomComponent>;
   let roomComponent: RoomComponent;
   let redirectInt: RedirectionInterfaceMock;
   let roomAccess: RoomAccessMock;
-  let emitRoomsNotifInterface: EmitRoomsMock;
+  let roomsNotifInterface: RoomsNotifInterface;
   let getUsersInRoomNotifInterface: GetUsersInRoomNotifMock;
   let manageRoomsMock: ManageRoomsMock;
   let activeRoute = {snapshot: {paramMap: {get: (x) => {return 'room1'}}}} as ActivatedRoute;
@@ -30,7 +31,7 @@ describe('RoomComponent', () => {
         {provide: ActivatedRoute, useValue: activeRoute},
         {provide: 'RedirectionInterface', useClass: RedirectionInterfaceMock},
         {provide: 'RoomAccessInterface', useClass: RoomAccessMock},
-        {provide: 'EmitRoomsNotifInterface', useClass: EmitRoomsMock},
+        {provide: 'RoomsNotifInterface', useClass: RoomsNotifMock},
         {provide: 'GetUsersInRoomNotifInterface', useClass: GetUsersInRoomNotifMock},
         {provide: 'ManageRoomsInterface', useClass: ManageRoomsMock},
 
@@ -39,7 +40,7 @@ describe('RoomComponent', () => {
     fixture = TestBed.createComponent(RoomComponent);
     redirectInt = TestBed.get('RedirectionInterface');
     roomAccess = TestBed.get('RoomAccessInterface');
-    emitRoomsNotifInterface = TestBed.get('EmitRoomsNotifInterface');
+    roomsNotifInterface = TestBed.get('RoomsNotifInterface');
     getUsersInRoomNotifInterface = TestBed.get('GetUsersInRoomNotifInterface');
     manageRoomsMock = TestBed.get('ManageRoomsInterface');
     roomComponent = fixture.componentInstance;
@@ -89,9 +90,9 @@ describe('RoomComponent', () => {
     });
 
     it('should call emitRoomNotif from int', () => {
-      spyOn(emitRoomsNotifInterface, 'emitRoomNotif').and.callThrough();
+      spyOn(roomsNotifInterface, 'emitRoomNotif').and.callThrough();
       roomComponent.addUserInRoom();
-      expect(emitRoomsNotifInterface.emitRoomNotif).toHaveBeenCalled();
+      expect(roomsNotifInterface.emitRoomNotif).toHaveBeenCalled();
     });
 
     it('should call getUsersConnected', () => {
@@ -139,10 +140,10 @@ describe('RoomComponent', () => {
     });
 
     it('should call emitRoomNotif from int', () => {
-      spyOn(emitRoomsNotifInterface, 'emitRoomNotif').and.callThrough();
+      spyOn(roomsNotifInterface, 'emitRoomNotif').and.callThrough();
       roomComponent.roomId = 'room2';
       roomComponent.getOutFromRoom();
-      expect(emitRoomsNotifInterface.emitRoomNotif).toHaveBeenCalled();
+      expect(roomsNotifInterface.emitRoomNotif).toHaveBeenCalled();
     });
 
     it('should call emitUsersLeaveRoomNotif from int', () => {

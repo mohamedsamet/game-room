@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from '../models/user/user.model';
-import { RedirectionInterface } from '../interfaces/utilities/redirection/redirection.interface';
+import { RedirectionInterface } from '../interfaces/utilities/redirection.interface';
 import { AddUserInterface } from '../interfaces/user/add-user.interface';
 import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
 import { LOCAL_STORAGE_ID } from '../constants/rooms.constant';

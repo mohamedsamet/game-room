@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { DisconnectionInterface } from '../interfaces/user/disconnection.interface';
-import { RedirectionInterface } from '../interfaces/utilities/redirection/redirection.interface';
+import { DisconnectUserInterface } from '../interfaces/user/disconnect-user.interface';
+import { RedirectionInterface } from '../interfaces/utilities/redirection.interface';
 import { LoggedUserInterface } from '../interfaces/user/logged-user.interface';
 import { LOCAL_STORAGE_ID } from '../constants/rooms.constant';
 
@@ -12,7 +12,7 @@ import { LOCAL_STORAGE_ID } from '../constants/rooms.constant';
 
 export class HomeComponent implements OnInit {
   public userName: string;
-  constructor(@Inject('DisconnectionInterface') private disconnectInt: DisconnectionInterface,
+  constructor(@Inject('DisconnectionInterface') private disconnectInt: DisconnectUserInterface,
               @Inject('RedirectionInterface') private  redirect: RedirectionInterface,
               @Inject('LoggedUserInterface') private  loggedUser: LoggedUserInterface) { }
 

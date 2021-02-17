@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RoomsListComponent } from './rooms-list.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ManageRoomsMock } from '../../../tests-spec-mocks/manage-rooms.mock';
-import { GetRoomsNotifMock } from '../../../tests-spec-mocks/get-rooms-notif.mock';
-import { EmitRoomsMock } from '../../../tests-spec-mocks/emit-rooms.mock';
+import { RoomsNotifMock } from '../../../tests-spec-mocks/rooms-notif.mock';
 import { RedirectionInterfaceMock } from '../../../tests-spec-mocks/redirection.mock';
 import { RoomsHelper } from '../../../tests-spec-mocks/helpers/room.service.spec.helper';
 import { PaginatorComponent } from '../../paginator/paginator.component';
@@ -12,9 +11,8 @@ import { By } from '@angular/platform-browser';
 describe('RoomsListComponent', () => {
   let fixture: ComponentFixture<RoomsListComponent>;
   let roomsList: RoomsListComponent;
-  let getRoomsNotif: GetRoomsNotifMock
+  let roomsNotif: RoomsNotifMock;
   let manageRooms: ManageRoomsMock;
-  let emitRoomsMock: EmitRoomsMock;
   let redirect: RedirectionInterfaceMock;
   const activeRoute = {} as ActivatedRoute;
   activeRoute.outlet = 'urltest';
@@ -27,16 +25,14 @@ describe('RoomsListComponent', () => {
       ],
       providers: [
         {provide: 'ManageRoomsInterface', useClass: ManageRoomsMock},
-        {provide: 'GetRoomsNotifInterface', useClass: GetRoomsNotifMock},
-        {provide: 'EmitRoomsNotifInterface', useClass: EmitRoomsMock},
+        {provide: 'RoomsNotifInterface', useClass: RoomsNotifMock},
         {provide: 'RedirectionInterface', useClass: RedirectionInterfaceMock},
         {provide: ActivatedRoute, useValue: activeRoute}
         ]
     }).compileComponents();
     fixture = TestBed.createComponent(RoomsListComponent);
-    getRoomsNotif = TestBed.get('GetRoomsNotifInterface');
+    roomsNotif = TestBed.get('RoomsNotifInterface');
     redirect = TestBed.get('RedirectionInterface');
-    emitRoomsMock = TestBed.get('EmitRoomsNotifInterface');
     manageRooms = TestBed.get('ManageRoomsInterface');
     roomsList = fixture.componentInstance;
     fixture.detectChanges();
@@ -120,9 +116,9 @@ describe('RoomsListComponent', () => {
     });
 
     it('should call getRoomsSockNotif from int', () => {
-      spyOn(getRoomsNotif, 'getRoomsSockNotif').and.callThrough();
+      spyOn(roomsNotif, 'getRoomsSockNotif').and.callThrough();
       roomsList.getRooms();
-      expect(getRoomsNotif.getRoomsSockNotif).toHaveBeenCalled();
+      expect(roomsNotif.getRoomsSockNotif).toHaveBeenCalled();
     });
 
     it('should not show reload btn if selected page =1', () => {
@@ -232,10 +228,10 @@ describe('RoomsListComponent', () => {
     });
 
     it('should emit notif of room', () => {
-      spyOn(emitRoomsMock, 'emitRoomNotif').and.callThrough();
+      spyOn(roomsNotif, 'emitRoomNotif').and.callThrough();
       roomsList.deleteRoom('525');
       fixture.detectChanges();
-      expect(emitRoomsMock.emitRoomNotif).toHaveBeenCalled();
+      expect(roomsNotif.emitRoomNotif).toHaveBeenCalled();
     });
   });
 

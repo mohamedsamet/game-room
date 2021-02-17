@@ -1,14 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
-import { GetRoomsNotifInterface } from '../../interfaces/rooms/get-rooms-notif.interface';
+import { RoomsNotifInterface } from '../../interfaces/rooms/rooms-notif.interface';
 import {
   DISCONNECT_SOCKET, GET_ROOMS, GET_USERS_IN_ROOMS, LEAVE_USER_FROM_ROOM, REQUEST_ROOMS, REQUEST_USERS_IN_ROOM
 } from '../../constants/socket-events';
-import { EmitRoomsNotifInterface } from '../../interfaces/rooms/emit-rooms-notif.interface';
 import { RoomsResultModel } from '../../models/room/rooms-result.model';
-import { RedirectionInterface } from '../../interfaces/utilities/redirection/redirection.interface';
-import { GetUsersInRoomNotifInterface } from '../../interfaces/rooms/get-users-in-room-notif.interface';
+import { RedirectionInterface } from '../../interfaces/utilities/redirection.interface';
 import { UserInRoomResultModel } from '../../models/user/user-in-room-result.model';
 import { LOCAL_STORAGE_ID, ROOMS_PER_PAGE } from '../../constants/rooms.constant';
 import { DataInterface } from '../../interfaces/utilities/data.interface';
@@ -16,7 +14,7 @@ import { DataInterface } from '../../interfaces/utilities/data.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class SocketRoomService implements GetRoomsNotifInterface, EmitRoomsNotifInterface, GetUsersInRoomNotifInterface {
+export class SocketRoomService implements RoomsNotifInterface, RoomsNotifInterface {
   constructor(private socket: Socket,
               @Inject('RedirectionInterface') private  redirect: RedirectionInterface,
               @Inject('DataInterface') private  dataInt: DataInterface) {

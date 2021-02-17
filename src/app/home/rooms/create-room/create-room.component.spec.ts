@@ -3,15 +3,15 @@ import { CreateRoomComponent } from './create-room.component';
 import { AddRoomMock } from '../../../tests-spec-mocks/add-room.mock';
 import { AddRoomInterface } from '../../../interfaces/rooms/add-room.interface';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
-import { EmitRoomsMock } from '../../../tests-spec-mocks/emit-rooms.mock';
+import { RoomsNotifMock } from '../../../tests-spec-mocks/rooms-notif.mock';
+import { RoomsNotifInterface } from '../../../interfaces/rooms/rooms-notif.interface';
 
 describe('CreateRoom', () => {
   let fixture: ComponentFixture<CreateRoomComponent>;
   let createRoom: CreateRoomComponent;
   let addRoomInt: AddRoomInterface;
   let formBuilder: FormBuilder;
-  let emitRoomsNotifInterface: EmitRoomsNotifInterface;
+  let roomsNotifInterface: RoomsNotifInterface;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
@@ -21,14 +21,14 @@ describe('CreateRoom', () => {
       providers: [
         FormBuilder,
         {provide: 'AddRoomInterface', useClass: AddRoomMock},
-        {provide: 'EmitRoomsNotifInterface', useClass: EmitRoomsMock}
+        {provide: 'RoomsNotifInterface', useClass: RoomsNotifMock}
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(CreateRoomComponent);
     createRoom = fixture.componentInstance;
     formBuilder = TestBed.get(FormBuilder);
     addRoomInt = TestBed.get('AddRoomInterface');
-    emitRoomsNotifInterface = TestBed.get('EmitRoomsNotifInterface');
+    roomsNotifInterface = TestBed.get('RoomsNotifInterface');
   });
 
   it('should create the user in room component', () => {
@@ -65,10 +65,10 @@ describe('CreateRoom', () => {
     });
 
     it('should call emitRoomNotif from interface', () => {
-      spyOn(emitRoomsNotifInterface, 'emitRoomNotif');
+      spyOn(roomsNotifInterface, 'emitRoomNotif');
       createRoom.createRoomForm.controls.roomName.setValue('room 1');
       createRoom.validateCreation();
-      expect(emitRoomsNotifInterface.emitRoomNotif).toHaveBeenCalled();
+      expect(roomsNotifInterface.emitRoomNotif).toHaveBeenCalled();
     });
 
     it('should call createRoomEvent from interface', () => {

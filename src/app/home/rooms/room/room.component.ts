@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { RedirectionInterface } from '../../../interfaces/utilities/redirection/redirection.interface';
+import { RedirectionInterface } from '../../../interfaces/utilities/redirection.interface';
 import { ActivatedRoute } from '@angular/router';
 import { RoomAccessInterface } from '../../../interfaces/rooms/room-access.interface';
-import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
 import { GetUsersInRoomNotifInterface } from '../../../interfaces/rooms/get-users-in-room-notif.interface';
 import { UserModel } from '../../../models/user/user.model';
 import { ManageRoomsInterface } from '../../../interfaces/rooms/manage-rooms.interface';
+import { RoomsNotifInterface } from '../../../interfaces/rooms/rooms-notif.interface';
 
 @Component({
   selector: 'app-room',
@@ -18,7 +18,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   public roomName: string;
   constructor(@Inject('RedirectionInterface') private  redirect: RedirectionInterface,
               @Inject('RoomAccessInterface') private  roomAccess: RoomAccessInterface,
-              @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface,
+              @Inject('RoomsNotifInterface') private roomsNotifInt: RoomsNotifInterface,
               @Inject('GetUsersInRoomNotifInterface') private getUsersInRoom: GetUsersInRoomNotifInterface,
               @Inject('ManageRoomsInterface') private manageRoomsInt: ManageRoomsInterface,
               private activeRoute: ActivatedRoute) { }
@@ -39,7 +39,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   addUserInRoom(): void {
     this.roomId = this.activeRoute.snapshot.paramMap.get('roomId');
     this.roomAccess.addUserToRoom(this.roomId).subscribe(() => {
-      this.emitRoomInt.emitRoomNotif();
+      this.roomsNotifInt.emitRoomNotif();
       this.getUsersConnected();
     }, () => {
       this.goBack();
@@ -54,7 +54,7 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   getOutFromRoom(): void {
     this.roomAccess.removeUserFromRoom(this.roomId).subscribe(() => {
-      this.emitRoomInt.emitRoomNotif();
+      this.roomsNotifInt.emitRoomNotif();
       this.getUsersInRoom.emitUsersLeaveRoomNotif(this.roomId);
     });
   }

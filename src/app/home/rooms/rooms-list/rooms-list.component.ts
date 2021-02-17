@@ -2,12 +2,11 @@ import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { RoomModel } from '../../../models/room/room.model';
 import { Subject } from 'rxjs';
 import { ManageRoomsInterface } from '../../../interfaces/rooms/manage-rooms.interface';
-import { GetRoomsNotifInterface } from '../../../interfaces/rooms/get-rooms-notif.interface';
+import { RoomsNotifInterface } from '../../../interfaces/rooms/rooms-notif.interface';
 import { LOCAL_STORAGE_ID, ROOMS_PER_PAGE } from '../../../constants/rooms.constant';
 import { PaginatorComponent } from '../../paginator/paginator.component';
 import { RoomsResultModel } from '../../../models/room/rooms-result.model';
-import { EmitRoomsNotifInterface } from '../../../interfaces/rooms/emit-rooms-notif.interface';
-import { RedirectionInterface } from '../../../interfaces/utilities/redirection/redirection.interface';
+import { RedirectionInterface } from '../../../interfaces/utilities/redirection.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,8 +23,7 @@ export class RoomsListComponent implements OnInit {
   @Input() $roomCreated = new Subject();
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent;
   constructor(@Inject('ManageRoomsInterface') private manageRoomsInt: ManageRoomsInterface,
-              @Inject('GetRoomsNotifInterface') private getRoomsNotif: GetRoomsNotifInterface,
-              @Inject('EmitRoomsNotifInterface') private emitRoomInt: EmitRoomsNotifInterface,
+              @Inject('RoomsNotifInterface') private roomsNotifInt: RoomsNotifInterface,
               @Inject('RedirectionInterface') private redirect: RedirectionInterface,
               private activeRoute: ActivatedRoute) {
   }
@@ -51,7 +49,7 @@ export class RoomsListComponent implements OnInit {
   }
 
   getRooms(): void {
-    this.getRoomsNotif.getRoomsSockNotif().subscribe(result => {
+    this.roomsNotifInt.getRoomsSockNotif().subscribe(result => {
       if (this.selectedPage === 1) {
         this.applyRoomsResult(result);
       } else {
@@ -91,7 +89,7 @@ export class RoomsListComponent implements OnInit {
     this.manageRoomsInt.deleteRoom(roomId, this.userId).subscribe(() => {
       this.selectPage(1);
       this.initPagination();
-      this.emitRoomInt.emitRoomNotif();
+      this.roomsNotifInt.emitRoomNotif();
     });
   }
 }
