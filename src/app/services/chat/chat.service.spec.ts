@@ -85,33 +85,32 @@ describe('ChatService', () => {
   });
 
   describe('getMessagesByPage method', () => {
-    const roomId: string = 'azeaze'
+    const roomId: string = 'azeaze';
     const chatUrl = `http://localhost:3000/chat/${roomId}?start=10&end=15`;
     afterEach(() => {
       httpTestingController.verify();
     });
 
-    it('should send get request to add message', () => {
+    it('should send get request to get message', () => {
       chatService.getMessagesByPage(roomId, 10, 15).subscribe(() => {
         expect(req.request.method).toEqual('GET');
       });
       const req = httpTestingController.expectOne(chatUrl);
-      req.flush({} as ChatResultModel);
+      req.flush(ChatMessagesSpecHelper.getChatMessageByPage());
     });
 
     it('should get chat array response', () => {
       const expectedKeys: string[] = ['pseudo', 'userId', 'message', 'dateTimeParsed'].sort();
       chatService.getMessagesByPage(roomId, 10, 15).subscribe((res) => {
-        console.log(res)
-        expect(res.messages[0].pseudo).toEqual('yasmin');
-        expect(res.messages[0].userId).toEqual('popoe');
-        expect(res.messages[0].message).toEqual('hello there');
-        expect(res.messages[0].dateTimeParsed).toEqual('11:35');
+        expect(res.messages[0].pseudo).toEqual('samet');
+        expect(res.messages[0].userId).toEqual('456');
+        expect(res.messages[0].message).toEqual('aze');
+        expect(res.messages[0].dateTimeParsed).toEqual('18:02');
         expect(Object.keys(res.messages[0]).sort()).toEqual(expectedKeys);
-        expect(res.total).toEqual(2);
+        expect(res.total).toEqual(1);
       });
       const req = httpTestingController.expectOne(chatUrl);
-      req.flush(new SocketMock().getChatMessages());
+      req.flush(ChatMessagesSpecHelper.getChatMessageByPage());
     });
   });
 

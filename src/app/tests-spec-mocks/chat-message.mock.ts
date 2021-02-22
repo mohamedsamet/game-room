@@ -1,13 +1,12 @@
-import {Observable, of, Subject} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ChatMessageInterface } from '../interfaces/chat/chat-message.interface';
 import { ChatModel } from '../models/chat/chat.model';
 import { UserWriterStatusModel } from '../models/user/user-writer-status.model';
 import { ChatMessagesSpecHelper } from './helpers/chat-messages.spec.helper';
 import { ChatResultModel } from '../models/chat/chat-result.model';
-import {delay} from "rxjs/operators";
+import { delay } from 'rxjs/operators';
 
 export class ChatMessageMock implements ChatMessageInterface {
-  public getMsgSubject = new Subject()
 
   getWriterStatusInRoom(): Observable<UserWriterStatusModel[]> {
     return of(ChatMessagesSpecHelper.usersInRoom);

@@ -14,8 +14,12 @@ import { LoggedUserInterface } from '../../../../interfaces/user/logged-user.int
 export class ChatBoxComponent implements OnInit {
   public message = '';
   public roomId: string;
-  public chatMessages: ChatModel[];
+  public chatMessages: ChatModel[] = [];
   public userId: string;
+  public isLoading: boolean;
+  public totalElement: number;
+  public isScrollBottom = false;
+  public showNewMessagesAlert = false;
   public writers: UserWriterStatusModel[] = [];
   @ViewChild('messagesScroll') public chatContent: ElementRef;
   constructor(@Inject('ChatMessageInterface') private chatMessageInterface: ChatMessageInterface,
@@ -25,7 +29,7 @@ export class ChatBoxComponent implements OnInit {
 
   ngOnInit(): void {
     this.roomId = this.activeRoute.snapshot.paramMap.get('roomId');
-    this.getMessagesInRoom();
+    this.getMessagesInRoom(0, CHAT_LIMIT_MESSAGES_LOADED);
     this.getWriterStatusInRoom(this.roomId);
     this.userId = localStorage.getItem(LOCAL_STORAGE_ID);
     this.listenToNewMessages();
@@ -42,23 +46,53 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  getMessagesInRoom(): void {
-    this.chatMessageInterface.getMessagesByPage(this.roomId, 0, CHAT_LIMIT_MESSAGES_LOADED).subscribe(chatMessages => {
-      this.chatMessages = chatMessages.messages;
-      this.manageScrollChatBox();
+  getMessagesInRoom(start: number, end: number): void {
+    this.isLoading = true;
+    this.chatMessageInterface.getMessagesByPage(this.roomId, start, end).subscribe(chatMessages => {
+      this.chatMessages = this.chatMessages.concat(chatMessages.messages);
+      this.totalElement = chatMessages.total;
+      if (start === 0) {
+        this.manageScrollChatBox();
+      }
+      this.isLoading = false
     });
   }
 
   listenToNewMessages(): void {
     this.chatMessageInterface.getMessageInRoom().subscribe(message => {
       this.chatMessages.unshift(message);
-      this.manageScrollChatBox();
+      this.totalElement += 1;
+      if (this.isScrollBottom) {
+        this.manageScrollChatBox();
+      } else {
+        this.showNewMessagesAlert = true
+      }
     });
+  }
+
+  loadMoreMessages() {
+    if (this.totalElement > this.chatMessages.length) {
+      this.isLoading = true;
+      const startIndex = this.chatMessages.length;
+      this.getMessagesInRoom(startIndex, CHAT_LIMIT_MESSAGES_LOADED + startIndex);
+    }
+  }
+
+  scrollToBottomEvent(event: boolean) {
+    this.isScrollBottom = event;
+    if (this.isScrollBottom) {
+      this.showNewMessagesAlert = false;
+    }
   }
 
   private manageScrollChatBox(): void {
     this.ref.detectChanges();
     this.chatContent.nativeElement.scrollTop = this.chatContent.nativeElement.scrollHeight;
+  }
+
+  showNewMessages(): void {
+    this.showNewMessagesAlert = false;
+    this.manageScrollChatBox();
   }
 
   textChanged(text: string): void {
