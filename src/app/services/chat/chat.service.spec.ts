@@ -102,6 +102,7 @@ describe('ChatService', () => {
     it('should get chat array response', () => {
       const expectedKeys: string[] = ['pseudo', 'userId', 'message', 'dateTimeParsed'].sort();
       chatService.getMessagesByPage(roomId, 10, 15).subscribe((res) => {
+        console.log(res)
         expect(res.messages[0].pseudo).toEqual('yasmin');
         expect(res.messages[0].userId).toEqual('popoe');
         expect(res.messages[0].message).toEqual('hello there');
@@ -110,7 +111,7 @@ describe('ChatService', () => {
         expect(res.total).toEqual(2);
       });
       const req = httpTestingController.expectOne(chatUrl);
-      req.flush(ChatMessagesSpecHelper.ChatMessages);
+      req.flush(new SocketMock().getChatMessages());
     });
   });
 
