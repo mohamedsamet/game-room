@@ -47,7 +47,16 @@ export class SocketMock {
     return of([writerStatus1, writerStatus2]);
   }
 
-  getChatMsg() {
+  getChatMsg(): Observable<ChatModel> {
+    return of({
+      pseudo: 'samet',
+        userId: '123456',
+        message: 'message',
+        dateTimeParsed: '03:55'
+    });
+  }
+
+  getChatMessages() {
     const chatModel1 = {
       pseudo: 'samet',
       userId: '123456',
@@ -60,7 +69,7 @@ export class SocketMock {
       message: 'message2',
       dateTimeParsed: '13:55'
     } as ChatModel;
-    return of([chatModel1, chatModel2])
+    return of({messages: [chatModel1, chatModel2], total: 2})
   }
 
   getUserInRoom() {

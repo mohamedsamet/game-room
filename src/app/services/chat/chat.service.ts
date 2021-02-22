@@ -9,6 +9,7 @@ import {
 } from '../../constants/socket-events';
 import { DataInterface } from '../../interfaces/utilities/data.interface';
 import { UserWriterStatusModel } from '../../models/user/user-writer-status.model';
+import { ChatResultModel } from '../../models/chat/chat-result.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,15 @@ export class ChatService implements ChatMessageInterface {
     return this.http.post<ChatModel>(`${this.baseUrl}${this.urls.CHAT_URL}/${roomId}`, {message});
   }
 
-  requestMessagesInRoom(roomId: string): void {
+  getMessagesByPage(roomId:string, start: number, end: number): Observable<ChatResultModel> {
+    return this.http.get<ChatResultModel>(`${this.baseUrl}${this.urls.CHAT_URL}/${roomId}?start=${start}&end=${end}`);
+  }
+
+  requestMessageInRoom(roomId: string): void {
     this.socket.emit(REQUEST_CHATMSG, roomId);
   }
 
-  getMessagesInRoom(): Observable<ChatModel[]> {
+  getMessageInRoom(): Observable<ChatModel> {
     const $socket = this.socket.fromEvent(GET_CHATMSG);
     return this.dataInt.getDataFromEvent($socket);
   }

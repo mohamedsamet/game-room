@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } f
 import { ChatMessageInterface } from '../../../../interfaces/chat/chat-message.interface';
 import { ActivatedRoute } from '@angular/router';
 import { ChatModel } from '../../../../models/chat/chat.model';
-import { LOCAL_STORAGE_ID } from '../../../../constants/rooms.constant';
+import { CHAT_LIMIT_MESSAGES_LOADED, LOCAL_STORAGE_ID } from '../../../../constants/rooms.constant';
 import { UserWriterStatusModel } from '../../../../models/user/user-writer-status.model';
 import { LoggedUserInterface } from '../../../../interfaces/user/logged-user.interface';
 
@@ -28,13 +28,14 @@ export class ChatBoxComponent implements OnInit {
     this.getMessagesInRoom();
     this.getWriterStatusInRoom(this.roomId);
     this.userId = localStorage.getItem(LOCAL_STORAGE_ID);
+    this.listenToNewMessages();
   }
 
   sendMessage(): void {
     this.message = this.message.trim();
     if (this.message && this.message.length > 0) {
       this.chatMessageInterface.sendMessage(this.message, this.roomId).subscribe(() => {
-        this.chatMessageInterface.requestMessagesInRoom(this.roomId);
+        this.chatMessageInterface.requestMessageInRoom(this.roomId);
         this.message = '';
         this.sendUpdateWriterStatus();
       });
@@ -42,11 +43,17 @@ export class ChatBoxComponent implements OnInit {
   }
 
   getMessagesInRoom(): void {
-    this.chatMessageInterface.getMessagesInRoom().subscribe(chatMessages => {
-      this.chatMessages = chatMessages;
+    this.chatMessageInterface.getMessagesByPage(this.roomId, 0, CHAT_LIMIT_MESSAGES_LOADED).subscribe(chatMessages => {
+      this.chatMessages = chatMessages.messages;
       this.manageScrollChatBox();
     });
-    this.chatMessageInterface.requestMessagesInRoom(this.roomId);
+  }
+
+  listenToNewMessages(): void {
+    this.chatMessageInterface.getMessageInRoom().subscribe(message => {
+      this.chatMessages.unshift(message);
+      this.manageScrollChatBox();
+    });
   }
 
   private manageScrollChatBox(): void {

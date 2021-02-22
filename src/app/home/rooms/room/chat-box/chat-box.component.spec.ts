@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { ChatBoxComponent } from './chat-box.component';
 import { ChatMessageMock } from '../../../../tests-spec-mocks/chat-message.mock';
@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { UserWriterStatusModel } from '../../../../models/user/user-writer-status.model';
 import { By } from '@angular/platform-browser';
 import { ChatMessagesSpecHelper } from '../../../../tests-spec-mocks/helpers/chat-messages.spec.helper';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 describe('ChatBoxComponent', () => {
   let fixture: ComponentFixture<ChatBoxComponent>;
@@ -33,6 +35,7 @@ describe('ChatBoxComponent', () => {
     chatMessageInterface = TestBed.get('ChatMessageInterface');
     loggedUserInterface = TestBed.get('LoggedUserInterface');
     chatBoxComponent.chatContent = {nativeElement: {scrollHeight: 500, scrollTop: 0}} as ElementRef;
+    chatBoxComponent.chatMessages = []
   });
 
   it('should create chat box component', () => {
@@ -51,6 +54,12 @@ describe('ChatBoxComponent', () => {
       expect(chatBoxComponent.getMessagesInRoom).toHaveBeenCalled();
     });
 
+    it('should call listenToNewMessages', () => {
+      spyOn(chatBoxComponent, 'listenToNewMessages');
+      chatBoxComponent.ngOnInit();
+      expect(chatBoxComponent.listenToNewMessages).toHaveBeenCalled();
+    });
+
     it('should call getWriterStatusInRoom', () => {
       spyOn(chatBoxComponent, 'getWriterStatusInRoom');
       chatBoxComponent.ngOnInit();
@@ -64,7 +73,7 @@ describe('ChatBoxComponent', () => {
     });
   });
 
-  describe('snedMessage method', () => {
+  describe('sendMessages method', () => {
     it('should not send message if empty', () => {
       spyOn(chatMessageInterface, 'sendMessage').and.callThrough();
       chatBoxComponent.message = '';
@@ -88,11 +97,11 @@ describe('ChatBoxComponent', () => {
     });
 
     it('should call requestMessagesInRoom when responding from int', () => {
-      spyOn(chatMessageInterface, 'requestMessagesInRoom').and.callThrough();
+      spyOn(chatMessageInterface, 'requestMessageInRoom').and.callThrough();
       chatBoxComponent.message = 'hello';
       chatBoxComponent.roomId = 'room1';
       chatBoxComponent.sendMessage();
-      expect(chatMessageInterface.requestMessagesInRoom).toHaveBeenCalledWith('room1');
+      expect(chatMessageInterface.requestMessageInRoom).toHaveBeenCalledWith('room1');
     });
 
     it('should init message when responding', () => {
@@ -113,9 +122,10 @@ describe('ChatBoxComponent', () => {
 
   describe('getMessagesInRoom method', () => {
     it('should call getMessagesInRoom from int', () => {
-      spyOn(chatMessageInterface, 'getMessagesInRoom').and.callThrough();
+      spyOn(chatMessageInterface, 'getMessagesByPage').and.callThrough();
+      chatBoxComponent.roomId = 'aze';
       chatBoxComponent.getMessagesInRoom();
-      expect(chatMessageInterface.getMessagesInRoom).toHaveBeenCalled();
+      expect(chatMessageInterface.getMessagesByPage).toHaveBeenCalledWith('aze', 0, 14);
     });
 
     it('should set chatMessages from response', () => {
@@ -142,13 +152,37 @@ describe('ChatBoxComponent', () => {
       chatBoxComponent.getMessagesInRoom();
       expect(chatBoxComponent.chatContent.nativeElement).toBeTruthy();
     });
+  });
 
-    it('should call requestMessagesInRoom', () => {
-      chatBoxComponent.roomId = 'room1';
-      spyOn(chatMessageInterface, 'requestMessagesInRoom');
-      chatBoxComponent.getMessagesInRoom();
-      expect(chatMessageInterface.requestMessagesInRoom).toHaveBeenCalledWith('room1');
+  describe('listenToNewMessages method', () => {
+    it('should call getMessageInRoom from int', () => {
+      spyOn(chatMessageInterface, 'getMessageInRoom').and.callThrough();
+      chatBoxComponent.listenToNewMessages();
+      expect(chatMessageInterface.getMessageInRoom).toHaveBeenCalled();
     });
+
+    it('should set chatMessages from response with unshfit', fakeAsync(() => {
+      chatBoxComponent.listenToNewMessages();
+      const expectedChatKeys = ['pseudo', 'userId', 'dateTimeParsed', 'message'].sort();
+      of(true).pipe(delay(2001)).subscribe(() => {
+        expect(Object.keys(chatBoxComponent.chatMessages[0]).sort()).toEqual(expectedChatKeys);
+        expect(chatBoxComponent.chatMessages[0].pseudo).toEqual('marwa');
+        expect(chatBoxComponent.chatMessages[0].dateTimeParsed).toEqual('13:35')
+        expect(chatBoxComponent.chatMessages[0].message).toEqual('zzz there');
+        expect(chatBoxComponent.chatMessages[0].userId).toEqual('zzz');
+        flush();
+      });
+      tick(2001);
+    }));
+
+    it('should call manageScrollChatBox when responding', fakeAsync(() => {
+      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      chatBoxComponent.listenToNewMessages();
+      of(true).pipe(delay(2001)).subscribe(() => {
+        expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
+      });
+      tick(2001);
+    }));
   });
 
   describe('textChanged method', () => {

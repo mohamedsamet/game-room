@@ -17,6 +17,13 @@ export class ChatMessagesSpecHelper {
     }
   ];
 
+  public static ChatMessage: ChatModel = {
+      pseudo: 'marwa',
+      dateTimeParsed: '13:35',
+      message: 'zzz there',
+      userId: 'zzz'
+    };
+
   public static usersInRoom: UserWriterStatusModel[] = [
     {
       _id:'78999',
