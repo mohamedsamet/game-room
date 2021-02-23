@@ -1,6 +1,11 @@
 <div class="mx-0 p-2 p-md-4 border rounded-sm h-100">
   <div class="position-relative h-100">
-    <div #messagesScroll class="messages-scroll-container">
+    <div *ngIf="isLoading" class="loader"></div>
+    <div scroll-event
+         #messagesScroll
+         (scrollTopEvent)="loadMoreMessages()"
+         (isScrollBottom)="scrollToBottomEvent($event)"
+         class="messages-scroll-container">
       <div class="messages-content">
         <div class="mt-2 p-2 fit-content-width message-bloc" *ngFor="let msg of chatMessages"
              [ngClass]="{'is-user-msg': msg.userId === userId}">
@@ -12,6 +17,11 @@
         </div>
       </div>
     </div>
+    <button *ngIf="showNewMessagesAlert"
+            (click)="showNewMessages()"
+            class="new-messages">New messages
+      <i class="chev-down-icn"></i>
+    </button>
     <label>
       <div class="position-absolute writer-box" *ngIf="writers.length">
         <span *ngFor="let writer of writers; let i = index">{{writer.pseudo}}

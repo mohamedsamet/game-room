@@ -56,22 +56,6 @@ export class SocketMock {
     });
   }
 
-  getChatMessages() {
-    const chatModel1 = {
-      pseudo: 'samet',
-      userId: '123456',
-      message: 'message',
-      dateTimeParsed: '03:55'
-    } as ChatModel;
-    const chatModel2 = {
-      pseudo: 'yasmine',
-      userId: '987654',
-      message: 'message2',
-      dateTimeParsed: '13:55'
-    } as ChatModel;
-    return of({messages: [chatModel1, chatModel2], total: 2})
-  }
-
   getUserInRoom() {
     const usersInRoom = {} as UserInRoomResultModel;
     const user: UserModel = {_id: '8888', pseudo: 'samet'}

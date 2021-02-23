@@ -12,6 +12,37 @@
   }
 }
 
+.loader {
+  background-image: url(/assets/dual-loader.svg);
+  background-size: 60px;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: .8;
+}
+
+.new-messages {
+  position: absolute;
+  font-size: 13px;
+  color: white;
+  background: #005800;
+  border: none;
+  border-radius: 12px;
+  padding: 1px 30px  1px 10px;
+  transform: translateX(-50%);
+  left: 50%;
+  i.chev-down-icn {
+    background-image: url(/assets/chevron-double-down.svg);
+    background-size: 20px;
+    width: 20px;
+    height: 20px;
+    right: 6px;
+    position: absolute;
+  }
+}
+
 .fit-content-width {
   width: fit-content;
   width: -moz-fit-content;

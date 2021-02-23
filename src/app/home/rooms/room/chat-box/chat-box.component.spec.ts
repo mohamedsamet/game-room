@@ -124,12 +124,23 @@ describe('ChatBoxComponent', () => {
     it('should call getMessagesInRoom from int', () => {
       spyOn(chatMessageInterface, 'getMessagesByPage').and.callThrough();
       chatBoxComponent.roomId = 'aze';
-      chatBoxComponent.getMessagesInRoom();
+      chatBoxComponent.getMessagesInRoom(0, 14);
       expect(chatMessageInterface.getMessagesByPage).toHaveBeenCalledWith('aze', 0, 14);
     });
 
+    it('should set isloading true', () => {
+      chatBoxComponent.isLoading = true;
+      chatBoxComponent.getMessagesInRoom(0, 10);
+      expect(chatBoxComponent.isLoading).toBeFalsy();
+    });
+
+    it('should set totalElement', () => {
+      chatBoxComponent.getMessagesInRoom(0, 10);
+      expect(chatBoxComponent.totalElement).toEqual(2);
+    });
+
     it('should set chatMessages from response', () => {
-      chatBoxComponent.getMessagesInRoom();
+      chatBoxComponent.getMessagesInRoom(0, 5);
       const expectedChatKeys = ['pseudo', 'userId', 'dateTimeParsed', 'message'].sort();
       expect(Object.keys(chatBoxComponent.chatMessages[0]).sort()).toEqual(expectedChatKeys);
       expect(chatBoxComponent.chatMessages[0].pseudo).toEqual('yasmin');
@@ -142,14 +153,42 @@ describe('ChatBoxComponent', () => {
       expect(chatBoxComponent.chatMessages[1].userId).toEqual('azeaze');
     });
 
+    it('should concat chatMessages from response', () => {
+      chatBoxComponent.chatMessages = [{
+        pseudo: 'samet2',
+        dateTimeParsed: '10:22',
+        message: 'aaa',
+        userId: '789'
+      }];
+      chatBoxComponent.getMessagesInRoom(0, 5);
+      expect(chatBoxComponent.chatMessages[0].pseudo).toEqual('samet2');
+      expect(chatBoxComponent.chatMessages[1].pseudo).toEqual('yasmin');
+      expect(chatBoxComponent.chatMessages[2].pseudo).toEqual('samet');
+      expect(chatBoxComponent.chatMessages[0].dateTimeParsed).toEqual('10:22');
+      expect(chatBoxComponent.chatMessages[1].dateTimeParsed).toEqual('11:35');
+      expect(chatBoxComponent.chatMessages[2].dateTimeParsed).toEqual('11:55');
+      expect(chatBoxComponent.chatMessages[1].message).toEqual('hello there');
+      expect(chatBoxComponent.chatMessages[0].message).toEqual('aaa');
+      expect(chatBoxComponent.chatMessages[2].message).toEqual('hello');
+      expect(chatBoxComponent.chatMessages[1].userId).toEqual('popoe');
+      expect(chatBoxComponent.chatMessages[2].userId).toEqual('azeaze');
+      expect(chatBoxComponent.chatMessages[0].userId).toEqual('789');
+    });
+
     it('should call manageScrollChatBox when responding', () => {
       spyOn(chatBoxComponent['ref'], 'detectChanges');
-      chatBoxComponent.getMessagesInRoom();
+      chatBoxComponent.getMessagesInRoom(0, 5);
       expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
     });
 
+    it('should not call manageScrollChatBox when responding', () => {
+      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      chatBoxComponent.getMessagesInRoom(10, 15);
+      expect(chatBoxComponent['ref'].detectChanges).not.toHaveBeenCalled();
+    });
+
     it('should set chatContent scrollTop', () => {
-      chatBoxComponent.getMessagesInRoom();
+      chatBoxComponent.getMessagesInRoom(0, 5);
       expect(chatBoxComponent.chatContent.nativeElement).toBeTruthy();
     });
   });
@@ -177,9 +216,49 @@ describe('ChatBoxComponent', () => {
 
     it('should call manageScrollChatBox when responding', fakeAsync(() => {
       spyOn(chatBoxComponent['ref'], 'detectChanges');
+      chatBoxComponent.isScrollBottom = true;
       chatBoxComponent.listenToNewMessages();
       of(true).pipe(delay(2001)).subscribe(() => {
         expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
+      });
+      tick(2001);
+    }));
+
+    it('should not call manageScrollChatBox when responding', fakeAsync(() => {
+      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      chatBoxComponent.isScrollBottom = false;
+      chatBoxComponent.listenToNewMessages();
+      of(true).pipe(delay(2001)).subscribe(() => {
+        expect(chatBoxComponent['ref'].detectChanges).not.toHaveBeenCalled();
+      });
+      tick(2001);
+    }));
+
+    it('should increment totalElement when responding', fakeAsync(() => {
+      chatBoxComponent.totalElement = 6;
+      chatBoxComponent.listenToNewMessages();
+      of(true).pipe(delay(2001)).subscribe(() => {
+        expect(chatBoxComponent.totalElement).toEqual(7);
+      });
+      tick(2001);
+    }));
+
+    it('should show new Message alert when responding', fakeAsync(() => {
+      chatBoxComponent.showNewMessagesAlert = false;
+      chatBoxComponent.isScrollBottom = false;
+      chatBoxComponent.listenToNewMessages();
+      of(true).pipe(delay(2001)).subscribe(() => {
+        expect(chatBoxComponent.showNewMessagesAlert).toBeTruthy();
+      });
+      tick(2001);
+    }));
+
+    it('should not show new Message alert when responding', fakeAsync(() => {
+      chatBoxComponent.showNewMessagesAlert = false;
+      chatBoxComponent.isScrollBottom = true;
+      chatBoxComponent.listenToNewMessages();
+      of(true).pipe(delay(2001)).subscribe(() => {
+        expect(chatBoxComponent.showNewMessagesAlert).toBeFalsy();
       });
       tick(2001);
     }));
@@ -209,6 +288,63 @@ describe('ChatBoxComponent', () => {
       chatBoxComponent.message = '';
       chatBoxComponent.textChanged('');
       expect(chatBoxComponent.sendUpdateWriterStatus).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('loadMoreMessages method', () => {
+    beforeEach(() => {
+      chatBoxComponent.totalElement = 5;
+      chatBoxComponent.chatMessages = ChatMessagesSpecHelper.ChatMessages;
+    });
+
+    it('should set isLoading', () => {
+      chatBoxComponent.isLoading = true;
+      chatBoxComponent.loadMoreMessages();
+      expect(chatBoxComponent.isLoading).toBeFalsy();
+    });
+
+    it('should call getMessagesINRoom', () => {
+      spyOn(chatBoxComponent, 'getMessagesInRoom');
+      chatBoxComponent.loadMoreMessages();
+      expect(chatBoxComponent.getMessagesInRoom).toHaveBeenCalledWith(2, 16);
+    });
+
+    it('should not call getMessagesINRoom', () => {
+      chatBoxComponent.totalElement = 2;
+      spyOn(chatBoxComponent, 'getMessagesInRoom');
+      chatBoxComponent.loadMoreMessages();
+      expect(chatBoxComponent.getMessagesInRoom).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('scrollToBottomEvent method', () => {
+    it('should set isScrollBottom', () => {
+      chatBoxComponent.scrollToBottomEvent(true);
+      expect(chatBoxComponent.isScrollBottom).toBeTruthy();
+    });
+
+    it('should set showNewMessagesAlert to false', () => {
+      chatBoxComponent.scrollToBottomEvent(true);
+      expect(chatBoxComponent.showNewMessagesAlert).toBeFalsy();
+    });
+
+    it('should not set showNewMessagesAlert', () => {
+      chatBoxComponent.showNewMessagesAlert = true;
+      chatBoxComponent.scrollToBottomEvent(false);
+      expect(chatBoxComponent.showNewMessagesAlert).toBeTruthy();
+    });
+  });
+
+  describe('showNewMessages method', () => {
+    it('should set showNewMessagesAlert to false', () => {
+      chatBoxComponent.showNewMessages();
+      expect(chatBoxComponent.showNewMessagesAlert).toBeFalsy();
+    });
+
+    it('should call  manageScrollChatBox', () => {
+      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      chatBoxComponent.showNewMessages();
+      expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
     });
   });
 
@@ -294,13 +430,49 @@ describe('ChatBoxComponent', () => {
   describe('HTML DOM test', () => {
     describe('chat bloc', () => {
       beforeEach(() => {
-        chatBoxComponent.chatMessages = ChatMessagesSpecHelper.ChatMessages;
         fixture.detectChanges();
       });
 
       it('should show messageScroll elem', () => {
         const messageScroll = fixture.debugElement.queryAll(By.css('.messages-scroll-container'));
         expect(messageScroll).toBeTruthy();
+      });
+
+      it('should point to directive scroll-event', () => {
+        const messageScroll = fixture.nativeElement.querySelector('.messages-scroll-container');
+        expect(messageScroll.getAttribute('scroll-event')).not.toEqual(null);
+      });
+
+      it('should call loadMoreMessages', () => {
+        spyOn(chatBoxComponent, 'loadMoreMessages');
+        const messageScroll = fixture.debugElement.query(By.css('.messages-scroll-container'));
+        messageScroll.triggerEventHandler('scrollTopEvent', 'test');
+        fixture.detectChanges();
+        expect(chatBoxComponent.loadMoreMessages).toHaveBeenCalled();
+      });
+
+      it('should call scrollToBottomEvent', () => {
+        spyOn(chatBoxComponent, 'scrollToBottomEvent');
+        const messageScroll = fixture.debugElement.query(By.css('.messages-scroll-container'));
+        messageScroll.triggerEventHandler('isScrollBottom', true);
+        fixture.detectChanges();
+        expect(chatBoxComponent.scrollToBottomEvent).toHaveBeenCalledWith(true);
+      });
+
+      it('should show loader', () => {
+        chatBoxComponent.isLoading = true;
+        fixture.detectChanges();
+        const loader = fixture.nativeElement.querySelector('.loader');
+        fixture.detectChanges();
+        expect(loader).toBeTruthy();
+      });
+
+      it('should not show loader', () => {
+        chatBoxComponent.isLoading = false;
+        fixture.detectChanges();
+        const loader = fixture.nativeElement.querySelector('.loader');
+        fixture.detectChanges();
+        expect(loader).toBeFalsy();
       });
 
       it('should show chat blocs', () => {
@@ -332,6 +504,36 @@ describe('ChatBoxComponent', () => {
         const chatBloc = fixture.debugElement.queryAll(By.css('.message-bloc .message-text'));
         expect(chatBloc[0].nativeElement.textContent.trim()).toEqual('hello there');
         expect(chatBloc[1].nativeElement.textContent.trim()).toEqual('hello');
+      });
+    });
+
+    describe('new messages button', () => {
+      it('should show new messages button', () => {
+        chatBoxComponent.showNewMessagesAlert = true;
+        fixture.detectChanges();
+        const newMessages = fixture.nativeElement.querySelector('.new-messages');
+        expect(newMessages).toBeTruthy();
+      });
+
+      it('should not show new messages button', () => {
+        chatBoxComponent.showNewMessagesAlert = false;
+        fixture.detectChanges();
+        const newMessages = fixture.nativeElement.querySelector('.new-messages');
+        expect(newMessages).toBeFalsy();
+      });
+
+      it('should contain message new Messages', () => {
+        chatBoxComponent.showNewMessagesAlert = true;
+        fixture.detectChanges();
+        const newMessages = fixture.nativeElement.querySelector('.new-messages');
+        expect(newMessages.textContent.trim()).toEqual('New messages');
+      });
+
+      it('should contain icon', () => {
+        chatBoxComponent.showNewMessagesAlert = true;
+        fixture.detectChanges();
+        const newMessagesIcn = fixture.nativeElement.querySelector('.new-messages i.chev-down-icn');
+        expect(newMessagesIcn).toBeTruthy();
       });
     });
 

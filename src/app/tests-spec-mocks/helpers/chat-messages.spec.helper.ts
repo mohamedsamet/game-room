@@ -1,5 +1,6 @@
 import { ChatModel } from '../../models/chat/chat.model';
 import { UserWriterStatusModel } from '../../models/user/user-writer-status.model';
+import { ChatResultModel } from '../../models/chat/chat-result.model';
 
 export class ChatMessagesSpecHelper {
   public static ChatMessages: ChatModel[] = [
@@ -38,4 +39,16 @@ export class ChatMessagesSpecHelper {
       roomId: 'aze'
     }
   ];
+
+  public static getChatMessageByPage(): ChatResultModel {
+    const chatResultModel = {} as ChatResultModel;
+    const chatModel = {} as ChatModel;
+    chatModel.userId = '456';
+    chatModel.message = 'aze';
+    chatModel.dateTimeParsed = '18:02';
+    chatModel.pseudo = 'samet';
+    chatResultModel.total = 1;
+    chatResultModel.messages = [chatModel];
+    return chatResultModel;
+  }
 }
