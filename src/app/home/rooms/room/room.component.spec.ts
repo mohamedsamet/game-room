@@ -17,7 +17,7 @@ describe('RoomComponent', () => {
   let roomsNotifInterface: RoomsNotifInterface;
   let getUsersInRoomNotifInterface: GetUsersInRoomNotifMock;
   let manageRoomsMock: ManageRoomsMock;
-  let activeRoute = {snapshot: {paramMap: {get: (x) => {return 'room1'}}}} as ActivatedRoute;
+  const activeRoute = {snapshot: {paramMap: {get: (x) =>  'room1'}}} as ActivatedRoute;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -69,7 +69,7 @@ describe('RoomComponent', () => {
   describe('getRoomName method', () => {
     it('should set roomName', () => {
       roomComponent.getRoomName();
-      expect(roomComponent.roomName).toEqual('room1')
+      expect(roomComponent.roomName).toEqual('room1');
     });
   });
 
