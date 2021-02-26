@@ -1,7 +1,7 @@
 <div class="mx-0 p-2 p-md-4 border rounded-sm h-100">
   <div class="position-relative h-100">
     <div *ngIf="isLoading" class="loader"></div>
-    <div scroll-event
+    <div appScrollEvent
          #messagesScroll
          (scrollTopEvent)="loadMoreMessages()"
          (isScrollBottom)="scrollToBottomEvent($event)"
