@@ -25,7 +25,7 @@ export class ChatBoxComponent implements OnInit {
   constructor(@Inject('ChatMessageInterface') private chatMessageInterface: ChatMessageInterface,
               @Inject('LoggedUserInterface') private  loggedUser: LoggedUserInterface,
               private activeRoute: ActivatedRoute,
-              private ref: ChangeDetectorRef) { }
+              public ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.roomId = this.activeRoute.snapshot.paramMap.get('roomId');
@@ -54,7 +54,7 @@ export class ChatBoxComponent implements OnInit {
       if (start === 0) {
         this.manageScrollChatBox();
       }
-      this.isLoading = false
+      this.isLoading = false;
     });
   }
 
@@ -64,13 +64,17 @@ export class ChatBoxComponent implements OnInit {
       this.totalElement += 1;
       if (this.isScrollBottom) {
         this.manageScrollChatBox();
-      } else {
-        this.showNewMessagesAlert = true
+      } else if (this.isScrollableChatBox()) {
+        this.showNewMessagesAlert = true;
       }
     });
   }
 
-  loadMoreMessages() {
+  private isScrollableChatBox(): boolean {
+    return this.chatContent.nativeElement.scrollHeight > this.chatContent.nativeElement.clientHeight;
+  }
+
+  loadMoreMessages(): void {
     if (this.totalElement > this.chatMessages.length) {
       this.isLoading = true;
       const startIndex = this.chatMessages.length;
@@ -78,7 +82,7 @@ export class ChatBoxComponent implements OnInit {
     }
   }
 
-  scrollToBottomEvent(event: boolean) {
+  scrollToBottomEvent(event: boolean): void {
     this.isScrollBottom = event;
     if (this.isScrollBottom) {
       this.showNewMessagesAlert = false;

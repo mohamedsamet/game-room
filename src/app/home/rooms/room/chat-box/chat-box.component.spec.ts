@@ -16,7 +16,7 @@ describe('ChatBoxComponent', () => {
   let chatBoxComponent: ChatBoxComponent;
   let chatMessageInterface: ChatMessageMock;
   let loggedUserInterface: LoggedUserInterfaceMock;
-  let activeRoute = {snapshot: {paramMap: {get: (x) => {return 'room1'}}}} as ActivatedRoute;
+  const activeRoute = {snapshot: {paramMap: {get: (x) =>  'room1' }}} as ActivatedRoute;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule],
@@ -35,7 +35,7 @@ describe('ChatBoxComponent', () => {
     chatMessageInterface = TestBed.get('ChatMessageInterface');
     loggedUserInterface = TestBed.get('LoggedUserInterface');
     chatBoxComponent.chatContent = {nativeElement: {scrollHeight: 500, scrollTop: 0}} as ElementRef;
-    chatBoxComponent.chatMessages = []
+    chatBoxComponent.chatMessages = [];
   });
 
   it('should create chat box component', () => {
@@ -176,15 +176,15 @@ describe('ChatBoxComponent', () => {
     });
 
     it('should call manageScrollChatBox when responding', () => {
-      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      spyOn(chatBoxComponent.ref, 'detectChanges');
       chatBoxComponent.getMessagesInRoom(0, 5);
-      expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
+      expect(chatBoxComponent.ref.detectChanges).toHaveBeenCalled();
     });
 
     it('should not call manageScrollChatBox when responding', () => {
-      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      spyOn(chatBoxComponent.ref, 'detectChanges');
       chatBoxComponent.getMessagesInRoom(10, 15);
-      expect(chatBoxComponent['ref'].detectChanges).not.toHaveBeenCalled();
+      expect(chatBoxComponent.ref.detectChanges).not.toHaveBeenCalled();
     });
 
     it('should set chatContent scrollTop', () => {
@@ -206,7 +206,7 @@ describe('ChatBoxComponent', () => {
       of(true).pipe(delay(2001)).subscribe(() => {
         expect(Object.keys(chatBoxComponent.chatMessages[0]).sort()).toEqual(expectedChatKeys);
         expect(chatBoxComponent.chatMessages[0].pseudo).toEqual('marwa');
-        expect(chatBoxComponent.chatMessages[0].dateTimeParsed).toEqual('13:35')
+        expect(chatBoxComponent.chatMessages[0].dateTimeParsed).toEqual('13:35');
         expect(chatBoxComponent.chatMessages[0].message).toEqual('zzz there');
         expect(chatBoxComponent.chatMessages[0].userId).toEqual('zzz');
         flush();
@@ -215,21 +215,21 @@ describe('ChatBoxComponent', () => {
     }));
 
     it('should call manageScrollChatBox when responding', fakeAsync(() => {
-      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      spyOn(chatBoxComponent.ref, 'detectChanges');
       chatBoxComponent.isScrollBottom = true;
       chatBoxComponent.listenToNewMessages();
       of(true).pipe(delay(2001)).subscribe(() => {
-        expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
+        expect(chatBoxComponent.ref.detectChanges).toHaveBeenCalled();
       });
       tick(2001);
     }));
 
     it('should not call manageScrollChatBox when responding', fakeAsync(() => {
-      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      spyOn(chatBoxComponent.ref, 'detectChanges');
       chatBoxComponent.isScrollBottom = false;
       chatBoxComponent.listenToNewMessages();
       of(true).pipe(delay(2001)).subscribe(() => {
-        expect(chatBoxComponent['ref'].detectChanges).not.toHaveBeenCalled();
+        expect(chatBoxComponent.ref.detectChanges).not.toHaveBeenCalled();
       });
       tick(2001);
     }));
@@ -246,6 +246,7 @@ describe('ChatBoxComponent', () => {
     it('should show new Message alert when responding', fakeAsync(() => {
       chatBoxComponent.showNewMessagesAlert = false;
       chatBoxComponent.isScrollBottom = false;
+      chatBoxComponent.chatContent = {nativeElement: {scrollHeight: 500, scrollTop: 0, clientHeight: 56}} as ElementRef;
       chatBoxComponent.listenToNewMessages();
       of(true).pipe(delay(2001)).subscribe(() => {
         expect(chatBoxComponent.showNewMessagesAlert).toBeTruthy();
@@ -342,9 +343,9 @@ describe('ChatBoxComponent', () => {
     });
 
     it('should call  manageScrollChatBox', () => {
-      spyOn(chatBoxComponent['ref'], 'detectChanges');
+      spyOn(chatBoxComponent.ref, 'detectChanges');
       chatBoxComponent.showNewMessages();
-      expect(chatBoxComponent['ref'].detectChanges).toHaveBeenCalled();
+      expect(chatBoxComponent.ref.detectChanges).toHaveBeenCalled();
     });
   });
 
@@ -372,7 +373,7 @@ describe('ChatBoxComponent', () => {
     });
   });
 
-  describe('updateWriterInRoomStatus method', ()=> {
+  describe('updateWriterInRoomStatus method', () => {
     let userStatus: UserWriterStatusModel;
     beforeEach(() => {
       userStatus = {_id: 'aze', pseudo: 'samet', roomId: '789', status: true};
@@ -440,7 +441,7 @@ describe('ChatBoxComponent', () => {
 
       it('should point to directive scroll-event', () => {
         const messageScroll = fixture.nativeElement.querySelector('.messages-scroll-container');
-        expect(messageScroll.getAttribute('scroll-event')).not.toEqual(null);
+        expect(messageScroll.getAttribute('appScrollEvent')).not.toEqual(null);
       });
 
       it('should call loadMoreMessages', () => {
