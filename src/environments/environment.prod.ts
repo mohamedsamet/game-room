@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:3005',
-  socketUrl: 'http://localhost:3007'
+  baseUrl: 'https://calm-tundra-11220.herokuapp.com',
+  socketUrl: 'https://calm-tundra-11220.herokuapp.com/'
 };
