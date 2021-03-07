@@ -1,6 +1,6 @@
 {
   "name": "game-room",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "scripts": {
     "ng": "ng",
     "start": "docker-compose down -v && docker-compose up",
