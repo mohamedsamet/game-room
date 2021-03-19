@@ -26,6 +26,7 @@ describe('AppComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.componentInstance;
+    app.isLoading = true
     redirectInt = TestBed.get('RedirectionInterface');
     loggedUserInt = TestBed.get('LoggedUserInterface');
   });
@@ -64,6 +65,11 @@ describe('AppComponent', () => {
       expect(redirectInt.redirectTo).toHaveBeenCalledWith('/');
     });
 
+    it('should set loading to false', () => {
+      app.manageAutoLogin();
+      expect(app.isLoading).toBeFalsy();
+    });
+
     it('should not redirect to / if user credential exist', () => {
       spyOn(redirectInt, 'redirectTo');
       localStorage.setItem(LOCAL_STORAGE_ID, 'test user id');
@@ -90,6 +96,17 @@ describe('AppComponent', () => {
       loggedUserInt.setError();
       app.getLoggedUser();
       expect(redirectInt.redirectTo).toHaveBeenCalledWith('/');
+    });
+
+    it('should set loader to false', () => {
+      loggedUserInt.setError();
+      app.getLoggedUser();
+      expect(app.isLoading).toBeFalsy();
+    });
+
+    it('should set loader to false', () => {
+      app.getLoggedUser();
+      expect(app.isLoading).toBeFalsy();
     });
   });
 

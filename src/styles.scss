@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+.loader {
+  background-image: url(/assets/dual-loader.svg);
+  background-size: 60px;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: .8;
+  &.top-centred {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

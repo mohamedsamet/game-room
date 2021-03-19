@@ -8,6 +8,7 @@ import { LOCAL_STORAGE_ID } from './constants/rooms.constant';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+  public isLoading = true;
   constructor(@Inject('LoggedUserInterface') private  loggedUser: LoggedUserInterface,
               @Inject('RedirectionInterface') private  redirect: RedirectionInterface) {}
 
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
     if (userCredential) {
       this.getLoggedUser();
     } else {
+      this.isLoading = false;
       this.redirect.redirectTo(`/`);
     }
   }
@@ -27,9 +29,11 @@ export class AppComponent implements OnInit {
   getLoggedUser(): void {
     this.loggedUser.getLoggedUser().subscribe(user => {
       this.loggedUser.setUserName(user.pseudo);
+      this.isLoading = false;
       this.redirect.redirectTo(`${user.pseudo}/rooms`);
     }, () => {
       localStorage.removeItem(LOCAL_STORAGE_ID);
+      this.isLoading = false;
       this.redirect.redirectTo(`/`);
     });
   }
